@@ -1,10 +1,34 @@
 <template>
   <div class="header-wrapper">
+    <div v-if="this.$route.path === '/posts'">
+      <header class="post flex items-center h-full">
+        <div class="text-sm">29 days left in trial</div>
+        <div class="px-4">
+          <button
+            class="rounded px-4 py-2 bg-gray-600 text-gray-100 hover:bg-gray-700 duration-300 text-sm"
+          >
+            Subscibe
+          </button>
+        </div>
+        <div class="">
+          <button
+            class="rounded px-4 py-2 bg-gray-600 text-gray-100 hover:bg-gray-700 duration-300 text-sm"
+          >
+            Production
+          </button>
+        </div>
+      </header>
+    </div>
+
     <header class="user-info">
-      <span class="username"
-        ><i class="el-icon-user"></i> {{ displayUserName }}</span
+      <span class="username"> {{ displayUserName }}</span>
+
+      <button
+        @click="logout"
+        class="rounded px-4 py-2 bg-gray-600 text-gray-100 hover:bg-gray-700 duration-300 text-sm"
       >
-      <a href="#" @click="logout">Logout</a>
+        Logout
+      </button>
     </header>
   </div>
 </template>
@@ -31,7 +55,7 @@ export default {
   display: flex;
   justify-content: flex-end;
   z-index: 100;
-  height: 30px;
+  height: 50px;
   border-bottom: 1px dotted rgba(200, 200, 200, 1);
 }
 .user-info {

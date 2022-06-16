@@ -9,6 +9,7 @@ module.exports = {
           100: "#c8d1fc",
           300: "#44559d",
           500: "#121a3e",
+          600: "#f0f2f9",
         },
         action: {
           default: "#ffd700",
@@ -23,8 +24,12 @@ module.exports = {
           500: "#25283d",
           600: "#2B2E45;",
         },
+        green: {
+          default: " #d6f5d4",
+          100: "#d6f5d4",
+        },
       },
     },
   },
-  plugins: [],
+  plugins: [require("tw-elements/dist/plugin")],
 };

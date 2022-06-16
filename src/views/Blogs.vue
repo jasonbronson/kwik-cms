@@ -1,72 +1,250 @@
 <template>
-  <div>
-    <div class="main">
-      <!-- <div class="left">
-        <ul>
-          <li class="menu-heading">Dashboards</li>
-          <li>
-            <a data-toggle="tab" href="#overview"
-              ><i class="fa fa-home fa-lg"></i> Overview</a
-            >
-          </li>
-          <li>
-            <a data-toggle="tab" href="#performance"
-              ><i class="fa fa-tachometer fa-lg"></i> Performance</a
-            >
-          </li>
-          <li>
-            <a data-toggle="tab" href="#analytics"
-              ><i class="fa fa-line-chart fa-lg"></i> Analytics</a
-            >
-          </li>
-          <li>
-            <a data-toggle="tab" href="#landing"
-              ><i class="fa fa-rocket fa-lg"></i> Landing</a
-            >
-          </li>
-          <li>
-            <a data-toggle="tab" href="#projects"
-              ><i class="fa fa-table fa-lg"></i> Projects</a
-            >
-          </li>
-          <li class="menu-heading">Pages</li>
-          <li class="active">
-            <a data-toggle="tab" href="#user-profile"
-              ><i class="fa fa-street-view fa-lg"></i> User Profile</a
-            >
-          </li>
-          <li>
-            <a data-toggle="tab" href="#candidates"
-              ><i class="fa fa-users fa-lg"></i> Candidates</a
-            >
-          </li>
-          <li>
-            <a data-toggle="tab" href="#invoices"
-              ><i class="fa fa-files-o fa-lg"></i> Invoices</a
-            >
-          </li>
-          <li>
-            <a data-toggle="tab" href="#single-invoice"
-              ><i class="fa fa-file-text-o fa-lg"></i> Single Invoice</a
-            >
-          </li>
-          <li>
-            <a data-toggle="tab" href="#browse"
-              ><i class="fa fa-search fa-lg"></i> Browse</a
-            >
-          </li>
-        </ul>
-      </div> -->
-      <!-- <div class="right">
-        <div class="tab-content">
-          <div id="overview" class="tab-pane fade">
-            <div class="header">
-              <h4>Account</h4>
+  <div class="">
+    <div class="">
+      <div class="font-sans text-black min-h-screen bg-primary-600">
+        <div class="flex justify-between py-8 items-center px-4">
+          <div class="flex items-center">
+            <div class="text-primary-300 mr-4">Blog Posts</div>
+            <div class="border rounded overflow-hidden flex">
+              <input type="text" class="px-4 py-2" placeholder="Search..." />
+              <button
+                class="flex items-center justify-center px-4 border-l bg-gray-600"
+              >
+                <svg
+                  class="h-4 w-4 text-white"
+                  fill="currentColor"
+                  xmlns="http://www.w3.org/2000/svg"
+                  viewBox="0 0 24 24"
+                >
+                  <path
+                    d="M16.32 14.9l5.39 5.4a1 1 0 0 1-1.42 1.4l-5.38-5.38a8 8 0 1 1 1.41-1.41zM10 16a6 6 0 1 0 0-12 6 6 0 0 0 0 12z"
+                  />
+                </svg>
+              </button>
             </div>
-            <div class="content"></div>
+          </div>
+          <button
+            class="rounded px-4 py-2 bg-gray-600 text-gray-100 hover:bg-gray-700 duration-300 text-sm"
+          >
+            New Post
+          </button>
+        </div>
+        <div class="items-center justify-between flex text-sm px-4">
+          <div class="flex items-center">
+            <div class="bg-white px-4 border-solid border-2 rounded mr-2">
+              <ul
+                class="flex flex-wrap -mb-px text-sm font-medium text-center text-gray-500 dark:text-gray-400"
+              >
+                <li class="mr-2">
+                  <a
+                    href="#"
+                    class="inline-flex p-4 rounded-t-lg border-b-2 border-transparent hover:text-gray-600 hover:border-gray-300 dark:hover:text-gray-300 group"
+                  >
+                    <svg
+                      class="mr-2 w-5 h-5 text-gray-400 group-hover:text-gray-500 dark:text-gray-500 dark:group-hover:text-gray-300"
+                      fill="currentColor"
+                      viewBox="0 0 20 20"
+                      xmlns="http://www.w3.org/2000/svg"
+                    >
+                      <path
+                        fill-rule="evenodd"
+                        d="M18 10a8 8 0 11-16 0 8 8 0 0116 0zm-6-3a2 2 0 11-4 0 2 2 0 014 0zm-2 4a5 5 0 00-4.546 2.916A5.986 5.986 0 0010 16a5.986 5.986 0 004.546-2.084A5 5 0 0010 11z"
+                        clip-rule="evenodd"
+                      ></path>
+                    </svg>
+                    All
+                  </a>
+                </li>
+                <li class="mr-2">
+                  <a
+                    href="#"
+                    class="inline-flex p-4 text-blue-600 rounded-t-lg border-b-2 border-blue-600 active dark:text-blue-500 dark:border-blue-500 group"
+                    aria-current="page"
+                  >
+                    <svg
+                      class="mr-2 w-5 h-5 text-blue-600 dark:text-blue-500"
+                      fill="currentColor"
+                      viewBox="0 0 20 20"
+                      xmlns="http://www.w3.org/2000/svg"
+                    >
+                      <path
+                        d="M5 3a2 2 0 00-2 2v2a2 2 0 002 2h2a2 2 0 002-2V5a2 2 0 00-2-2H5zM5 11a2 2 0 00-2 2v2a2 2 0 002 2h2a2 2 0 002-2v-2a2 2 0 00-2-2H5zM11 5a2 2 0 012-2h2a2 2 0 012 2v2a2 2 0 01-2 2h-2a2 2 0 01-2-2V5zM11 13a2 2 0 012-2h2a2 2 0 012 2v2a2 2 0 01-2 2h-2a2 2 0 01-2-2v-2z"
+                      ></path>
+                    </svg>
+                    Draft
+                  </a>
+                </li>
+                <li class="mr-2">
+                  <a
+                    href="#"
+                    class="inline-flex p-4 rounded-t-lg border-b-2 border-transparent hover:text-gray-600 hover:border-gray-300 dark:hover:text-gray-300 group"
+                  >
+                    <svg
+                      class="mr-2 w-5 h-5 text-gray-400 group-hover:text-gray-500 dark:text-gray-500 dark:group-hover:text-gray-300"
+                      fill="currentColor"
+                      viewBox="0 0 20 20"
+                      xmlns="http://www.w3.org/2000/svg"
+                    >
+                      <path
+                        d="M5 4a1 1 0 00-2 0v7.268a2 2 0 000 3.464V16a1 1 0 102 0v-1.268a2 2 0 000-3.464V4zM11 4a1 1 0 10-2 0v1.268a2 2 0 000 3.464V16a1 1 0 102 0V8.732a2 2 0 000-3.464V4zM16 3a1 1 0 011 1v7.268a2 2 0 010 3.464V16a1 1 0 11-2 0v-1.268a2 2 0 010-3.464V4a1 1 0 011-1z"
+                      ></path>
+                    </svg>
+                    Published
+                  </a>
+                </li>
+                <li class="mr-2">
+                  <a
+                    href="#"
+                    class="inline-flex p-4 rounded-t-lg border-b-2 border-transparent hover:text-gray-600 hover:border-gray-300 dark:hover:text-gray-300 group"
+                  >
+                    <svg
+                      class="mr-2 w-5 h-5 text-gray-400 group-hover:text-gray-500 dark:text-gray-500 dark:group-hover:text-gray-300"
+                      fill="currentColor"
+                      viewBox="0 0 20 20"
+                      xmlns="http://www.w3.org/2000/svg"
+                    >
+                      <path d="M9 2a1 1 0 000 2h2a1 1 0 100-2H9z"></path>
+                      <path
+                        fill-rule="evenodd"
+                        d="M4 5a2 2 0 012-2 3 3 0 003 3h2a3 3 0 003-3 2 2 0 012 2v11a2 2 0 01-2 2H6a2 2 0 01-2-2V5zm3 4a1 1 0 000 2h.01a1 1 0 100-2H7zm3 0a1 1 0 000 2h3a1 1 0 100-2h-3zm-3 4a1 1 0 100 2h.01a1 1 0 100-2H7zm3 0a1 1 0 100 2h3a1 1 0 100-2h-3z"
+                        clip-rule="evenodd"
+                      ></path>
+                    </svg>
+                    Scheduled
+                  </a>
+                </li>
+              </ul>
+            </div>
+            <div class="mr-2">
+              <div class="dropdown inline-block relative">
+                <button
+                  class="bg-white text-gray-700 font-semibold py-2 px-4 rounded inline-flex items-center"
+                >
+                  <span class="mr-1">Author</span>
+                  <svg
+                    class="fill-current h-4 w-8"
+                    xmlns="http://www.w3.org/2000/svg"
+                    viewBox="0 0 20 20"
+                  >
+                    <path
+                      d="M9.293 12.95l.707.707L15.657 8l-1.414-1.414L10 10.828 5.757 6.586 4.343 8z"
+                    />
+                  </svg>
+                </button>
+                <ul class="dropdown-menu absolute hidden text-gray-700 pt-2">
+                  <li class="">
+                    <a
+                      class="rounded-t bg-gray-200 hover:bg-gray-400 py-2 px-4 block whitespace-no-wrap"
+                      href="#"
+                      >One</a
+                    >
+                  </li>
+                  <li class="">
+                    <a
+                      class="bg-gray-200 hover:bg-gray-400 py-2 px-4 block whitespace-no-wrap"
+                      href="#"
+                      >Two</a
+                    >
+                  </li>
+                  <li class="">
+                    <a
+                      class="rounded-b bg-gray-200 hover:bg-gray-400 py-2 px-4 block whitespace-no-wrap"
+                      href="#"
+                      >Three is the magic number</a
+                    >
+                  </li>
+                </ul>
+              </div>
+            </div>
+            <div>
+              <div class="dropdown inline-block relative">
+                <button
+                  class="bg-white text-gray-700 font-semibold py-2 px-4 rounded inline-flex items-center"
+                >
+                  <span class="mr-1">Categories</span>
+                  <svg
+                    class="fill-current h-4 w-8"
+                    xmlns="http://www.w3.org/2000/svg"
+                    viewBox="0 0 20 20"
+                  >
+                    <path
+                      d="M9.293 12.95l.707.707L15.657 8l-1.414-1.414L10 10.828 5.757 6.586 4.343 8z"
+                    />
+                  </svg>
+                </button>
+                <ul class="dropdown-menu absolute hidden text-gray-700 pt-2">
+                  <li class="">
+                    <a
+                      class="rounded-t bg-gray-200 hover:bg-gray-400 py-2 px-4 block whitespace-no-wrap"
+                      href="#"
+                      >One</a
+                    >
+                  </li>
+                  <li class="">
+                    <a
+                      class="bg-gray-200 hover:bg-gray-400 py-2 px-4 block whitespace-no-wrap"
+                      href="#"
+                      >Two</a
+                    >
+                  </li>
+                  <li class="">
+                    <a
+                      class="rounded-b bg-gray-200 hover:bg-gray-400 py-2 px-4 block whitespace-no-wrap"
+                      href="#"
+                      >Three is the magic number</a
+                    >
+                  </li>
+                </ul>
+              </div>
+            </div>
+          </div>
+          <div class="w-1/6 flex justify-end tex-primary-500">
+            Export All Posts
           </div>
         </div>
-      </div> -->
+        <!-- options selected -->
+        <div class="px-4">
+          <div
+            class="w-full flex bg-white mt-8 items-center justify-between py-4 px-4"
+          >
+            <div class="flex justify-start items-center">
+              <input
+                class="form-check-input appearance-none h-4 w-4 border border-gray-300 rounded-sm bg-white checked:bg-blue-600 checked:border-blue-600 focus:outline-none transition duration-200 mt-1 align-top bg-no-repeat bg-center bg-contain float-left mr-6 cursor-pointer"
+                type="checkbox"
+                value=""
+                id="flexCheckDefault"
+              />
+              <div class="w-32 mr-6">
+                <img
+                  class="rounded shadow-md"
+                  src="https://source.unsplash.com/random/1280x720"
+                  alt=""
+                />
+              </div>
+              <div class="w-12">
+                <div
+                  class="m-1 mr-2 w-12 h-12 relative flex justify-center items-center rounded-full bg-gray-500 text-xl text-white"
+                >
+                  <img
+                    src="http://source.unsplash.com/100x100/?girl"
+                    class="rounded-full"
+                  />
+                </div>
+              </div>
+              <div class="text-sm ml-6">Example post</div>
+            </div>
+            <div class="flex justify-end">
+              <button
+                type="button"
+                class="text-emerald-400 bg-green-100 hover:bg-blue-800 focus:outline-none focus:ring-4 focus:ring-blue-300 font-medium rounded-full text-sm px-5 py-2.5 text-center mr-2 mb-2 dark:bg-blue-600 dark:hover:bg-blue-700 dark:focus:ring-blue-800"
+              >
+                Jun 15, 2022
+              </button>
+            </div>
+          </div>
+        </div>
+        <!-- options selected -->
+      </div>
     </div>
   </div>
 </template>
@@ -120,6 +298,8 @@ body {
 
 /* Custom scrollbar */
 .main {
+  top: 40px;
+  height: 40px;
   // width
   ::-webkit-scrollbar {
     width: 5px;
@@ -456,5 +636,8 @@ body {
 
 .left:hover + .right {
   margin-left: 215px;
+}
+.dropdown:hover .dropdown-menu {
+  display: block;
 }
 </style>
