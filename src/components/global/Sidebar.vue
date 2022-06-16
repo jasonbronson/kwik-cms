@@ -34,7 +34,7 @@ export default {
     return {
       topItems: [
         { to: "/home", icon: "fad fa-home" },
-        { to: "/blogs", icon: "fad fa-blog" },
+        { to: "/posts", icon: "fad fa-blog" },
         { to: "/1", icon: "fad fa-file" },
         { to: "/2", icon: "fad fa-table" },
         { to: "/3", icon: "fad fa-cubes" },
