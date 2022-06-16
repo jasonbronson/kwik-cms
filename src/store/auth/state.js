@@ -1,1 +1,6 @@
-export default { user: null, isAuthenticated: false, loading: false };
+export default {
+  user: null,
+  isAuthenticated: false,
+  loading: false,
+  loginError: "",
+};

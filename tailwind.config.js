@@ -1,0 +1,30 @@
+/** @type {import('tailwindcss').Config} */
+module.exports = {
+  content: ["./index.html", "./src/**/*.{vue,js,ts,jsx,tsx}"],
+  theme: {
+    extend: {
+      colors: {
+        primary: {
+          default: "#121a3e",
+          100: "#c8d1fc",
+          300: "#44559d",
+          500: "#121a3e",
+        },
+        action: {
+          default: "#ffd700",
+          500: "#ffd700",
+        },
+        secondary: {
+          default: "#9f26b5",
+          100: "#9F26B50D",
+          200: "#72297e7a",
+          300: "#9f26b5",
+          400: "rgba(216, 63, 142, 0.09)",
+          500: "#25283d",
+          600: "#2B2E45;",
+        },
+      },
+    },
+  },
+  plugins: [],
+};
