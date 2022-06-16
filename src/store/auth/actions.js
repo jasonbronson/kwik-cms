@@ -1,45 +1,40 @@
-import { authentication } from "@/api/authentication";
+//import router from "../../router/index";
+import axios from "@/services/axios";
 import jwtDecode from "jwt-decode";
-import router from "../../router/index";
-import { ElNotification } from "element-plus";
 
 export default {
-  async adminLogin({ state, commit }, values) {
+  async login({ commit }, payload) {
     commit("setLoading", true);
     try {
-      const { data } = await authentication.adminLogin(values);
-      localStorage.setItem("access_token", data?.token);
-      router.push("/meta-data");
+      const { data } = payload;
+      const headers = {
+        Authorization:
+          "Basic " +
+          Buffer.from(data.username + ":" + data.password).toString("base64"),
+      };
+      const res = await axios.post("/sign-in", null, { headers });
+      const token = res.data;
+
+      localStorage.setItem("access_token", token);
+      localStorage.setItem("email", data.username);
+      commit("setIsAuthenticated", true);
     } catch (e) {
-      ElNotification({
-        title: "Error",
-        message: e?.response?.data?.message || "Login was unsuccessfully",
-        duration: 5000,
-        type: "error",
-      });
       console.log(e);
+      throw e;
     }
     commit("setLoading", false);
   },
-  async logOut({ commit, state }) {
-    commit("setIsAuthenticated", false);
-    localStorage.clear();
-    router.push("/");
+  logout() {
+    localStorage.removeItem("access_token");
+    localStorage.removeItem("email");
   },
   localAuthenticate({ commit }) {
     try {
-      jwtDecode(localStorage.getItem("access_token"));
+      const tokenInfo = jwtDecode(localStorage.getItem("access_token"));
+      localStorage.setItem("email", tokenInfo.email);
       commit("setIsAuthenticated", true);
-    } catch (e) {
+    } catch (error) {
       commit("setIsAuthenticated", false);
-    }
-  },
-  async fetchMe({ commit }) {
-    try {
-      const { data } = await authentication.fetchMe();
-      commit("setUser", data);
-    } catch (e) {
-      console.log(e);
     }
   },
 };

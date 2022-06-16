@@ -1,13 +1,45 @@
 <template>
-$END$
+  <div class="header-wrapper">
+    <header class="user-info">
+      <span class="username"
+        ><i class="el-icon-user"></i> {{ displayUserName }}</span
+      >
+      <a href="#" @click="logout">Logout</a>
+    </header>
+  </div>
 </template>
 
 <script>
 export default {
-name: "Header"
-}
+  name: "Header",
+  methods: {
+    logout(event) {
+      event.preventDefault();
+      this.$store.dispatch("auth/logout");
+      this.$router.push("/login");
+    },
+  },
+};
 </script>
 
-<style scoped>
-
+<style lang="scss" scoped>
+.header-wrapper {
+  position: sticky;
+  top: 0;
+  background: #fff;
+  width: 100%;
+  display: flex;
+  justify-content: flex-end;
+  z-index: 100;
+  height: 30px;
+  border-bottom: 1px dotted rgba(200, 200, 200, 1);
+}
+.user-info {
+  display: flex;
+  align-items: center;
+  padding: 10px 20px;
+  .username {
+    margin: 0 25px;
+  }
+}
 </style>

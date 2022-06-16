@@ -1,13 +1,9 @@
 <template>
-$END$
+  <div><slot /></div>
 </template>
 
 <script>
 export default {
-name: "nologin"
-}
+  name: "nologin",
+};
 </script>
-
-<style scoped>
-
-</style>
