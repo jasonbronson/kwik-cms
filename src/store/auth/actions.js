@@ -5,6 +5,7 @@ import jwtDecode from "jwt-decode";
 export default {
   async login({ commit }, payload) {
     commit("setLoading", true);
+    commit("setLoginError", "");
     try {
       const { data } = payload;
       const headers = {
@@ -19,8 +20,7 @@ export default {
       localStorage.setItem("email", data.username);
       commit("setIsAuthenticated", true);
     } catch (e) {
-      console.log(e);
-      throw e;
+      commit("setLoginError", e?.response?.data?.Message || "Unknown Error");
     }
     commit("setLoading", false);
   },

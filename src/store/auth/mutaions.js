@@ -8,4 +8,7 @@ export default {
   setLoading: (state, payload) => {
     state.loading = payload;
   },
+  setLoginError: (state, payload) => {
+    state.loginError = payload;
+  },
 };
