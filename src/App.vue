@@ -1,9 +1,24 @@
 <template>
-  <div id="app">
-    <div id="nav">
+  <keep-alive>
+    <component v-bind:is="layout" class="tab">
       <router-view />
-    </div>
-  </div>
+    </component>
+  </keep-alive>
 </template>
-
+<script>
+import DefaultLayout from "./layouts/default.vue";
+import NoLoginLayout from "./layouts/nologin.vue";
+export default {
+  name: "App",
+  components: {
+    DefaultLayout,
+    NoLoginLayout,
+  },
+  computed: {
+    layout() {
+      return this.$route.meta.layout || "default-layout";
+    },
+  },
+};
+</script>
 <style></style>
