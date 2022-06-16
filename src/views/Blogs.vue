@@ -1,7 +1,7 @@
 <template>
   <div>
     <div class="main">
-      <div class="left">
+      <!-- <div class="left">
         <ul>
           <li class="menu-heading">Dashboards</li>
           <li>
@@ -56,10 +56,9 @@
             >
           </li>
         </ul>
-      </div>
-      <div class="right">
+      </div> -->
+      <!-- <div class="right">
         <div class="tab-content">
-          <!-- Overview -->
           <div id="overview" class="tab-pane fade">
             <div class="header">
               <h4>Account</h4>
@@ -67,7 +66,7 @@
             <div class="content"></div>
           </div>
         </div>
-      </div>
+      </div> -->
     </div>
   </div>
 </template>
