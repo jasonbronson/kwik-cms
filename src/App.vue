@@ -8,6 +8,9 @@
 <script>
 import DefaultLayout from "./layouts/default.vue";
 import NoLoginLayout from "./layouts/nologin.vue";
+
+require("./plugins");
+
 export default {
   name: "App",
   components: {

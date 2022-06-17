@@ -4,7 +4,7 @@
       <div class="font-sans text-black min-h-screen bg-primary-600 px-5">
         <div class="flex justify-between py-8 items-center px-5">
           <div class="flex items-center">
-            <div class="text-primary-300 mr-4">Blog Posts</div>
+            <div class="text-primary-400 mr-4">Blog Posts</div>
             <div class="border rounded overflow-hidden flex">
               <input type="text" class="px-4 py-2" placeholder="Search..." />
               <button
@@ -23,11 +23,13 @@
               </button>
             </div>
           </div>
-          <button
-            class="rounded px-4 py-2 bg-primary-400 text-gray-100 hover:bg-primary-500 duration-300 text-sm"
-          >
-            New Post
-          </button>
+          <router-link to="/posts/new">
+            <button
+              class="rounded px-4 py-2 bg-primary-400 text-gray-100 hover:bg-primary-500 duration-300 text-sm"
+            >
+              New Post
+            </button>
+          </router-link>
         </div>
         <div>
           <UnderlineTabs
