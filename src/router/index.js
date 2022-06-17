@@ -1,6 +1,7 @@
 import Vue from "vue";
 import VueRouter from "vue-router";
-import Blogs from "../views/Blogs.vue";
+import Blogs from "../views/Posts/Posts.vue";
+import NewBlog from "../views/Posts/New.vue";
 import Users from "../views/Users.vue";
 import CreateUser from "../views/CreateUser";
 import Home from "../views/Home.vue";
@@ -32,8 +33,16 @@ const routes = [
   },
   {
     path: "/posts",
-    name: "Blogs",
+    name: "Posts",
     component: Blogs,
+    meta: {
+      requiresAuth: true,
+    },
+  },
+  {
+    path: "/posts/new",
+    name: "NewPost",
+    component: NewBlog,
     meta: {
       requiresAuth: true,
     },

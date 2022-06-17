@@ -6,8 +6,9 @@ module.exports = {
       colors: {
         primary: {
           default: "#121a3e",
-          100: "#c8d1fc",
-          300: "#eff1ff",
+          100: "#DCE0EE", // tab selection
+          200: "#70768F", // form title
+          300: "#eff1ff", // Dropdown hover
           400: "#384062", // button
           500: "#121a3e", // left drawer, button:hover
           600: "#f0f2f9",
@@ -28,6 +29,10 @@ module.exports = {
         green: {
           default: " #d6f5d4",
           100: "#d6f5d4",
+        },
+        blue: {
+          default: " #428bca",
+          300: "#428bca", //links
         },
       },
     },
