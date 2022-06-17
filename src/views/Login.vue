@@ -60,7 +60,7 @@
               @click="handleSubmit"
             >
               <span v-if="!loading">Login</span>
-              <span v-else>...</span>
+              <i v-else class="fas fa-spinner fa-spin"></i>
             </button>
             <span v-if="loginError" class="text-red-500 text-xs pl-2">
               {{ loginError }}
