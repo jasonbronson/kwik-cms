@@ -5,6 +5,7 @@ import Users from "../views/Users.vue";
 import CreateUser from "../views/CreateUser";
 import Home from "../views/Home.vue";
 import Login from "../views/Login.vue";
+import Register from "../views/Register.vue";
 import store from "../store";
 import ErrorPage from "../views/Error.vue";
 
@@ -57,6 +58,15 @@ const routes = [
     path: "/login",
     name: "LoginPage",
     component: Login,
+    meta: {
+      layout: "noLoginLayout",
+      requiresAuth: false,
+    },
+  },
+  {
+    path: "/sign-up",
+    name: "RegisterPage",
+    component: Register,
     meta: {
       layout: "noLoginLayout",
       requiresAuth: false,
