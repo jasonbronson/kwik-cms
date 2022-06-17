@@ -11,9 +11,9 @@
             :key="index"
             @click="changeTab(tabData)"
           >
-            <a
+            <div
               href="#"
-              class="inline-flex items-center gap-2 p-4 rounded-t-lg border-b-2 border-transparent group"
+              class="cursor-pointer inline-flex items-center gap-2 p-4 rounded-t-lg border-b-2 border-transparent group"
               :class="[
                 {
                   'text-blue-600 border-blue-600 active dark:text-blue-500 dark:border-blue-500 group':
@@ -27,7 +27,7 @@
             >
               <span class="text-base"><i :class="tabData.icon"></i></span>
               <span>{{ tabData.title }}</span>
-            </a>
+            </div>
           </li>
           <!--          <li class="mr-2">
             <a

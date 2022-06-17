@@ -1,27 +1,7 @@
 <template>
   <div class="header-wrapper">
-    <div v-if="this.$route.path === '/posts'">
-      <header class="post flex items-center h-full">
-        <div class="text-sm">29 days left in trial</div>
-        <div class="px-4">
-          <button
-            class="rounded px-4 py-2 bg-gray-600 text-gray-100 hover:bg-gray-700 duration-300 text-sm"
-          >
-            Subscibe
-          </button>
-        </div>
-        <div class="">
-          <button
-            class="rounded px-4 py-2 bg-gray-600 text-gray-100 hover:bg-gray-700 duration-300 text-sm"
-          >
-            Production
-          </button>
-        </div>
-      </header>
-    </div>
-
     <header class="user-info">
-      <span class="username"> {{ displayUserName }}</span>
+      <span class="username"> User Name </span>
 
       <button
         @click="logout"
