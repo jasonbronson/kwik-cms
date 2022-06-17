@@ -1,7 +1,7 @@
 <template>
   <ValidationObserver ref="observer">
     <div class="bg-primary-500 h-screen flex justify-center items-center">
-      <div class="flex w-1/2 h-1/2">
+      <div class="flex w-3/4 h-3/4">
         <div class="w-1/2 h-full rounded-l-lg overflow-hidden">
           <img
             class="object-cover w-full h-full"
@@ -72,7 +72,7 @@
             class="flex flex-col text-center gap-1 text-primary-300 text-sm cursor-pointer"
           >
             <router-link to="/forgot-password">Forgot password?</router-link>
-            <router-link to="/register">Create an Account!</router-link>
+            <router-link to="/sign-up">Create an Account!</router-link>
           </div>
         </div>
       </div>
