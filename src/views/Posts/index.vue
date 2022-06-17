@@ -35,59 +35,29 @@
           <UnderlineTabs
             :data="BlogTabs"
             v-model="currentBlogTab"
-            @input="handleEventTypeChange"
+            @input="handleTabChange"
           />
         </div>
-        <!-- options selected -->
-        <div class="px-4">
-          <div
-            class="w-full flex bg-white mt-8 items-center justify-between py-4 px-4"
-          >
-            <div class="flex justify-start items-center">
-              <input
-                class="form-check-input appearance-none h-4 w-4 border border-gray-300 rounded-sm bg-white checked:bg-blue-600 checked:border-blue-600 focus:outline-none transition duration-200 mt-1 align-top bg-no-repeat bg-center bg-contain float-left mr-6 cursor-pointer"
-                type="checkbox"
-                value=""
-                id="flexCheckDefault"
-              />
-              <div class="w-32 mr-6">
-                <img
-                  class="rounded shadow-md"
-                  src="https://source.unsplash.com/random/1280x720"
-                  alt=""
-                />
-              </div>
-              <div class="w-12">
-                <div
-                  class="m-1 mr-2 w-12 h-12 relative flex justify-center items-center rounded-full bg-gray-500 text-xl text-white"
-                >
-                  <img
-                    src="http://source.unsplash.com/100x100/?girl"
-                    class="rounded-full"
-                  />
-                </div>
-              </div>
-              <div class="text-sm ml-6">Example post</div>
-            </div>
-            <div class="flex justify-end">
-              <button
-                type="button"
-                class="text-emerald-400 bg-green-100 hover:bg-blue-800 focus:outline-none focus:ring-4 focus:ring-blue-300 font-medium rounded-full text-sm px-5 py-2.5 text-center mr-2 mb-2 dark:bg-blue-600 dark:hover:bg-blue-700 dark:focus:ring-blue-800"
-              >
-                Jun 15, 2022
-              </button>
-            </div>
-          </div>
+
+        <div class="mt-5">
+          <ListSinglePost
+            v-for="(post, index) in posts"
+            :key="index"
+            :title="post.title"
+            :createdAt="post.created_at"
+            :id="post.id"
+          />
         </div>
-        <!-- options selected -->
       </div>
     </div>
   </div>
 </template>
 <script>
 import UnderlineTabs from "@/components/UnderlineTabs";
+import ListSinglePost from "@/components/Posts/ListSinglePost";
+import { mapState } from "vuex";
 export default {
-  components: { UnderlineTabs },
+  components: { ListSinglePost, UnderlineTabs },
   data() {
     return {
       BlogTabs: [
@@ -116,10 +86,19 @@ export default {
       password: "",
     };
   },
+  computed: {
+    ...mapState({
+      posts: (state) => state.posts.posts,
+      loading: (state) => state.posts.loading,
+    }),
+  },
   methods: {
-    handleEventTypeChange(selectedValue) {
+    handleTabChange(selectedValue) {
       this.currentBlogTab = selectedValue;
     },
+  },
+  mounted() {
+    this.$store.dispatch("posts/fetchAllPosts");
   },
 };
 </script>

@@ -4,7 +4,6 @@ axios.defaults.baseURL = process.env.VUE_APP_API_ADDRESS;
 
 axios.interceptors.request.use(
   (config) => {
-    console.log(process.env.VUE_APP_API_ADDRESS);
     const token = localStorage.getItem("access_token");
     let authToken = `Bearer ${token}`;
     if (

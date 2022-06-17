@@ -23,6 +23,8 @@ localize("en", en);
 Vue.component("ValidationObserver", ValidationObserver);
 Vue.component("ValidationProvider", ValidationProvider);
 
+Vue.use(require("vue-moment"));
+
 new Vue({
   router,
   store,
