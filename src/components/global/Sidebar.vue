@@ -39,7 +39,7 @@ export default {
         { to: "/2", icon: "fad fa-table" },
         { to: "/3", icon: "fad fa-cubes" },
         { to: "/4", icon: "fad fa-photo-video" },
-        { to: "/5", icon: "fad fa-users" },
+        { to: "/users", icon: "fad fa-users" },
       ],
       bottomItems: [
         { to: "/6", icon: "fa fa-question" },

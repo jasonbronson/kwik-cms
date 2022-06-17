@@ -1,6 +1,8 @@
 import Vue from "vue";
 import VueRouter from "vue-router";
 import Blogs from "../views/Blogs.vue";
+import Users from "../views/Users.vue";
+import CreateUser from "../views/CreateUser";
 import Home from "../views/Home.vue";
 import Login from "../views/Login.vue";
 import store from "../store";
@@ -31,6 +33,22 @@ const routes = [
     path: "/posts",
     name: "Blogs",
     component: Blogs,
+    meta: {
+      requiresAuth: true,
+    },
+  },
+  {
+    path: "/users",
+    name: "Users",
+    component: Users,
+    meta: {
+      requiresAuth: true,
+    },
+  },
+  {
+    path: "/users/new",
+    name: "CreateUser",
+    component: CreateUser,
     meta: {
       requiresAuth: true,
     },
