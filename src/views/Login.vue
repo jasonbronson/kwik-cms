@@ -56,7 +56,7 @@
           <div>
             <button
               :disabled="loading"
-              class="w-full bg-primary-300 hover:bg-primary-500 rounded text-white p-2 transition duration-200 ease-in"
+              class="w-full bg-primary-400 hover:bg-primary-500 rounded text-white p-2 transition duration-200 ease-in"
               @click="handleSubmit"
             >
               <span v-if="!loading">Login</span>

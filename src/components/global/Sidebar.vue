@@ -53,7 +53,7 @@ export default {
 <style scoped lang="scss">
 .sidebar-wrapper {
   width: 52px;
-  min-height: 100vh;
+  height: 100vh;
   background: #121a3e;
   top: 0;
   left: 0;
