@@ -5,7 +5,7 @@
 
       <button
         @click="logout"
-        class="rounded px-4 py-2 bg-gray-600 text-gray-100 hover:bg-gray-700 duration-300 text-sm"
+        class="rounded px-4 py-2 bg-primary-400 text-gray-100 hover:bg-primary-500 duration-300 text-sm"
       >
         Logout
       </button>
