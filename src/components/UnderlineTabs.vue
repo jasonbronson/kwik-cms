@@ -31,10 +31,11 @@
           </li>
         </ul>
       </div>
+
       <div class="mr-2">
         <div class="dropdown inline-block relative">
           <button
-            class="bg-white text-gray-700 font-semibold py-2 px-4 rounded inline-flex items-center"
+            class="shadow bg-white text-gray-700 font-semibold py-2 px-4 rounded inline-flex items-center"
           >
             <span class="mr-1">Author</span>
             <svg
@@ -47,35 +48,40 @@
               />
             </svg>
           </button>
-          <ul class="dropdown-menu absolute hidden text-gray-700 pt-2">
-            <li class="">
-              <a
-                class="rounded-t bg-gray-200 hover:bg-gray-400 py-2 px-4 block whitespace-no-wrap"
-                href="#"
-                >One</a
-              >
-            </li>
-            <li class="">
-              <a
-                class="bg-gray-200 hover:bg-gray-400 py-2 px-4 block whitespace-no-wrap"
-                href="#"
-                >Two</a
-              >
-            </li>
-            <li class="">
-              <a
-                class="rounded-b bg-gray-200 hover:bg-gray-400 py-2 px-4 block whitespace-no-wrap"
-                href="#"
-                >Three is the magic number</a
-              >
-            </li>
+          <ul class="hidden dropdown-menu absolute text-gray-700">
+            <div class="shadow rounded bg-white w-40">
+              <li class="p-1">
+                <div
+                  class="cursor-pointer rounded hover:bg-primary-300 py-1 px-4 block whitespace-no-wrap"
+                  href="#"
+                >
+                  All
+                </div>
+              </li>
+              <li class="p-1">
+                <div
+                  class="cursor-pointer rounded hover:bg-primary-300 py-1 px-4"
+                  href="#"
+                >
+                  <div class="flex gap-2">
+                    <img
+                      src="https://images.unsplash.com/photo-1494790108377-be9c29b29330?ixlib=rb-1.2.1&ixid=MnwxMjA3fDB8MHxzZWFyY2h8Mnx8cHJvZmlsZXxlbnwwfHwwfHw%3D&w=1000&q=80"
+                      alt="profile pic"
+                      class="w-5 h-5 rounded-full object-cover"
+                    />
+                    <span>User Name</span>
+                  </div>
+                </div>
+              </li>
+            </div>
           </ul>
         </div>
       </div>
-      <div>
+
+      <div class="mr-2">
         <div class="dropdown inline-block relative">
           <button
-            class="bg-white text-gray-700 font-semibold py-2 px-4 rounded inline-flex items-center"
+            class="shadow bg-white text-gray-700 font-semibold py-2 px-4 rounded inline-flex items-center"
           >
             <span class="mr-1">Categories</span>
             <svg
@@ -88,28 +94,25 @@
               />
             </svg>
           </button>
-          <ul class="dropdown-menu absolute hidden text-gray-700 pt-2">
-            <li class="">
-              <a
-                class="rounded-t bg-gray-200 hover:bg-gray-400 py-2 px-4 block whitespace-no-wrap"
-                href="#"
-                >One</a
-              >
-            </li>
-            <li class="">
-              <a
-                class="bg-gray-200 hover:bg-gray-400 py-2 px-4 block whitespace-no-wrap"
-                href="#"
-                >Two</a
-              >
-            </li>
-            <li class="">
-              <a
-                class="rounded-b bg-gray-200 hover:bg-gray-400 py-2 px-4 block whitespace-no-wrap"
-                href="#"
-                >Three is the magic number</a
-              >
-            </li>
+          <ul class="hidden dropdown-menu absolute text-gray-700">
+            <div class="shadow rounded bg-white w-40">
+              <li class="p-1">
+                <div
+                  class="cursor-pointer rounded hover:bg-primary-300 py-1 px-4 block whitespace-no-wrap"
+                  href="#"
+                >
+                  All
+                </div>
+              </li>
+              <li class="p-1">
+                <div
+                  class="cursor-pointer rounded hover:bg-primary-300 py-1 px-4 block whitespace-no-wrap"
+                  href="#"
+                >
+                  Example category
+                </div>
+              </li>
+            </div>
           </ul>
         </div>
       </div>
@@ -153,5 +156,19 @@ export default {
 <style lang="scss" scoped>
 .dropdown:hover .dropdown-menu {
   display: block;
+}
+.dropdown-menu {
+  padding-top: 15px;
+}
+.dropdown-menu::after {
+  content: "";
+  position: absolute;
+  top: 0px;
+  left: 30px;
+  margin-left: -8px;
+  border-width: 8px;
+  border-style: solid;
+  border-color: white transparent transparent transparent;
+  transform: rotate(180deg);
 }
 </style>

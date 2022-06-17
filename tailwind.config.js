@@ -7,7 +7,7 @@ module.exports = {
         primary: {
           default: "#121a3e",
           100: "#c8d1fc",
-          300: "#44559d",
+          300: "#eff1ff",
           400: "#384062", // button
           500: "#121a3e", // left drawer, button:hover
           600: "#f0f2f9",
