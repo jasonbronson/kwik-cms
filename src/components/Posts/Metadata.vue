@@ -95,6 +95,7 @@
         </div>
         <div class="flex gap-7">
           <textarea
+            v-model="editData.summary"
             rows="4"
             class="flex-grow border-solid border-2 rounded p-3 focus:outline-none focus:border-primary-100 focus:shadow"
           />
@@ -152,6 +153,25 @@ export default {
   name: "Metadata",
   components: {
     Datepicker,
+  },
+  data() {
+    return { editData: { summary: "" } };
+  },
+  props: {
+    post: {
+      default: () => {},
+    },
+  },
+  watch: {
+    editData: {
+      handler(value) {
+        this.$emit("handleMetaDataChange", value);
+      },
+      deep: true,
+    },
+    post(value) {
+      this.editData = { summary: value?.summary };
+    },
   },
 };
 </script>
