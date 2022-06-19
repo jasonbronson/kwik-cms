@@ -1,42 +1,52 @@
 <template>
-  <div class="wrapper">
-    <div class="title">
-      <span>Manage User</span>
-      <button class="button button-dark" @click="addUser">Add User</button>
-    </div>
-    <div class="table-wrapper">
-      <table class="table table-auto border-collapse border border-slate-300">
-        <thead>
-          <tr class="table-header bg-indigo-400 text-white">
-            <td class="p-2">User</td>
-            <td class="p-2">Role</td>
-            <td class="p-2">Email</td>
-            <td class="p-2">Actions</td>
-          </tr>
-        </thead>
-        <tbody>
-          <tr class="even:bg-amber-100 odd:bg-blue-100" v-for="(item, idx) in listData" :key="idx">
-            <td class="p-2">{{ item.first_name + " " + item.last_name }}</td>
-            <td class="p-2">{{ item.role.name }}</td>
-            <td class="p-2">{{ item.email }}</td>
-            <td class="p-2">
-              <button class="button button-light">Edit</button>
-              <button class="button button-light">Delete</button>
-            </td>
-          </tr>
-        </tbody>
-      </table>
+  <div>
+    <are-you-sure v-if="deleteUserConfirm" text="Do you want to delete this user?" @yes="deleteUser" @no="deleteUserConfirm = false"></are-you-sure>
+    <div class="wrapper">
+      <div class="title">
+        <span>Manage User</span>
+        <button class="button button-dark" @click="addUser">Add User</button>
+      </div>
+      <div class="table-wrapper">
+        <table class="table table-auto border-collapse border border-slate-300">
+          <thead>
+            <tr class="table-header bg-indigo-400 text-white">
+              <td class="p-2">User</td>
+              <td class="p-2">Role</td>
+              <td class="p-2">Email</td>
+              <td class="p-2">Actions</td>
+            </tr>
+          </thead>
+          <tbody>
+            <tr class="even:bg-amber-100 odd:bg-blue-100" v-for="(item, idx) in listData" :key="idx">
+              <td class="p-2">{{ item.first_name + " " + item.last_name }}</td>
+              <td class="p-2">{{ item.role.name }}</td>
+              <td class="p-2">{{ item.email }}</td>
+              <td class="p-2">
+                <button class="button button-light">Edit</button>
+                <button class="button button-light" @click="showPopup(item)">Delete</button>
+              </td>
+            </tr>
+          </tbody>
+        </table>
+      </div>
     </div>
   </div>
+
 </template>
 
 <script>
 import { mapState } from 'vuex'
+import AreYouSure from '../components/global/AreYouSure.vue'
 export default {
   name: "Users",
   data() {
     return {
+      deleteUserConfirm: false,
+      selectedUser: {}
     }
+  },
+  components: {
+    AreYouSure
   },
   computed: {
     ...mapState({
@@ -49,6 +59,20 @@ export default {
   methods: {
     addUser() {
       this.$router.push("/users/new")
+    },
+    showPopup(item) {
+      this.deleteUserConfirm = true;
+      this.selectedUser = item
+    },
+    async deleteUser() {
+      try {
+        this.loading = true
+        await this.$store.dispatch("users/deleteUser", this.selectedUser);
+        this.deleteUserConfirm = false
+        this.$router.push('/users')
+      } catch (error) {
+        console.log(error)
+      }
     }
   }
 };
@@ -71,7 +95,7 @@ export default {
   background: #ffffff;
   color: black;
   border: 1px solid black;
-  margin-left: 10px;
+  margin-right: 10px;
 }
 .title {
   display: flex;

@@ -82,7 +82,7 @@ export default {
     payload
   ) => {
     try {
-      await axios.delete('/users/' + payload.user.id)
+      await axios.delete('/users/' + payload.id)
     } catch (e) {
       console.log('deleteUser Error: ', e)
       commit('setError', e.response.data.Message, { root: true })

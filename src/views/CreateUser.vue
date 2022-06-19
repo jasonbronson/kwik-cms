@@ -1,7 +1,7 @@
 <template>
   <div class="wrapper">
     <div class="title">
-      <span>Add a New User</span>
+      <span><i @click="goBack" class="fa-solid fa-angle-left"></i>Add a New User</span>
       <button class="button button-dark" @click="createUser">Create User</button>
     </div>
     <ValidationObserver ref="observer">
@@ -73,11 +73,11 @@
           </div>
         </div>
       </div>
-      <div class="title">
-        <span>User Profile</span>
-      </div>
       <div class="form-author">
         <form>
+          <div class="title">
+            <span>User Profile</span>
+          </div>
           <div class="form-field">
             <label for="emailInput">First Name: </label>
             <ValidationProvider
@@ -144,6 +144,9 @@
           </div>
         </form>
         <form>
+          <div class="title">
+            <span>Social Media</span>
+          </div>
           <div class="form-field">
             <label for="emailInput">Facebook: </label>
             <input
@@ -259,6 +262,9 @@ export default {
           })
         }
       }
+    },
+    goBack() {
+      this.$router.push('/users')
     }
   }
 };
@@ -287,6 +293,10 @@ export default {
   display: flex;
   justify-content: space-between;
   padding: 20px 0px;
+  i {
+    padding-right: 10px;
+    cursor: pointer;
+  }
   span {
     font-size: 16px;
     font-weight: 700;
@@ -310,7 +320,10 @@ export default {
   display: flex;
   justify-content: space-between;
   form {
-    width: 45%;
+    width: 50%;
+    .form-field {
+      width: 80%;
+    }
   }
 }
 .role-group {
