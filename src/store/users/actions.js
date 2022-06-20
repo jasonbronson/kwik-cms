@@ -70,7 +70,7 @@ export default {
     payload
   ) => {
     try {
-      await axios.put('/users/' + payload.user.id, payload.user)
+      await axios.put('/users/' + payload.id, payload)
     } catch (e) {
       console.log('updateUser Error: ', e)
       commit('setError', e.response.data.Message, { root: true })

@@ -1,7 +1,7 @@
 <template>
   <div class="header-wrapper">
     <header class="user-info">
-      <span class="username"> User Name </span>
+      <span class="username"> {{ displayUserName }} </span>
 
       <button
         @click="logout"
@@ -16,6 +16,11 @@
 <script>
 export default {
   name: "Header",
+  computed: {
+    displayUserName() {
+      return localStorage.getItem('email') || ''
+    },
+  },
   methods: {
     logout(event) {
       event.preventDefault();

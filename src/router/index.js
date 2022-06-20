@@ -3,8 +3,9 @@ import VueRouter from "vue-router";
 import Posts from "../views/Posts";
 import NewBlog from "../views/Posts/New.vue";
 import EditBlog from "../views/Posts/edit/_id.vue";
-import Users from "../views/Users.vue";
-import CreateUser from "../views/CreateUser";
+import Users from "../views/Users";
+import NewUser from "../views/Users/New.vue";
+import EditUser from "../views/Users/edit/_id.vue";
 import Home from "../views/Home.vue";
 import Login from "../views/Login.vue";
 import Register from "../views/Register.vue";
@@ -66,8 +67,16 @@ const routes = [
   },
   {
     path: "/users/new",
-    name: "CreateUser",
-    component: CreateUser,
+    name: "NewUser",
+    component: NewUser,
+    meta: {
+      requiresAuth: true,
+    },
+  },
+  {
+    path: "/users/edit/:id",
+    name: "EditUser",
+    component: EditUser,
     meta: {
       requiresAuth: true,
     },

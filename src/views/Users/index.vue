@@ -22,7 +22,7 @@
               <td class="p-2">{{ item.role.name }}</td>
               <td class="p-2">{{ item.email }}</td>
               <td class="p-2">
-                <button class="button button-light">Edit</button>
+                <button class="button button-light" @click="editUser(item)">Edit</button>
                 <button class="button button-light" @click="showPopup(item)">Delete</button>
               </td>
             </tr>
@@ -36,7 +36,7 @@
 
 <script>
 import { mapState } from 'vuex'
-import AreYouSure from '../components/global/AreYouSure.vue'
+import AreYouSure from '@/components/global/AreYouSure.vue'
 export default {
   name: "Users",
   data() {
@@ -60,6 +60,9 @@ export default {
     addUser() {
       this.$router.push("/users/new")
     },
+    editUser(item) {
+      this.$router.push(`/users/edit/${item.id}`)
+    },
     showPopup(item) {
       this.deleteUserConfirm = true;
       this.selectedUser = item
@@ -69,6 +72,7 @@ export default {
         this.loading = true
         await this.$store.dispatch("users/deleteUser", this.selectedUser);
         this.deleteUserConfirm = false
+        await this.$store.dispatch("users/fetchAndSetUsers");
         this.$router.push('/users')
       } catch (error) {
         console.log(error)
