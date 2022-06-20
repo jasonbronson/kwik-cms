@@ -12,6 +12,7 @@ module.exports = {
           400: "#384062", // button
           500: "#121a3e", // left drawer, button:hover
           600: "#f0f2f9",
+          700: "#3f2a55", // bg selected tab
         },
         action: {
           default: "#ffd700",
@@ -29,6 +30,7 @@ module.exports = {
         green: {
           default: " #d6f5d4",
           100: "#d6f5d4",
+          200: "#309c42" //upload button
         },
         blue: {
           default: " #428bca",
@@ -38,4 +40,15 @@ module.exports = {
     },
   },
   plugins: [require("tw-elements/dist/plugin")],
+  variants: {
+    extend: {
+      border: ["first", "last"],    
+      borderCollapse: ["first", "last"],
+      borderColor: ["first", "last"],
+      borderOpacity: ["first", "last"],
+      borderRadius: ["first", "last"],
+      borderStyle: ["first", "last"],
+      borderWidth: ["first", "last"],
+    },
+  },
 };
