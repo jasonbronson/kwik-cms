@@ -44,4 +44,15 @@ export default {
       throw e;
     }
   },
+  async deletePost({ commit }, payload) {
+    console.log("payload-----------", payload);
+    commit("setLoading", true);
+    try {
+      await axios.delete(`/posts/${payload}`);
+      commit("setLoading", false);
+    } catch (e) {
+      commit("setLoading", false);
+      throw e;
+    }
+  },
 };
