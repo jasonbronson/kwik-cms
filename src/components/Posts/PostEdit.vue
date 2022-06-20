@@ -31,28 +31,17 @@
     </div>
     <div class="bg-white rounded mt-10 shadow">
       <div class="flex">
-        <div
-          class="w-1/2 text-center py-3 cursor-pointer"
-          :class="{ 'bg-primary-100': currentTab !== 'metadata' }"
-          @click="currentTab = 'metadata'"
-        >
+        <div class="w-1/2 text-center py-3">
           <i class="fas fa-file mr-2"></i>
           <span>Metadata</span>
         </div>
-        <div
-          class="w-1/2 text-center py-3 cursor-pointer"
-          :class="{ 'bg-primary-100': currentTab !== 'seo' }"
-          @click="currentTab = 'seo'"
-        >
+        <div class="w-1/2 text-center py-3 bg-primary-100">
           <i class="fas fa-search mr-2"></i>
           <span>SEO</span>
         </div>
       </div>
-      <div v-if="currentTab === 'metadata'">
+      <div>
         <Metadata :post="post" @handleMetaDataChange="handleChildDataChange" />
-      </div>
-      <div v-else>
-        <SEO @handleSEODataChange="handleChildDataChange" />
       </div>
     </div>
   </div>
@@ -60,15 +49,13 @@
 
 <script>
 import Metadata from "@/components/Posts/Metadata";
-import SEO from "@/components/Posts/SEO";
 import Editor from "@tinymce/tinymce-vue";
 
 export default {
   name: "PostEdit",
-  components: { SEO, Metadata, Editor },
+  components: { Metadata, Editor },
   data() {
     return {
-      currentTab: "metadata",
       editData: { title: "", content: "" },
     };
   },
