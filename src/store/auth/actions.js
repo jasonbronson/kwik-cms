@@ -24,6 +24,27 @@ export default {
     }
     commit("setLoading", false);
   },
+  async register({ commit }, payload) {
+    commit("setLoading", true);
+    commit("setLoginError", "");
+    try {
+      const { data } = payload;
+      const headers = {
+        Authorization:
+          "Basic " +
+          Buffer.from(data.username + ":" + data.password).toString("base64"),
+      };
+      const res = await axios.post("/sign-up", null, { headers });
+      const token = res.data;
+
+      localStorage.setItem("access_token", token);
+      localStorage.setItem("email", data.username);
+      commit("setIsAuthenticated", true);
+    } catch (e) {
+      commit("setLoginError", e?.response?.data?.Message || "Unknown Error");
+    }
+    commit("setLoading", false);
+  },
   logout() {
     localStorage.removeItem("access_token");
     localStorage.removeItem("email");

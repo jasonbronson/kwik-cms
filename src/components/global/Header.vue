@@ -18,7 +18,7 @@ export default {
   name: "Header",
   computed: {
     displayUserName() {
-      return localStorage.getItem('email') || ''
+      return localStorage.getItem("email") || "";
     },
   },
   methods: {

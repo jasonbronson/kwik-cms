@@ -71,7 +71,7 @@
             >
               <input
                 class="w-full border-solid border-2 rounded h-10 px-4 focus:outline-none focus:border-primary-100"
-                v-model="email"
+                v-model="name"
                 placeholder="Your name..."
                 type="name"
               />

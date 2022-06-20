@@ -75,7 +75,7 @@
                         alt="profile pic"
                         class="w-5 h-5 rounded-full object-cover"
                       />
-                      <span>User Name</span>
+                      <span>{{ displayUserName }}</span>
                     </div>
                   </div>
                 </li>
@@ -138,6 +138,9 @@ export default {
     return {
       deleteUserConfirm: false,
     };
+  },
+  displayUserName() {
+    return localStorage.getItem("email") || "";
   },
   props: {
     data: {
