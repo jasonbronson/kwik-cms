@@ -1,5 +1,5 @@
 <template>
-  <div class="px-4 mb-2">
+  <div class="mb-2">
     <div
       class="w-full flex bg-white items-center justify-between py-4 px-4"
       @click="handleClick"
@@ -12,16 +12,12 @@
           id="flexCheckDefault"
           v-model="checked"
         />
-        <div class="w-32 mr-6">
-          <img
-            class="rounded shadow-md"
-            src="https://source.unsplash.com/random/1280x720"
-            alt=""
-          />
+        <div class="w-32 mr-6" v-if="postImg">
+          <img class="shadow-md" :src="postImg" alt="" />
         </div>
         <div class="w-12">
           <div
-            class="m-1 mr-2 w-12 h-12 relative flex justify-center items-center rounded-full bg-gray-500 text-xl text-white"
+            class="m-1 mr-2 w-10 h-10 relative flex justify-center items-center rounded-full bg-gray-500 text-xl text-white"
           >
             <img
               src="http://source.unsplash.com/100x100/?girl"
@@ -29,9 +25,11 @@
             />
           </div>
         </div>
-        <router-link :to="`/posts/edit/${id}`" class="text-sm ml-6">{{
-          title
-        }}</router-link>
+        <router-link
+          :to="`/posts/edit/${id}`"
+          class="text-base font-bold ml-6"
+          >{{ title }}</router-link
+        >
       </div>
       <div class="flex justify-end">
         <button
@@ -64,6 +62,10 @@ export default {
     item: {
       type: Array,
       default: () => {},
+    },
+    postImg: {
+      type: String,
+      default: "",
     },
     // checked: {
     //   type: Array,
