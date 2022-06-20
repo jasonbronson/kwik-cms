@@ -13,7 +13,7 @@
           <span>{{ name }}</span>
         </div>
       </div>
-      <div class="flex text-primary-200">
+      <div class="flex text-primary-200 items-center">
         <div class="flex flex-col items-center justify-center px-4">
           <i class="fa-solid fa-link"></i>
           <span>Copy URL</span>
