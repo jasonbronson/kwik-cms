@@ -2,12 +2,10 @@
   <ValidationObserver ref="observer">
     <div class="bg-primary-500 h-screen flex justify-center items-center">
       <div class="flex w-3/4 h-3/4">
-        <div class="w-1/2 h-full rounded-l-lg overflow-hidden">
-          <img
-            class="object-cover w-full h-full"
-            src="https://images-platform.99static.com//PkTaYd2uVTNfwFdN8PeZUplscE8=/107x89:1092x1074/fit-in/500x500/99designs-contests-attachments/81/81514/attachment_81514499"
-            alt="logo"
-          />
+        <div
+          class="logo-container w-1/2 h-full rounded-l-lg overflow-hidden flex items-center"
+        >
+          <img class="object-cover w-full" src="@/assets/logo.jpg" alt="logo" />
         </div>
 
         <div
@@ -113,4 +111,8 @@ export default {
 };
 </script>
 
-<style scoped></style>
+<style scoped>
+.logo-container {
+  background: #101415;
+}
+</style>

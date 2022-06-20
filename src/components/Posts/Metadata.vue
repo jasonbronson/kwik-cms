@@ -5,6 +5,21 @@
         <div
           class="text-primary-200 flex items-center h-10 text-sm font-semibold"
         >
+          <i class="fab fa-searchengin mr-2"></i>
+          <span> Slug </span>
+        </div>
+        <div class="flex gap-7">
+          <input
+            v-model="editData.slug"
+            placeholder="Slug"
+            class="flex-grow border-solid border-2 rounded h-10 px-4 focus:outline-none focus:border-primary-100 focus:shadow"
+          />
+        </div>
+      </div>
+      <div>
+        <div
+          class="text-primary-200 flex items-center h-10 text-sm font-semibold"
+        >
           <i class="fas fa-user mr-2"></i>
           <span>Author</span>
         </div>
@@ -101,8 +116,6 @@
           />
         </div>
       </div>
-    </div>
-    <div class="w-1/2 pt-5 pb-16 pl-8 pr-32 flex flex-col gap-2">
       <div>
         <div
           class="text-primary-200 flex items-center h-10 text-sm font-semibold"
@@ -144,6 +157,39 @@
         </div>
       </div>
     </div>
+    <div class="w-1/2 pt-5 pb-16 pl-8 pr-32 flex flex-col gap-2">
+      <div>
+        <div class="text-primary-200 mb-2">
+          <div class="text-sm font-semibold mb-1">SEO Title</div>
+          <div class="text-xs">
+            We suggest a
+            <span class="text-blue-300">max of 55 chars</span>
+          </div>
+        </div>
+        <div class="flex gap-7">
+          <input
+            placeholder="Title that will appear in search engines"
+            class="flex-grow border-solid border-2 rounded h-10 px-4 focus:outline-none focus:border-primary-100 focus:shadow"
+          />
+        </div>
+      </div>
+      <div>
+        <div class="text-primary-200 mb-2">
+          <div class="text-sm font-semibold mb-1">Meta Description</div>
+          <div class="text-xs">
+            We suggest a
+            <span class="text-blue-300">max of 140 chars</span>
+          </div>
+        </div>
+        <div class="flex gap-7">
+          <textarea
+            placeholder="Meta Description that will appear in search engines"
+            rows="4"
+            class="flex-grow border-solid border-2 rounded p-3 focus:outline-none focus:border-primary-100 focus:shadow"
+          />
+        </div>
+      </div>
+    </div>
   </div>
 </template>
 
@@ -155,7 +201,7 @@ export default {
     Datepicker,
   },
   data() {
-    return { editData: { summary: "" } };
+    return { editData: { summary: "", slug: "" } };
   },
   props: {
     post: {
@@ -170,7 +216,7 @@ export default {
       deep: true,
     },
     post(value) {
-      this.editData = { summary: value?.summary };
+      this.editData = { summary: value?.summary, slug: value?.slug };
     },
   },
 };
