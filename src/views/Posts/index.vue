@@ -1,8 +1,8 @@
 <template>
   <div class="">
     <div class="">
-      <div class="font-sans text-black min-h-screen bg-primary-600 px-5">
-        <div class="flex justify-between py-8 items-center px-5">
+      <div class="font-sans text-black min-h-screen bg-primary-600 px-10">
+        <div class="flex justify-between py-8 items-center">
           <div class="flex items-center">
             <div class="text-primary-400 mr-4">Blog Posts</div>
             <div class="border rounded overflow-hidden flex">
@@ -32,25 +32,30 @@
           </router-link>
         </div>
         <!--  -->
-        <div v-if="!isDeletePost">
+        <div class="flex items-center">
           <UnderlineTabs
+            v-if="!isDeletePost"
             :data="BlogTabs"
             v-model="currentBlogTab"
             @input="handleTabChange"
           />
-        </div>
-        <div v-if="isDeletePost">
           <UnderTabsActions
+            v-else
             :isDeletePost="isDeletePost"
             :data="ActionPostTabs"
             v-model="currentActionTab"
             @input="handleTabActionChange"
             :postSelected="postSelected"
           />
+          <DropDown title="Author" :options="authors" />
+          <DropDown title="Categories" :options="categories" />
+          <div class="flex-grow text-right flex justify-end tex-primary-500">
+            Export All Posts
+          </div>
         </div>
 
         <div class="mt-5">
-          <ListSinglePost
+          <ListItem
             @click="goToEvent"
             v-for="(post, index) in posts"
             :key="index"
@@ -58,6 +63,7 @@
             :createdAt="post.created_at"
             :id="post.id"
             :item="post"
+            postImg="https://source.unsplash.com/random/1280x720"
           />
         </div>
         <!--  -->
@@ -68,12 +74,18 @@
 <script>
 import UnderlineTabs from "@/components/UnderlineTabs";
 import UnderTabsActions from "@/components/UnderTabsActions";
-import ListSinglePost from "@/components/Posts/ListSinglePost";
+import ListItem from "@/components/ListItem";
 import { mapState } from "vuex";
+import DropDown from "@/components/DropDown";
 export default {
-  components: { ListSinglePost, UnderlineTabs, UnderTabsActions },
+  components: { DropDown, ListItem, UnderlineTabs, UnderTabsActions },
   data() {
     return {
+      authors: [
+        { name: "All" },
+        { name: "All", img: "http://source.unsplash.com/100x100/?girl" },
+      ],
+      categories: [{ name: "All" }, { name: "Example category" }],
       BlogTabs: [
         {
           title: "All",
