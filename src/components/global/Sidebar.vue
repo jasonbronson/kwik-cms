@@ -38,7 +38,7 @@ export default {
         { to: "/1", icon: "fad fa-file" },
         { to: "/2", icon: "fad fa-table" },
         { to: "/3", icon: "fad fa-cubes" },
-        { to: "/4", icon: "fad fa-photo-video" },
+        { to: "/media", icon: "fad fa-photo-video" },
         { to: "/users", icon: "fad fa-users" },
       ],
       bottomItems: [
