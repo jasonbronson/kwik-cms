@@ -31,33 +31,47 @@
             </button>
           </router-link>
         </div>
-        <div>
+        <!--  -->
+        <div v-if="!isDeletePost">
           <UnderlineTabs
             :data="BlogTabs"
             v-model="currentBlogTab"
             @input="handleTabChange"
           />
         </div>
+        <div v-if="isDeletePost">
+          <UnderTabsActions
+            :isDeletePost="isDeletePost"
+            :data="ActionPostTabs"
+            v-model="currentActionTab"
+            @input="handleTabActionChange"
+            :postSelected="postSelected"
+          />
+        </div>
 
         <div class="mt-5">
           <ListSinglePost
+            @click="goToEvent"
             v-for="(post, index) in posts"
             :key="index"
             :title="post.title"
             :createdAt="post.created_at"
             :id="post.id"
+            :item="post"
           />
         </div>
+        <!--  -->
       </div>
     </div>
   </div>
 </template>
 <script>
 import UnderlineTabs from "@/components/UnderlineTabs";
+import UnderTabsActions from "@/components/UnderTabsActions";
 import ListSinglePost from "@/components/Posts/ListSinglePost";
 import { mapState } from "vuex";
 export default {
-  components: { ListSinglePost, UnderlineTabs },
+  components: { ListSinglePost, UnderlineTabs, UnderTabsActions },
   data() {
     return {
       BlogTabs: [
@@ -69,20 +83,44 @@ export default {
         {
           title: "Draft",
           id: "draft",
-          icon: "fas fa-th-large",
+          icon: "fa-solid fa-pen",
         },
         {
           title: "Published",
           id: "published",
-          icon: "fas fa-sliders-v",
+          icon: "fa-solid fa-check",
         },
         {
           title: "Scheduled",
           id: "scheduled",
-          icon: "fas fa-clipboard-list",
+          icon: "fa-solid fa-clock",
         },
       ],
+      ActionPostTabs: [
+        {
+          title: "Publish",
+          id: "publish",
+          icon: "fa-solid fa-check",
+        },
+        {
+          title: "Schedule",
+          id: "schedule",
+          icon: "fa-solid fa-clock",
+        },
+        {
+          title: "Delete",
+          id: "delete",
+          icon: "fa-solid fa-trash",
+        },
+      ],
+      isDeletePost: false,
       currentBlogTab: {},
+      postSelected: {},
+      currentActionTab: {
+        title: "Delete",
+        id: "delete",
+        icon: "fa-solid fa-trash",
+      },
       password: "",
     };
   },
@@ -95,6 +133,18 @@ export default {
   methods: {
     handleTabChange(selectedValue) {
       this.currentBlogTab = selectedValue;
+    },
+    handleTabActionChange(selectedValue) {
+      this.currentActionTab = selectedValue;
+    },
+    goToEvent(value) {
+      if (value) {
+        this.isDeletePost = true;
+        this.postSelected = value;
+      } else {
+        this.isDeletePost = false;
+      }
+      console.log("-----------------value", value);
     },
   },
   mounted() {
