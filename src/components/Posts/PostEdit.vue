@@ -17,6 +17,7 @@
       </button>
       <button
         class="shadow rounded px-4 py-2 bg-white text-primary-500 font-bold duration-300 text-sm hover:border-primary-500 border"
+        @click="saveDraft"
       >
         Save Draft
       </button>
@@ -67,7 +68,14 @@ export default {
   methods: {
     async publishPost() {
       try {
-        await this.$emit("publish", this.editData);
+        await this.$emit("publish", {...this.editData, status: "publish"});
+      } catch (e) {
+        console.log(e);
+      }
+    },
+    async saveDraft() {
+      try {
+        await this.$emit("publish", {...this.editData, status: "draft"});
       } catch (e) {
         console.log(e);
       }

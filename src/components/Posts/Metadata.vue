@@ -26,10 +26,9 @@
         <div>
           <select
             class="w-full border-solid border-2 rounded h-10 px-4 focus:outline-none focus:border-primary-100"
+            v-model="selectedUser"
           >
-            <option>User 1</option>
-            <option>User 2</option>
-            <option>User 3</option>
+            <option v-for="(user, i) in listUsers" :key="i" :value="user.id">{{ user.first_name + user.last_name }}</option>
           </select>
         </div>
       </div>
@@ -51,6 +50,7 @@
               placeholder="Publish date"
               input-class="focus:outline-none px-4 w-full flex-grow border-solid border-2 h-10 flex align-center"
               wrapper-class=""
+              v-model="editData.publish_date"
             />
           </div>
           <div
@@ -66,18 +66,19 @@
           class="text-primary-200 flex items-center h-10 text-sm font-semibold"
         >
           <i class="fas fa-tags mr-2"></i>
-          <span> Categories <span class="text-blue-300">(manage)</span> </span>
+          <span> Categories<span class="text-blue-300">(manage)</span> </span>
         </div>
         <div class="flex gap-7">
           <input
             placeholder="comma, seperated, categories"
             class="flex-grow border-solid border-2 rounded h-10 px-4 focus:outline-none focus:border-primary-100 focus:shadow"
+            v-model="listCateString"
           />
           <select
             class="w-48 border-solid border-2 rounded h-10 px-4 focus:outline-none focus:border-primary-100"
+            v-model="selectedCate"
           >
-            <option>Recent</option>
-            <option>Example Category</option>
+            <option v-for="(cate, i) in listCategories" :key="i" :value="cate.name">{{ cate.name }}</option>
           </select>
         </div>
       </div>
@@ -92,12 +93,13 @@
           <input
             placeholder="comma, seperated, tags"
             class="flex-grow border-solid border-2 rounded h-10 px-4 focus:outline-none focus:border-primary-100 focus:shadow"
+            v-model="listTagString"
           />
           <select
             class="w-48 border-solid border-2 rounded h-10 px-4 focus:outline-none focus:border-primary-100"
+            v-model="selectedTag"
           >
-            <option>Recent</option>
-            <option>Example Tags</option>
+            <option v-for="(tag, i) in listTags" :key="i" :value="tag.name">{{ tag.name }}</option>
           </select>
         </div>
       </div>
@@ -170,6 +172,7 @@
           <input
             placeholder="Title that will appear in search engines"
             class="flex-grow border-solid border-2 rounded h-10 px-4 focus:outline-none focus:border-primary-100 focus:shadow"
+            v-model="editData.seo_title"
           />
         </div>
       </div>
@@ -186,6 +189,7 @@
             placeholder="Meta Description that will appear in search engines"
             rows="4"
             class="flex-grow border-solid border-2 rounded p-3 focus:outline-none focus:border-primary-100 focus:shadow"
+            v-model="editData.description"
           />
         </div>
       </div>
@@ -195,18 +199,48 @@
 
 <script>
 import Datepicker from "vuejs-datepicker";
+import { mapState } from 'vuex'
 export default {
   name: "Metadata",
   components: {
     Datepicker,
   },
+  computed: {
+  ...mapState({
+    listUsers: (state) => state.users.usersList,
+    listCategories: (state) => {
+      const cate = {...state.categories}
+      return cate.categoriesList
+    },
+    listTags: (state) => state.tags.tagsList,
+    // listCategories: (state) => state.categories.categoriesList,
+    listCateString() {
+      return this.listCateArray.join(",")
+    },
+    listTagString() {
+      return this.listTagArray.join(",")
+    }
+  }),
+  },
   data() {
-    return { editData: { summary: "", slug: "" } };
+    return { 
+      editData: {},
+      selectedUser: "",
+      selectedCate: "",
+      selectedTag: "",
+      listCateArray: [],
+      listTagArray: []
+    };
   },
   props: {
     post: {
       default: () => {},
     },
+  },
+  async mounted() {
+    await this.$store.dispatch("users/fetchAndSetUsers")
+    await this.$store.dispatch("tags/fetchAndSetTags")
+    await this.$store.dispatch("categories/fetchAndSetCategories")
   },
   watch: {
     editData: {
@@ -216,8 +250,27 @@ export default {
       deep: true,
     },
     post(value) {
-      this.editData = { summary: value?.summary, slug: value?.slug };
+      this.editData = value;
     },
+    selectedCate(value) {
+      if (!this.listCateArray.includes(value)) {
+        this.listCateArray.push(value)
+      }
+      this.editData.categories = this.listCategories.filter(i => this.listCateArray.includes(i.name)).map(j => ({id: j.id}))
+      this.$emit("handleMetaDataChange", this.editData);
+    },
+    selectedTag(value) {
+      if (!this.listCateArray.includes(value)) {
+        this.listTagArray.push(value)
+      }
+      this.editData.tags = this.listTags.filter(i => this.listTagArray.includes(i.name)).map(j => ({id: j.id}))
+      this.$emit("handleMetaDataChange", this.editData);
+    },
+    selectedUser(value) {
+      console.log("change")
+      this.editData.user_id = value
+      this.$emit("handleMetaDataChange", this.editData);
+    }
   },
 };
 </script>
