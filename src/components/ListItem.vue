@@ -25,11 +25,9 @@
             />
           </div>
         </div>
-        <router-link
-          :to="`/posts/edit/${id}`"
-          class="text-base font-bold ml-4"
-          >{{ title }}</router-link
-        >
+        <router-link :to="titleTo" class="text-base font-bold ml-4">{{
+          title
+        }}</router-link>
       </div>
       <div class="flex justify-end">
         <button
@@ -64,6 +62,10 @@ export default {
       default: () => {},
     },
     postImg: {
+      type: String,
+      default: "",
+    },
+    titleTo: {
       type: String,
       default: "",
     },
