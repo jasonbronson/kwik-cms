@@ -8,7 +8,7 @@ import EditBlog from "../views/Posts/edit/_id.vue";
 import Users from "../views/Users";
 import NewUser from "../views/Users/New.vue";
 import EditUser from "../views/Users/edit/_id.vue";
-import Media from "../views/Media.vue";
+import Media from "../views/Media/index.vue";
 import Home from "../views/Home.vue";
 import Login from "../views/Login.vue";
 import Register from "../views/Register.vue";
