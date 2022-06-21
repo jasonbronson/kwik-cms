@@ -36,7 +36,7 @@ export default {
         { to: "/home", icon: "fad fa-home" },
         { to: "/posts", icon: "fad fa-blog" },
         { to: "/Pages", icon: "fad fa-file" },
-        { to: "/2", icon: "fad fa-table" },
+        { to: "/custom-fields", icon: "fad fa-table" },
         { to: "/3", icon: "fad fa-cubes" },
         { to: "/media", icon: "fad fa-photo-video" },
         { to: "/users", icon: "fad fa-users" },
