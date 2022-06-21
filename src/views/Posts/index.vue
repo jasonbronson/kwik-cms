@@ -47,8 +47,20 @@
             @input="handleTabActionChange"
             :postSelected="postSelected"
           />
-          <DropDown title="Author" :options="authors" />
-          <DropDown title="Categories" :options="categories" />
+          <DropDown
+            title="Author"
+            :options="
+              this.posts.user ? this.posts.user.first_name : [{ name: 'Empty' }]
+            "
+          />
+          <DropDown
+            title="Categories"
+            :options="
+              this.posts.Categories
+                ? this.posts.Categories
+                : [{ name: 'Empty' }]
+            "
+          />
           <div class="flex-grow text-right flex justify-end tex-primary-500">
             Export All Posts
           </div>
@@ -81,11 +93,8 @@ export default {
   components: { DropDown, ListItem, UnderlineTabs, UnderTabsActions },
   data() {
     return {
-      authors: [
-        { name: "All" },
-        { name: "All", img: "http://source.unsplash.com/100x100/?girl" },
-      ],
-      categories: [{ name: "All" }, { name: "Example category" }],
+      authors: [{ name: "Empty" }],
+      categories: [{ name: "Empty" }],
       BlogTabs: [
         {
           title: "All",

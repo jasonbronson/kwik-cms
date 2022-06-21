@@ -110,7 +110,6 @@ export default {
         this.loading = true;
         await this.$store.dispatch("posts/deletePost", this.postSelected.id);
         this.deleteUserConfirm = false;
-        console.log("vao day");
         // this.$router.push("/users");
       } catch (error) {
         console.log(error);
