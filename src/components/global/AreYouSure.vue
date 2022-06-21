@@ -12,10 +12,10 @@
   </div>
 </template>
 <script lang="ts">
-import Vue from 'vue'
+import Vue from "vue";
 
 export default Vue.extend({
-  name: 'AreYouSure',
+  name: "AreYouSure",
   props: {
     text: {
       type: String,
@@ -23,7 +23,7 @@ export default Vue.extend({
       default: undefined,
     },
   },
-})
+});
 </script>
 <style lang="scss">
 .title {
@@ -34,7 +34,9 @@ export default Vue.extend({
 .dialog {
   width: 100%;
   height: 100%;
-  position: absolute;
+  top: 0;
+  left: 0;
+  position: fixed;
   z-index: 9999;
   background-color: rgba(0, 0, 0, 0.5);
   display: flex;

@@ -47,12 +47,7 @@
             @input="handleTabActionChange"
             :postSelected="postSelected"
           />
-          <DropDown
-            title="Author"
-            :options="
-              this.posts.user ? this.posts.user.first_name : [{ name: 'Empty' }]
-            "
-          />
+          <DropDown title="Author" :options="authors" />
           <DropDown
             title="Categories"
             :options="
@@ -93,7 +88,6 @@ export default {
   components: { DropDown, ListItem, UnderlineTabs, UnderTabsActions },
   data() {
     return {
-      authors: [{ name: "Empty" }],
       categories: [{ name: "Empty" }],
       BlogTabs: [
         {
@@ -149,7 +143,19 @@ export default {
     ...mapState({
       posts: (state) => state.posts.posts,
       loading: (state) => state.posts.loading,
+      usersList: (state) => state.users.usersList,
     }),
+    authors() {
+      if (this.usersList.length > 0) {
+        return this.usersList.map((el) => {
+          return {
+            name: `${el.first_name} ${el.last_name}`,
+            img: "https://source.unsplash.com/random/1280x720",
+          };
+        });
+      }
+      return [{ name: "Empty" }];
+    },
   },
   methods: {
     handleTabChange(selectedValue) {
@@ -169,6 +175,7 @@ export default {
     },
   },
   mounted() {
+    this.$store.dispatch("users/fetchAndSetUsers");
     this.$store.dispatch("posts/fetchAllPosts");
   },
 };
