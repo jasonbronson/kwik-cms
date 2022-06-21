@@ -1,12 +1,12 @@
 <template>
   <div
-    class="border-gray-300 border-b-2 transition duration-200"
+    class="border-gray-300 border-b-2"
     :class="{
       'pb-7': !hidden,
     }"
   >
     <div
-      class="flex items-center py-2 px-5 cursor-pointer text-white"
+      class="flex items-center py-2 px-5 cursor-pointer text-white rounded"
       :class="[
         {
           'bg-primary-200': !hidden,
