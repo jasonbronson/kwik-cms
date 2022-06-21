@@ -28,7 +28,9 @@
             class="w-full border-solid border-2 rounded h-10 px-4 focus:outline-none focus:border-primary-100"
             v-model="selectedUser"
           >
-            <option v-for="(user, i) in listUsers" :key="i" :value="user.id">{{ user.first_name + user.last_name }}</option>
+            <option v-for="(user, i) in listUsers" :key="i" :value="user.id">
+              {{ user.first_name + user.last_name }}
+            </option>
           </select>
         </div>
       </div>
@@ -78,7 +80,13 @@
             class="w-48 border-solid border-2 rounded h-10 px-4 focus:outline-none focus:border-primary-100"
             v-model="selectedCate"
           >
-            <option v-for="(cate, i) in listCategories" :key="i" :value="cate.name">{{ cate.name }}</option>
+            <option
+              v-for="(cate, i) in listCategories"
+              :key="i"
+              :value="cate.name"
+            >
+              {{ cate.name }}
+            </option>
           </select>
         </div>
       </div>
@@ -99,7 +107,9 @@
             class="w-48 border-solid border-2 rounded h-10 px-4 focus:outline-none focus:border-primary-100"
             v-model="selectedTag"
           >
-            <option v-for="(tag, i) in listTags" :key="i" :value="tag.name">{{ tag.name }}</option>
+            <option v-for="(tag, i) in listTags" :key="i" :value="tag.name">
+              {{ tag.name }}
+            </option>
           </select>
         </div>
       </div>
@@ -172,7 +182,7 @@
           <input
             placeholder="Title that will appear in search engines"
             class="flex-grow border-solid border-2 rounded h-10 px-4 focus:outline-none focus:border-primary-100 focus:shadow"
-            v-model="editData.seo_title"
+            v-model="editData.title"
           />
         </div>
       </div>
@@ -199,37 +209,37 @@
 
 <script>
 import Datepicker from "vuejs-datepicker";
-import { mapState } from 'vuex'
+import { mapState } from "vuex";
 export default {
   name: "Metadata",
   components: {
     Datepicker,
   },
   computed: {
-  ...mapState({
-    listUsers: (state) => state.users.usersList,
-    listCategories: (state) => {
-      const cate = {...state.categories}
-      return cate.categoriesList
-    },
-    listTags: (state) => state.tags.tagsList,
-    // listCategories: (state) => state.categories.categoriesList,
-    listCateString() {
-      return this.listCateArray.join(",")
-    },
-    listTagString() {
-      return this.listTagArray.join(",")
-    }
-  }),
+    ...mapState({
+      listUsers: (state) => state.users.usersList,
+      listCategories: (state) => {
+        const cate = { ...state.categories };
+        return cate.categoriesList;
+      },
+      listTags: (state) => state.tags.tagsList,
+      // listCategories: (state) => state.categories.categoriesList,
+      listCateString() {
+        return this.listCateArray.join(",");
+      },
+      listTagString() {
+        return this.listTagArray.join(",");
+      },
+    }),
   },
   data() {
-    return { 
+    return {
       editData: {},
       selectedUser: "",
       selectedCate: "",
       selectedTag: "",
       listCateArray: [],
-      listTagArray: []
+      listTagArray: [],
     };
   },
   props: {
@@ -238,9 +248,9 @@ export default {
     },
   },
   async mounted() {
-    await this.$store.dispatch("users/fetchAndSetUsers")
-    await this.$store.dispatch("tags/fetchAndSetTags")
-    await this.$store.dispatch("categories/fetchAndSetCategories")
+    await this.$store.dispatch("users/fetchAndSetUsers");
+    await this.$store.dispatch("tags/fetchAndSetTags");
+    await this.$store.dispatch("categories/fetchAndSetCategories");
   },
   watch: {
     editData: {
@@ -254,23 +264,27 @@ export default {
     },
     selectedCate(value) {
       if (!this.listCateArray.includes(value)) {
-        this.listCateArray.push(value)
+        this.listCateArray.push(value);
       }
-      this.editData.categories = this.listCategories.filter(i => this.listCateArray.includes(i.name)).map(j => ({id: j.id}))
+      this.editData.categories = this.listCategories
+        .filter((i) => this.listCateArray.includes(i.name))
+        .map((j) => ({ id: j.id }));
       this.$emit("handleMetaDataChange", this.editData);
     },
     selectedTag(value) {
       if (!this.listCateArray.includes(value)) {
-        this.listTagArray.push(value)
+        this.listTagArray.push(value);
       }
-      this.editData.tags = this.listTags.filter(i => this.listTagArray.includes(i.name)).map(j => ({id: j.id}))
+      this.editData.tags = this.listTags
+        .filter((i) => this.listTagArray.includes(i.name))
+        .map((j) => ({ id: j.id }));
       this.$emit("handleMetaDataChange", this.editData);
     },
     selectedUser(value) {
-      console.log("change")
-      this.editData.user_id = value
+      console.log("change");
+      this.editData.user_id = value;
       this.$emit("handleMetaDataChange", this.editData);
-    }
+    },
   },
 };
 </script>
