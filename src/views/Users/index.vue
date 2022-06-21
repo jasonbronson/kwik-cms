@@ -1,12 +1,12 @@
 <template>
   <div class="bg-primary-600 min-h-screen">
     <are-you-sure v-if="deleteUserConfirm" text="Do you want to delete this user?" @yes="deleteUser" @no="deleteUserConfirm = false"></are-you-sure>
-    <div class="wrapper bg-white">
+    <div class="wrapper">
       <div class="title">
         <span>Manage User</span>
         <button class="button button-dark" @click="addUser">Add User</button>
       </div>
-      <div class="table-wrapper">
+      <div class="table-wrapper bg-white">
         <table class="table table-auto border-collapse border border-slate-300">
           <thead>
             <tr class="table-header bg-indigo-400 text-white">
