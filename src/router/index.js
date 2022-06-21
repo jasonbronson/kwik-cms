@@ -14,6 +14,8 @@ import Login from "../views/Login.vue";
 import Register from "../views/Register.vue";
 import store from "../store";
 import ErrorPage from "../views/Error.vue";
+import CustomFields from "@/views/CustomFields";
+import NewCustomFields from "@/views/CustomFields/New";
 
 Vue.use(VueRouter);
 
@@ -106,6 +108,22 @@ const routes = [
     component: Media,
     meta: {
       requiresAuth: true,
+    },
+  },
+  {
+    path: "/custom-fields",
+    name: "CustomFields",
+    component: CustomFields,
+    meta: {
+      requiresAuth: false,
+    },
+  },
+  {
+    path: "/custom-fields/new",
+    name: "NewCustomFields",
+    component: NewCustomFields,
+    meta: {
+      requiresAuth: false,
     },
   },
   {

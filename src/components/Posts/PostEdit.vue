@@ -27,9 +27,6 @@
       <div>
         <Metadata :post="post" @handleMetaDataChange="handleChildDataChange" />
       </div>
-      <div>
-        <PublishData />
-      </div>
     </div>
   </div>
 </template>
