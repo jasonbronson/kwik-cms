@@ -16,12 +16,9 @@
         </svg>
       </button>
       <ul class="hidden dropdown-menu absolute text-gray-700">
-        <div class="shadow rounded bg-white w-40">
-          <li class="p-1" v-for="(option, index) in options" :key="index">
-            <div
-              class="cursor-pointer rounded hover:bg-primary-300 py-1 px-4"
-              href="#"
-            >
+        <div class="shadow rounded bg-white">
+          <div class="p-1" v-for="(option, index) in options" :key="index">
+            <div class="cursor-pointer rounded hover:bg-primary-300 py-1 px-4">
               <div class="flex gap-2">
                 <img
                   v-if="option.img"
@@ -29,10 +26,12 @@
                   alt="profile pic"
                   class="w-5 h-5 rounded-full object-cover"
                 />
-                <span>{{ option.name }}</span>
+                <div class="truncate">
+                  {{ option.name }}
+                </div>
               </div>
             </div>
-          </li>
+          </div>
         </div>
       </ul>
     </div>

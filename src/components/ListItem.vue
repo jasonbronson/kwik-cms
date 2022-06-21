@@ -27,7 +27,7 @@
         </div>
         <router-link
           :to="`/posts/edit/${id}`"
-          class="text-base font-bold ml-6"
+          class="text-base font-bold ml-4"
           >{{ title }}</router-link
         >
       </div>
