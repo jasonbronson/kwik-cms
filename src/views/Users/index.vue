@@ -1,7 +1,7 @@
 <template>
-  <div>
+  <div class="bg-primary-600 min-h-screen">
     <are-you-sure v-if="deleteUserConfirm" text="Do you want to delete this user?" @yes="deleteUser" @no="deleteUserConfirm = false"></are-you-sure>
-    <div class="wrapper">
+    <div class="wrapper bg-white">
       <div class="title">
         <span>Manage User</span>
         <button class="button button-dark" @click="addUser">Add User</button>
