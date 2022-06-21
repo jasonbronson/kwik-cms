@@ -1,6 +1,6 @@
 <template>
   <div class="font-sans text-black min-h-screen bg-primary-600 px-10">
-    <div class="flex justify-between py-8 items-center px-5">
+    <div class="flex justify-between py-8 items-center">
       <div class="flex items-center">
         <div class="text-primary-400 mr-4">Pages</div>
         <div class="border rounded overflow-hidden flex">
@@ -57,15 +57,12 @@
 import UnderlineTabs from "@/components/UnderlineTabs";
 import ListItem from "@/components/ListItem";
 import DropDown from "@/components/DropDown";
+import { mapState } from "vuex";
 export default {
   name: "index",
   components: { DropDown, UnderlineTabs, ListItem },
   data() {
     return {
-      editors: [
-        { name: "All" },
-        { name: "All", img: "http://source.unsplash.com/100x100/?girl" },
-      ],
       pageTypes: [{ name: "All" }, { name: "Landing page" }],
       PagesTabs: [
         {
@@ -95,6 +92,22 @@ export default {
   methods: {
     handleTabChange(selectedValue) {
       this.currentBlogTab = selectedValue;
+    },
+  },
+  computed: {
+    ...mapState({
+      usersList: (state) => state.users.usersList,
+    }),
+    editors() {
+      if (this.usersList.length > 0) {
+        return this.usersList.map((el) => {
+          return {
+            name: `${el.first_name} ${el.last_name}`,
+            img: "https://source.unsplash.com/random/1280x720",
+          };
+        });
+      }
+      return [{ name: "Empty" }];
     },
   },
 };
