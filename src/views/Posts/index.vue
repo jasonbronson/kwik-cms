@@ -70,6 +70,7 @@
             :createdAt="post.created_at"
             :id="post.id"
             :item="post"
+            :title-to="`/posts/edit/${post.id}`"
             postImg="https://source.unsplash.com/random/1280x720"
           />
         </div>
