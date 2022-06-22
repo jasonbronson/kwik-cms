@@ -13,8 +13,12 @@ export default {
   },
   methods: {
     async addPost(post) {
-      await this.$store.dispatch("posts/addPost", { post });
-      await this.$router.push("/posts");
+      try {
+        await this.$store.dispatch("posts/addPost", { post });
+        await this.$router.push("/posts");
+      } catch (e) {
+        console.log(e);
+      }
     },
   },
 };

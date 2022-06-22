@@ -49,18 +49,10 @@ export default {
   },
   methods: {
     async publishPost() {
-      try {
-        await this.$emit("publish", { ...this.editData, status: "publish" });
-      } catch (e) {
-        console.log(e);
-      }
+      await this.$emit("publish", { ...this.editData, status: "publish" });
     },
     async saveDraft() {
-      try {
-        await this.$emit("publish", { ...this.editData, status: "draft" });
-      } catch (e) {
-        console.log(e);
-      }
+      await this.$emit("publish", { ...this.editData, status: "draft" });
     },
     handleChildDataChange(value) {
       this.editData = { ...this.editData, ...value };

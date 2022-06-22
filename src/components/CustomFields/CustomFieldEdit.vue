@@ -8,6 +8,7 @@
         <div>
           <button
             class="shadow rounded px-4 py-2 bg-primary-400 text-gray-100 hover:bg-primary-500 hover:text-action-500 font-bold duration-300 text-sm"
+            @click="publishCustomField"
           >
             Publish
           </button>
@@ -88,6 +89,9 @@ export default {
     },
     setFieldValues(index, values) {
       this.fields[index] = values;
+    },
+    async publishCustomField() {
+      await this.$emit("publish", this.fields);
     },
   },
 };
