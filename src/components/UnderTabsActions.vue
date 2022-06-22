@@ -6,10 +6,30 @@
       @no="deleteUserConfirm = false"
       text="Do you want to delete this user?"
     ></are-you-sure>
-    <div class="items-center justify-between flex text-sm">
-      <div class="flex items-center">
-        <div class="bg-white px-4 border-solid border-2 rounded mr-2">
-          <ul
+    <div class="mr-20">
+      <div class="flex items-center gap-3 text-sm">
+        <div
+          class="shadow bg-white px-4 py-2 rounded cursor-pointer text-green-600"
+          @click="changeTab"
+        >
+          <i class="fas fa-check mr-2"></i>
+          <span>Publish</span>
+        </div>
+        <div
+          class="shadow bg-white px-4 py-2 rounded cursor-pointer text-gray-600"
+          @click="changeTab"
+        >
+          <i class="fas fa-clock mr-2"></i>
+          <span>Schedule</span>
+        </div>
+        <div
+          class="shadow bg-white px-4 py-2 rounded cursor-pointer text-red-600"
+          @click="changeTab"
+        >
+          <i class="fal fa-trash-alt mr-2"></i>
+          <span>Delete</span>
+        </div>
+        <!--          <ul
             class="flex flex-wrap -mb-px text-sm font-medium text-center text-gray-500 dark:text-gray-400"
           >
             <li
@@ -36,8 +56,8 @@
                 <span>{{ tabData.title }}</span>
               </div>
             </li>
-          </ul>
-        </div>
+          </ul>-->
+        <!--        </div>-->
       </div>
     </div>
   </div>
