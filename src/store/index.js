@@ -6,9 +6,10 @@ import posts from "./posts";
 import media from "./media";
 import tags from "./tags";
 import categories from "./categories";
+import customFields from "./custom-fields";
 
 Vue.use(Vuex);
 
 export default new Vuex.Store({
-  modules: { auth, users, posts, media, tags, categories },
+  modules: { auth, users, posts, media, tags, categories, customFields },
 });
