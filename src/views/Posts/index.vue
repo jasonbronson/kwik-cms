@@ -50,11 +50,7 @@
           <DropDown title="Author" :options="authors" />
           <DropDown
             title="Categories"
-            :options="
-              this.posts.Categories
-                ? this.posts.Categories
-                : [{ name: 'Empty' }]
-            "
+            :options="categories"
           />
           <div class="flex-grow text-right flex justify-end tex-primary-500">
             Export All Posts
@@ -89,7 +85,6 @@ export default {
   components: { DropDown, ListItem, UnderlineTabs, UnderTabsActions },
   data() {
     return {
-      categories: [{ name: "Empty" }],
       BlogTabs: [
         {
           title: "All",
@@ -145,6 +140,7 @@ export default {
       posts: (state) => state.posts.posts,
       loading: (state) => state.posts.loading,
       usersList: (state) => state.users.usersList,
+      categories: (state) => state.categories.categoriesList,
     }),
     authors() {
       if (this.usersList.length > 0) {
@@ -178,6 +174,7 @@ export default {
   mounted() {
     this.$store.dispatch("users/fetchAndSetUsers");
     this.$store.dispatch("posts/fetchAllPosts");
+    this.$store.dispatch("posts/fetchAndSetCategories");
   },
 };
 </script>

@@ -1,6 +1,6 @@
 export default () => ({
   loading: false,
-  tagsList: [],
+  categoriesList: [],
   tagMeta: null,
   currentCategory: null,
   rolesList: null,

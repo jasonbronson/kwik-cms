@@ -235,12 +235,8 @@ export default {
   computed: {
     ...mapState({
       listUsers: (state) => state.users.usersList,
-      listCategories: (state) => {
-        const cate = { ...state.categories };
-        return cate.categoriesList;
-      },
+      listCategories: (state) => state.categories.categoriesList,
       listTags: (state) => state.tags.tagsList,
-      // listCategories: (state) => state.categories.categoriesList,
       listCateString() {
         return this.listCateArray.join(",");
       },
