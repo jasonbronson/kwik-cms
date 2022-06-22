@@ -17,6 +17,7 @@
       <div class="mt-10 py-8 px-10 flex flex-col gap-2 bg-white rounded shadow">
         <div>
           <input
+            v-model="title"
             placeholder="Add Title"
             class="w-full flex-grow border-solid border-2 rounded h-10 px-4 focus:outline-none focus:border-primary-100 focus:shadow"
           />
@@ -74,6 +75,7 @@ export default {
   components: { SingleField },
   data() {
     return {
+      title: "",
       fields: [],
     };
   },
@@ -91,7 +93,7 @@ export default {
       this.fields[index] = values;
     },
     async publishCustomField() {
-      await this.$emit("publish", this.fields);
+      await this.$emit("publish", { fields: this.fields, title: this.title });
     },
   },
 };

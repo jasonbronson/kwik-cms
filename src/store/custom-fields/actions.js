@@ -4,7 +4,7 @@ export default {
   async addCustomFields({ commit }, payload) {
     commit("setLoading", true);
     try {
-      await axios.post("/dynamicfields", payload.fields);
+      await axios.post("/dynamicfields", payload);
       commit("setLoading", false);
     } catch (e) {
       commit("setLoading", false);

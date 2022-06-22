@@ -10,9 +10,7 @@ export default {
   methods: {
     async addCustomField(payload) {
       try {
-        await this.$store.dispatch("customFields/addCustomFields", {
-          fields: payload,
-        });
+        await this.$store.dispatch("customFields/addCustomFields", payload);
         await this.$router.push("/custom-fields");
       } catch (e) {
         console.log(e);
