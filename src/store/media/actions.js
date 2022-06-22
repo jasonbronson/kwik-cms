@@ -25,9 +25,10 @@ export default {
     }
   },
   async addMedia({ commit }, payload) {
+    console.log("payload", payload);
     commit("setLoading", true);
     try {
-      await axios.media("/media", payload.media);
+      await axios.post("/media", payload.file);
       commit("setLoading", false);
     } catch (e) {
       commit("setLoading", false);

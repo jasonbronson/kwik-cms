@@ -15,6 +15,8 @@
           ref="uploadRef"
           list-type="picture-card"
           :on-preview="handlePictureCardPreview"
+          :http-request="handleRequest"
+          :on-success="handleSuccess"
           :auto-upload="false"
         >
           <i class="el-icon-plus"></i
@@ -155,6 +157,8 @@
   </el-dialog>
 </template>
 <script>
+import { query } from "../../utils/query";
+import { mapActions } from "vuex";
 export default {
   data() {
     return {
@@ -458,6 +462,21 @@ export default {
     },
   },
   methods: {
+    ...mapActions({
+      fetchMedias: "media/fetchAllMedia",
+      uploadMedia: "media/addMedia",
+      fetchMediaById: "media/fetchMediaById",
+    }),
+    initDlg() {
+      try {
+        this.fetchMediaById({ id: this.mediaId });
+      } catch (e) {
+        this.selectedMedia = {};
+      }
+
+      // this.selectedMedia = { id: this.mediaId }
+      this.$refs["scroll-container"].$el.scrollTop = 0;
+    },
     handlePictureCardPreview(file) {
       this.dialogImageUrl = file.url;
       this.dialogVisible = true;
@@ -465,8 +484,42 @@ export default {
     handleChooseImage() {
       this.$emit("yes", this.selectedMedia);
     },
+    getQuery() {
+      let conditions = [];
+
+      conditions = Object.keys(this.filterInput)
+        .filter((filterKey) => this.filterInput[filterKey])
+        .map((filterKey) =>
+          query.caseInsensitiveSearch(filterKey, this.filterInput[filterKey])
+        );
+
+      return conditions && Array.isArray(conditions)
+        ? conditions.join("&")
+        : "";
+    },
     selectImage(item) {
       this.selectedMedia = item;
+    },
+    handleRequest(option) {
+      console.log("ok", option);
+      return this.uploadMedia(option);
+    },
+    changeQueryText() {
+      const payload = {
+        pageOffset: 0,
+        pageSize: 35,
+        query: this.getQuery(),
+        sort: "&sort[0]=created_at&sortby[0]=desc",
+      };
+      this.fetchMedias(payload);
+      this.initDlg();
+    },
+    upload() {
+      console.log("ok");
+      this.$refs["uploadRef"].submit();
+    },
+    handleSuccess() {
+      this.changeQueryText();
     },
   },
 };
