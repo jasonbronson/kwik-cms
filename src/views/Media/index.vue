@@ -3,7 +3,12 @@
     <div class="inner">
       <div class="title flex justify-between py-8">
         <span class="text-xl text-primary-200">Media Library</span>
-        <button class="button button-upload p-2 rounded-md bg-green-200 text-white"><i class="fa-solid fa-file-arrow-up mr-2"></i>Upload Media</button>
+        <button
+          @click="handleShowPopup"
+          class="button button-upload p-2 rounded-md bg-green-200 text-white"
+        >
+          <i class="fa-solid fa-file-arrow-up mr-2"></i>Upload Media
+        </button>
       </div>
       <el-container class="media-panel">
         <el-container class="media-panel-inner">
@@ -16,9 +21,13 @@
                 <i class="fas fa-search text-primary-400"></i>
               </button>
             </div>
-            <div class="border rounded overflow-hidden flex mr-4 text-primary-400">
+            <div
+              class="border rounded overflow-hidden flex mr-4 text-primary-400"
+            >
               <select name="sort" id="sort" class="bg-white p-2">
-                <option v-for="(year, idx) in years" :key="idx" :value="year">{{ year }}</option>
+                <option v-for="(year, idx) in years" :key="idx" :value="year">
+                  {{ year }}
+                </option>
               </select>
             </div>
           </div>
@@ -31,7 +40,11 @@
           >
             <div class="gallery-body">
               <div class="gallery-image">
-                <div v-for="media of listData" :key="media.id" class="gallery-image-item">
+                <div
+                  v-for="media of listData"
+                  :key="media.id"
+                  class="gallery-image-item"
+                >
                   <div class="thumbnail">
                     <a class="image-wrap" :href="media.url" target="_new">
                       <img :src="media.url" />
@@ -53,20 +66,33 @@
         </el-container>
       </el-container>
     </div>
+    <!-- popup -->
+    <popup-choose-image
+      :visible="showChooseImage"
+      @no="closeChooseImage"
+      @yes="setImage"
+    ></popup-choose-image>
+    <!-- popup -->
   </div>
 </template>
 
 <script lang="ts">
-import Vue from 'vue'
-import { mapActions, mapState } from 'vuex'
-
+import Vue from "vue";
+import { mapActions, mapState } from "vuex";
+// import MediaCard from "../../components/Media/MediaCard.vue";
+// import BackgroundTab from "../../components/BackgroundTab.vue";
+import PopupChooseImage from "../../components/global/PopupChooseImage.vue";
 export default Vue.extend({
   components: {
+    // MediaCard,
+    // BackgroundTab,
+    PopupChooseImage,
   },
   data() {
     return {
       years: [],
-    }
+      showChooseImage: false,
+    };
   },
   computed: {
     ...mapState({
@@ -75,39 +101,50 @@ export default Vue.extend({
       isFull: (state) => state.media.isFull,
     }),
     listTotal() {
-      return Array.isArray(this.listData) ? this.listData.length : 0
+      return Array.isArray(this.listData) ? this.listData.length : 0;
     },
     isNotScrolling() {
-      return this.loading || this.isFull
+      return this.loading || this.isFull;
     },
     isLoading() {
-      return this.loading && !this.isFull
+      return this.loading && !this.isFull;
     },
   },
   async mounted() {
-    var currentYear = new Date().getFullYear()
-    this.years = new Array(5).fill(0).map((val, index) => currentYear - index)
+    var currentYear = new Date().getFullYear();
+    this.years = new Array(5).fill(0).map((val, index) => currentYear - index);
 
-    await Promise.all([
-      this.fetchMedia(),
-    ])
+    await Promise.all([this.fetchMedia()]);
   },
   methods: {
     ...mapActions({
-      fetchMedia: 'media/fetchAllMedia',
-      uploadMedia: 'media/uploadMedia',
+      fetchMedia: "media/fetchAllMedia",
+      uploadMedia: "media/uploadMedia",
     }),
     loadMore() {
       const payload = {
         pageOffset: this.listTotal,
         pageSize: 25,
         query: this.getQuery(),
-        sort: '&sort[0]=created_at&sortby[0]=desc',
-      }
-      this.fetchMedias(payload)
+        sort: "&sort[0]=created_at&sortby[0]=desc",
+      };
+      this.fetchMedias(payload);
+    },
+    closeChooseImage() {
+      this.showChooseImage = false;
+      // this.$store.dispatch('media/addFolder', {
+      //   filename: fileName,
+      // })
+    },
+    setImage(value) {
+      this.showChooseImage = false;
+      console.log("value---------", value);
+    },
+    handleShowPopup() {
+      this.showChooseImage = true;
     },
   },
-})
+});
 </script>
 <style lang="scss" scoped>
 .wrapper {
@@ -159,11 +196,12 @@ export default Vue.extend({
         .image-wrap {
           flex-grow: 1;
           display: flex;
-          box-shadow: inset 0 0 15px rgb(0 0 0 / 10%), inset 0 0 0 1px rgb(0 0 0 / 5%);
+          box-shadow: inset 0 0 15px rgb(0 0 0 / 10%),
+            inset 0 0 0 1px rgb(0 0 0 / 5%);
           background: #eee;
           position: relative;
           &::before {
-            content: '';
+            content: "";
             width: 100%;
             padding-top: 100%;
             display: block;
@@ -247,7 +285,7 @@ export default Vue.extend({
 
 .dot-flashing::before,
 .dot-flashing::after {
-  content: '';
+  content: "";
   display: inline-block;
   position: absolute;
   top: 0;

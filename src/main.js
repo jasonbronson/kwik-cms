@@ -5,8 +5,10 @@ import store from "./store";
 import "./assets/index.css";
 import * as rules from "vee-validate/dist/rules";
 import en from "vee-validate/dist/locale/en.json";
-import ElementUI from 'element-ui'
-import 'element-ui/lib/theme-chalk/index.css'
+import ElementUI from "element-ui";
+import lang from "element-ui/lib/locale/lang/en";
+import locale from "element-ui/lib/locale";
+import "element-ui/lib/theme-chalk/index.css";
 import {
   ValidationObserver,
   ValidationProvider,
@@ -21,7 +23,9 @@ Object.keys(rules).forEach((rule) => {
 });
 
 localize("en", en);
+locale.use(lang);
 
+Vue.use(ElementUI);
 Vue.component("ValidationObserver", ValidationObserver);
 Vue.component("ValidationProvider", ValidationProvider);
 
