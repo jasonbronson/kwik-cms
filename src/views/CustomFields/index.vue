@@ -60,14 +60,11 @@
             <td>
               <div class="font-bold">{{ item.title }}</div>
               <div class="hidden text-xs mt-1 group-actions gap-2 flex">
-                <span>
-                  <router-link
-                    custom
-                    to="/custom-fields/edit"
-                    class="hover:text-primary-200"
-                  >
-                    Edit
-                  </router-link>
+                <span
+                  class="hover:text-primary-200"
+                  @click="handleRedirect(item)"
+                >
+                  Edit
                 </span>
                 <hr class="m-0 h-3 uk-divider-vertical" />
                 <span class="hover:text-primary-200"> Duplicate </span>
@@ -130,6 +127,9 @@ export default {
       } catch (error) {
         console.log(error);
       }
+    },
+    handleRedirect(item) {
+      this.$router.push(`/custom-fields/edit/${item.id}`);
     },
   },
 };

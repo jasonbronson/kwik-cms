@@ -70,6 +70,7 @@
 
 <script>
 import SingleField from "@/components/CustomFields/SingleField";
+import { mapState } from "vuex";
 export default {
   name: "CustomFieldEdit",
   components: { SingleField },
@@ -77,7 +78,23 @@ export default {
     return {
       title: "",
       fields: [],
+      editData: {
+        label: "",
+        fieldName: "",
+        fieldType: "",
+        instructions: "",
+      },
     };
+  },
+  props: {
+    field: {
+      default: () => {},
+    },
+  },
+  computed: {
+    ...mapState({
+      currentField: (state) => state.customFields.currentField,
+    }),
   },
   methods: {
     handleAddNewField() {

@@ -16,6 +16,7 @@ import store from "../store";
 import ErrorPage from "../views/Error.vue";
 import CustomFields from "@/views/CustomFields";
 import NewCustomFields from "@/views/CustomFields/New";
+import EditCustomFields from "@/views/CustomFields/edit/_id.vue";
 
 Vue.use(VueRouter);
 
@@ -122,6 +123,14 @@ const routes = [
     path: "/custom-fields/new",
     name: "NewCustomFields",
     component: NewCustomFields,
+    meta: {
+      requiresAuth: false,
+    },
+  },
+  {
+    path: "/custom-fields/edit/:id",
+    name: "EditCustomFields",
+    component: EditCustomFields,
     meta: {
       requiresAuth: false,
     },
