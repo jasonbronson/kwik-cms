@@ -79,9 +79,9 @@
                 >
               </div>
             </td>
-            <td>{{ item.Fields.map((item) => item.instructions) }}</td>
-            <td>{{ item.Fields ? item.Fields.length : "Empty" }}</td>
-            <td>{{ item.Fields ? item.Fields.length : "Empty" }}</td>
+            <td>{{ item.description ? item.description : "" }}</td>
+            <td>{{ item.location ? item.location : "" }}</td>
+            <td>{{ item.Fields ? item.Fields.length : "" }}</td>
             <!-- <td>5</td> -->
           </tr>
         </tbody>
@@ -132,12 +132,6 @@ export default {
       }
     },
   },
-  // watch: {
-  //   listDataDynamicGroup(newValue, oldValue) {
-  //     console.log("newValue", newValue);
-  //     console.log("oldValue", oldValue);
-  //   },
-  // },
 };
 </script>
 

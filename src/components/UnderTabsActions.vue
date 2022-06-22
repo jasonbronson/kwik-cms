@@ -131,6 +131,7 @@ export default {
         await this.$store.dispatch("posts/deletePost", this.postSelected.id);
         this.deleteUserConfirm = false;
         // this.$router.push("/users");
+        location.reload();
       } catch (error) {
         console.log(error);
       }
