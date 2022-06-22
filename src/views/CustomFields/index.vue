@@ -1,5 +1,11 @@
 <template>
   <div class="font-sans text-black min-h-screen bg-primary-600 px-32">
+    <are-you-sure
+      v-if="deleteDynamicConfirm"
+      @yes="deleteFieldGroup"
+      @no="deleteDynamicConfirm = false"
+      text="Do you want to delete this this Dynamic?"
+    ></are-you-sure>
     <div class="flex justify-between py-8 items-center">
       <div class="flex items-center">
         <div class="text-primary-400 mr-4">Dynamic Groups</div>
@@ -66,7 +72,11 @@
                 <hr class="m-0 h-3 uk-divider-vertical" />
                 <span class="hover:text-primary-200"> Duplicate </span>
                 <hr class="m-0 h-3 uk-divider-vertical" />
-                <span class="text-red-500 hover:text-red-300">Trash</span>
+                <span
+                  class="text-red-500 hover:text-red-300"
+                  @click="isShowPopup(item.id)"
+                  >Trash</span
+                >
               </div>
             </td>
             <td>{{ item.Fields.map((item) => item.instructions) }}</td>
@@ -81,25 +91,53 @@
 </template>
 
 <script>
+import AreYouSure from "../../components/global/AreYouSure.vue";
 import { mapActions, mapState } from "vuex";
 export default {
   name: "index",
   data() {
-    return {};
+    return {
+      deleteDynamicConfirm: false,
+      selectedDynamic: "",
+    };
+  },
+  components: {
+    AreYouSure,
   },
   computed: {
     ...mapState({
       listDataDynamicGroup: (state) => state.customFields.customFields,
     }),
   },
+  async mounted() {
+    await this.fetchDynamicGroups();
+  },
   methods: {
     ...mapActions({
       fetchDynamicGroups: "customFields/fetchAllFields",
     }),
+    isShowPopup(payload) {
+      this.deleteDynamicConfirm = true;
+      this.selectedDynamic = payload;
+    },
+    async deleteFieldGroup() {
+      let payload = this.selectedDynamic;
+      this.deleteDynamicConfirm = false;
+      try {
+        this.loading = true;
+        await this.$store.dispatch("customFields/deleteCustomFields", payload);
+        location.reload();
+      } catch (error) {
+        console.log(error);
+      }
+    },
   },
-  async mounted() {
-    await this.fetchDynamicGroups();
-  },
+  // watch: {
+  //   listDataDynamicGroup(newValue, oldValue) {
+  //     console.log("newValue", newValue);
+  //     console.log("oldValue", oldValue);
+  //   },
+  // },
 };
 </script>
 
