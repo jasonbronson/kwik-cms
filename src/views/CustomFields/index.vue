@@ -42,6 +42,8 @@
         </thead>
         <tbody class="text-sm">
           <tr
+            v-for="item in listDataDynamicGroup"
+            :key="item.id"
             class="table-row hover:bg-primary-300 cursor-pointer text-primary-500"
           >
             <td>
@@ -50,7 +52,7 @@
               </div>
             </td>
             <td>
-              <div class="font-bold">[LR] Event</div>
+              <div class="font-bold">{{ item.title }}</div>
               <div class="hidden text-xs mt-1 group-actions gap-2 flex">
                 <span>
                   <router-link
@@ -67,40 +69,10 @@
                 <span class="text-red-500 hover:text-red-300">Trash</span>
               </div>
             </td>
-            <td>Table Data</td>
-            <td>Table Data</td>
-            <td>5</td>
-          </tr>
-
-          <tr
-            class="table-row hover:bg-primary-300 cursor-pointer text-primary-500"
-          >
-            <td>
-              <div class="flex items-center h-10">
-                <input type="checkbox" />
-              </div>
-            </td>
-            <td>
-              <div class="font-bold">[HR] Heading Home Page</div>
-              <div class="hidden text-xs mt-1 group-actions gap-2 flex">
-                <span>
-                  <router-link
-                    custom
-                    to="/custom-fields/edit"
-                    class="hover:text-primary-200"
-                  >
-                    Edit
-                  </router-link>
-                </span>
-                <hr class="m-0 h-3 uk-divider-vertical" />
-                <span class="hover:text-primary-200"> Duplicate </span>
-                <hr class="m-0 h-3 uk-divider-vertical" />
-                <span class="text-red-500 hover:text-red-300">Trash</span>
-              </div>
-            </td>
-            <td>Table Data</td>
-            <td>Table Data</td>
-            <td>5</td>
+            <td>{{ item.Fields.map((item) => item.instructions) }}</td>
+            <td>{{ item.Fields ? item.Fields.length : "Empty" }}</td>
+            <td>{{ item.Fields ? item.Fields.length : "Empty" }}</td>
+            <!-- <td>5</td> -->
           </tr>
         </tbody>
       </table>
@@ -109,8 +81,25 @@
 </template>
 
 <script>
+import { mapActions, mapState } from "vuex";
 export default {
   name: "index",
+  data() {
+    return {};
+  },
+  computed: {
+    ...mapState({
+      listDataDynamicGroup: (state) => state.customFields.customFields,
+    }),
+  },
+  methods: {
+    ...mapActions({
+      fetchDynamicGroups: "customFields/fetchAllFields",
+    }),
+  },
+  async mounted() {
+    await this.fetchDynamicGroups();
+  },
 };
 </script>
 

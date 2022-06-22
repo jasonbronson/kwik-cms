@@ -4,7 +4,7 @@ export default {
   async addCustomFields({ commit }, payload) {
     commit("setLoading", true);
     try {
-      await axios.post("/dynamicfields", payload);
+      await axios.post("/dynamicgroups", payload);
       commit("setLoading", false);
     } catch (e) {
       commit("setLoading", false);
@@ -14,8 +14,21 @@ export default {
   async fetchAllFields({ commit }) {
     commit("setLoading", true);
     try {
-      const { data } = await axios.get("/dynamicfields");
+      const { data } = await axios.get("/dynamicgroups");
       commit("setCustomFields", data.data);
+      commit("setLoading", false);
+    } catch (e) {
+      commit("setLoading", false);
+      throw e;
+    }
+  },
+  async updateCustomFields({ commit }, payload) {
+    commit("setLoading", true);
+    try {
+      await axios.put(
+        `/dynamicgroups/${payload.customFields.id}`,
+        payload.customFields
+      );
       commit("setLoading", false);
     } catch (e) {
       commit("setLoading", false);

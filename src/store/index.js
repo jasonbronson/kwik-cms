@@ -6,7 +6,7 @@ import posts from "./posts";
 import media from "./media";
 import tags from "./tags";
 import categories from "./categories";
-import customFields from "./custom-fields";
+import customFields from "./customFields";
 
 Vue.use(Vuex);
 
