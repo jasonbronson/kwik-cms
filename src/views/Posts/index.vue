@@ -174,7 +174,7 @@ export default {
   mounted() {
     this.$store.dispatch("users/fetchAndSetUsers");
     this.$store.dispatch("posts/fetchAllPosts");
-    this.$store.dispatch("posts/fetchAndSetCategories");
+    this.$store.dispatch("categories/fetchAndSetCategories");
   },
 };
 </script>
