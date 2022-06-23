@@ -109,6 +109,7 @@ export default {
   async mounted() {
     await this.fetchDynamicGroups();
   },
+
   methods: {
     ...mapActions({
       fetchDynamicGroups: "customFields/fetchAllFields",
@@ -123,13 +124,13 @@ export default {
       try {
         this.loading = true;
         await this.$store.dispatch("customFields/deleteCustomFields", payload);
-        location.reload();
+        await this.fetchDynamicGroups();
       } catch (error) {
         console.log(error);
       }
     },
     handleRedirect(item) {
-      this.$router.push(`/custom-fields/edit/${item.id}`);
+      this.$router.push(`/custom-field/edit/${item.id}`);
     },
   },
 };
