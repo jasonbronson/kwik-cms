@@ -9,7 +9,8 @@
     <div class="flex justify-between py-8 items-center">
       <div class="flex items-center">
         <div class="text-primary-400 mr-4">Dynamic Groups</div>
-        <div class="border rounded overflow-hidden flex">
+        <KwikSearchInput @search="handlePlayerSearch" />
+        <!-- <div class="border rounded overflow-hidden flex">
           <input type="text" class="px-4 py-2" placeholder="Search..." />
           <button
             class="flex items-center justify-center px-4 border-l bg-primary-400"
@@ -25,7 +26,7 @@
               />
             </svg>
           </button>
-        </div>
+        </div> -->
       </div>
       <router-link to="/custom-fields/new">
         <button
@@ -89,6 +90,7 @@
 
 <script>
 import AreYouSure from "../../components/global/AreYouSure.vue";
+import KwikSearchInput from "../../components/global/KwikSearchInput.vue";
 import { mapActions, mapState } from "vuex";
 export default {
   name: "index",
@@ -100,6 +102,7 @@ export default {
   },
   components: {
     AreYouSure,
+    KwikSearchInput,
   },
   computed: {
     ...mapState({
@@ -131,6 +134,16 @@ export default {
     },
     handleRedirect(item) {
       this.$router.push(`/custom-fields/edit/${item.id}`);
+    },
+    handlePlayerSearch(newString) {
+      console.log("newString", newString);
+      if (newString && newString.length < 3) {
+        return;
+      }
+      this.$store.dispatch("customFields/getFieldByText", {
+        query: newString,
+        searchBy: "title",
+      });
     },
   },
 };

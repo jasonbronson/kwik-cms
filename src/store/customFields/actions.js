@@ -53,4 +53,18 @@ export default {
       throw e;
     }
   },
+  async getFieldByText({ commit }, payload) {
+    commit("setLoading", true);
+    try {
+      const { data } = await axios.get(
+        `/dynamicgroups?${payload.searchBy}=${payload.query}`
+      );
+      commit("setCustomFields", data.data);
+
+      commit("setLoading", false);
+    } catch (e) {
+      commit("setLoading", false);
+      throw e;
+    }
+  },
 };
