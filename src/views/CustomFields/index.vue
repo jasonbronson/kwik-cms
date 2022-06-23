@@ -130,7 +130,7 @@ export default {
       }
     },
     handleRedirect(item) {
-      this.$router.push(`/custom-field/edit/${item.id}`);
+      this.$router.push(`/custom-fields/edit/${item.id}`);
     },
   },
 };
