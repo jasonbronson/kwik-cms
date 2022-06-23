@@ -24,10 +24,10 @@
           <span>{{ index }}</span>
         </div>
       </div>
-      <div class="w-1/4">{{ editData.fieldLabel || "(No data)" }}</div>
-      <div class="w-1/4">{{ editData.fieldName || "(No data)" }}</div>
+      <div class="w-1/4">{{ editData.label || "(No data)" }}</div>
+      <div class="w-1/4">{{ editData.name || "(No data)" }}</div>
       <div class="w-1/4 flex justify-between items-center">
-        <span> {{ editData.fieldType || "(No data)" }}</span>
+        <span> {{ editData.type || "(No data)" }}</span>
         <span class="text-2xl">
           <i class="far fa-angle-up" v-if="!hidden" />
           <i class="far fa-angle-down" v-else />
@@ -55,7 +55,7 @@
             </span>
           </div>
           <input
-            v-model="editData.fieldLabel"
+            v-model="editData.label"
             @blur="fillFieldName"
             placeholder="Field Label"
             class="flex-grow border-solid border-2 rounded h-10 px-4 focus:outline-none focus:border-primary-100 focus:shadow"
@@ -70,7 +70,7 @@
             </span>
           </div>
           <input
-            v-model="editData.fieldName"
+            v-model="editData.name"
             placeholder="Field Label"
             class="flex-grow border-solid border-2 rounded h-10 px-4 focus:outline-none focus:border-primary-100 focus:shadow"
           />
@@ -82,7 +82,7 @@
           </div>
           <select
             class="flex-grow border-solid border-2 rounded h-10 px-4 focus:outline-none focus:border-primary-100 focus:shadow"
-            v-model="editData.fieldType"
+            v-model="editData.type"
           >
             <option>text</option>
             <option>textarea</option>
@@ -117,9 +117,9 @@ export default {
   data() {
     return {
       editData: {
-        fieldLabel: "",
-        fieldName: "",
-        fieldType: "",
+        label: "",
+        name: "",
+        type: "",
         instructions: "",
       },
       hidden: false,
@@ -129,10 +129,13 @@ export default {
     index: {
       require: true,
     },
+    field: {
+      default: () => {},
+    },
   },
   methods: {
     fillFieldName() {
-      this.editData.fieldName = this.editData.fieldLabel
+      this.editData.name = this.editData.label
         .split(" ")
         .join("_")
         .toLowerCase();
@@ -151,6 +154,9 @@ export default {
       },
       deep: true,
     },
+  },
+  mounted() {
+    this.editData = this.field;
   },
 };
 </script>
