@@ -55,4 +55,18 @@ export default {
       throw e;
     }
   },
+  async getPostsByText({ commit }, payload) {
+    commit("setLoading", true);
+    try {
+      const { data } = await axios.get(
+        `/posts?${payload.searchBy}=${payload.query}`
+      );
+      commit("setPosts", data.data);
+
+      commit("setLoading", false);
+    } catch (e) {
+      commit("setLoading", false);
+      throw e;
+    }
+  },
 };

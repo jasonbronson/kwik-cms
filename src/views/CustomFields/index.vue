@@ -9,24 +9,7 @@
     <div class="flex justify-between py-8 items-center">
       <div class="flex items-center">
         <div class="text-primary-400 mr-4">Dynamic Groups</div>
-        <KwikSearchInput @search="handlePlayerSearch" />
-        <!-- <div class="border rounded overflow-hidden flex">
-          <input type="text" class="px-4 py-2" placeholder="Search..." />
-          <button
-            class="flex items-center justify-center px-4 border-l bg-primary-400"
-          >
-            <svg
-              class="h-4 w-4 text-white"
-              fill="currentColor"
-              xmlns="http://www.w3.org/2000/svg"
-              viewBox="0 0 24 24"
-            >
-              <path
-                d="M16.32 14.9l5.39 5.4a1 1 0 0 1-1.42 1.4l-5.38-5.38a8 8 0 1 1 1.41-1.41zM10 16a6 6 0 1 0 0-12 6 6 0 0 0 0 12z"
-              />
-            </svg>
-          </button>
-        </div> -->
+        <KwikSearchInput @search="handleFieldSearch" />
       </div>
       <router-link to="/custom-fields/new">
         <button
@@ -135,7 +118,7 @@ export default {
     handleRedirect(item) {
       this.$router.push(`/custom-fields/edit/${item.id}`);
     },
-    handlePlayerSearch(newString) {
+    handleFieldSearch(newString) {
       console.log("newString", newString);
       if (newString && newString.length < 3) {
         return;

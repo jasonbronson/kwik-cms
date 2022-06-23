@@ -1,23 +1,5 @@
 <template>
   <div>
-    <!-- <div
-      class="flex items-center justify-end lg:justify-end md:justify-end sm:w-full lg:w-2/4 md:w-2/5"
-    >
-      <div class="hidden bg-primary-400 rounded sm:hidden lg:flex md:flex">
-        <button class="px-3 text-white bg-transparent">
-          <i class="fas fa-search text-md text-slate-500"></i>
-        </button>
-        <input
-          type="text"
-          class="px-2 py-3 w-80 text-sm border-none border-slate-900 bg-transparent text-white focus:outline-none focus:ring-0"
-          :placeholder="placeholder"
-          v-model="searchString"
-          @change="handleChange"
-          v-on:keyup.enter="handleSeachString"
-        />
-      </div>
-    </div> -->
-    <!--  -->
     <div class="border rounded overflow-hidden flex">
       <input
         type="text"
@@ -56,7 +38,7 @@ export default {
   props: {
     placeholder: {
       type: String,
-      default: "Search for live events, shows, news and more...",
+      default: "Search for dynamic groups",
     },
     value: {
       type: String,

@@ -5,7 +5,7 @@
         <div class="flex justify-between py-8 items-center">
           <div class="flex items-center">
             <div class="text-primary-400 mr-4">Blog Posts</div>
-            <div class="border rounded overflow-hidden flex">
+            <!-- <div class="border rounded overflow-hidden flex">
               <input type="text" class="px-4 py-2" placeholder="Search..." />
               <button
                 class="flex items-center justify-center px-4 border-l bg-primary-400"
@@ -21,7 +21,8 @@
                   />
                 </svg>
               </button>
-            </div>
+            </div> -->
+            <KwikSearchInput @search="handlePostsSearch" />
           </div>
           <router-link to="/posts/new">
             <button
@@ -48,10 +49,7 @@
             :postSelected="postSelected"
           />
           <DropDown title="Author" :options="authors" />
-          <DropDown
-            title="Categories"
-            :options="categories"
-          />
+          <DropDown title="Categories" :options="categories" />
           <div class="flex-grow text-right flex justify-end tex-primary-500">
             Export All Posts
           </div>
@@ -78,11 +76,18 @@
 <script>
 import UnderlineTabs from "@/components/UnderlineTabs";
 import UnderTabsActions from "@/components/UnderTabsActions";
+import KwikSearchInput from "../../components/global/KwikSearchInput.vue";
 import ListItem from "@/components/ListItem";
 import { mapState } from "vuex";
 import DropDown from "@/components/DropDown";
 export default {
-  components: { DropDown, ListItem, UnderlineTabs, UnderTabsActions },
+  components: {
+    DropDown,
+    ListItem,
+    UnderlineTabs,
+    UnderTabsActions,
+    KwikSearchInput,
+  },
   data() {
     return {
       BlogTabs: [
@@ -135,6 +140,7 @@ export default {
       password: "",
     };
   },
+
   computed: {
     ...mapState({
       posts: (state) => state.posts.posts,
@@ -168,7 +174,16 @@ export default {
       } else {
         this.isDeletePost = false;
       }
-      console.log("-----------------value", value);
+    },
+    handlePostsSearch(newString) {
+      console.log("newString", newString);
+      if (newString && newString.length < 3) {
+        return;
+      }
+      this.$store.dispatch("posts/getPostsByText", {
+        query: newString,
+        searchBy: "title",
+      });
     },
   },
   mounted() {
