@@ -129,7 +129,7 @@ export default {
 
   computed: {
     ...mapState({
-      page: (state) => state.pages.pages,
+      pages: (state) => state.pages.pages,
       loading: (state) => state.pages.loading,
       usersList: (state) => state.users.usersList,
       categories: (state) => state.categories.categoriesList,
