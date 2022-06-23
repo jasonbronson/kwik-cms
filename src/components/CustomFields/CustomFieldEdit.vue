@@ -17,7 +17,7 @@
       <div class="mt-10 py-8 px-10 flex flex-col gap-2 bg-white rounded shadow">
         <div>
           <input
-            v-model="title"
+            v-model="editData.title"
             placeholder="Add Title"
             class="w-full flex-grow border-solid border-2 rounded h-10 px-4 focus:outline-none focus:border-primary-100 focus:shadow"
           />
@@ -40,7 +40,7 @@
         </div>-->
         <div>
           <div class="uk-grid-small" uk-sortable="handle: .uk-card">
-            <div v-for="(field, index) in fields" :key="index">
+            <div v-for="(field, index) in editData.Fields" :key="index">
               <div class="uk-card uk-card-default w-full">
                 <div>
                   <SingleField
@@ -76,13 +76,9 @@ export default {
   components: { SingleField },
   data() {
     return {
-      title: "",
-      fields: [],
       editData: {
-        label: "",
-        fieldName: "",
-        fieldType: "",
-        instructions: "",
+        title: "",
+        Fields: [],
       },
     };
   },
@@ -98,19 +94,29 @@ export default {
   },
   methods: {
     handleAddNewField() {
-      this.fields.push({});
+      this.editData.Fields.push({
+        label: "",
+        name: "",
+        type: "",
+        instructions: "",
+      });
     },
     removeField(index) {
       console.log(index);
       if (index > -1) {
-        this.fields.splice(index, 1);
+        this.editData.Fields.splice(index, 1);
       }
     },
     setFieldValues(index, values) {
-      this.fields[index] = values;
+      this.editData.Fields[index] = values;
     },
     async publishCustomField() {
-      await this.$emit("publish", { fields: this.fields, title: this.title });
+      await this.$emit("publish", this.editData);
+    },
+  },
+  watch: {
+    currentField(value) {
+      this.editData = value;
     },
   },
 };

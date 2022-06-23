@@ -36,10 +36,7 @@ export default {
   async updateCustomFields({ commit }, payload) {
     commit("setLoading", true);
     try {
-      await axios.put(
-        `/dynamicgroups/${payload.customFields.id}`,
-        payload.customFields
-      );
+      await axios.put(`/dynamicgroups/${payload.id}`, payload);
       commit("setLoading", false);
     } catch (e) {
       commit("setLoading", false);

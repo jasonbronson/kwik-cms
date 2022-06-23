@@ -1,5 +1,5 @@
 <template>
-  <CustomFieldEdit @publishCustomField="updateField" :field="currentField" />
+  <CustomFieldEdit @publish="updateField" :field="currentField" />
 </template>
 
 <script>
@@ -19,8 +19,8 @@ export default {
     }),
   },
   methods: {
-    async updateField(post) {
-      await this.$store.dispatch("customFields/updateCustomFields", { post });
+    async updateField(payload) {
+      await this.$store.dispatch("customFields/updateCustomFields", payload);
       await this.$router.push("/custom-fields");
     },
   },
