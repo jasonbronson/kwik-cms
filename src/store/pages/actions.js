@@ -2,65 +2,65 @@
 import axios from "@/services/axios";
 
 export default {
-  async fetchAllPosts({ commit }) {
+  async fetchAllPages({ commit }) {
     commit("setLoading", true);
     try {
-      const { data } = await axios.get("/posts");
-      commit("setPosts", data.data);
+      const { data } = await axios.get("/pages");
+      commit("setPages", data.data);
       commit("setLoading", false);
     } catch (e) {
       commit("setLoading", false);
       throw e;
     }
   },
-  async fetchPostById({ commit }, payload) {
+  async fetchPageById({ commit }, payload) {
     commit("setLoading", true);
     try {
-      const { data } = await axios.get(`/posts/${payload.id}`);
-      commit("setCurrentPost", data.data);
+      const { data } = await axios.get(`/pages/${payload.id}`);
+      commit("setCurrentPage", data.data);
       commit("setLoading", false);
     } catch (e) {
       commit("setLoading", false);
       throw e;
     }
   },
-  async addPost({ commit }, payload) {
+  async addPage({ commit }, payload) {
     commit("setLoading", true);
     try {
-      await axios.post("/posts", payload.post);
+      await axios.post("/pages", payload.page);
       commit("setLoading", false);
     } catch (e) {
       commit("setLoading", false);
       throw e;
     }
   },
-  async updatePost({ commit }, payload) {
+  async updatePage({ commit }, payload) {
     commit("setLoading", true);
     try {
-      await axios.put(`/posts/${payload.post.id}`, payload.post);
+      await axios.put(`/pages/${payload.page.id}`, payload.page);
       commit("setLoading", false);
     } catch (e) {
       commit("setLoading", false);
       throw e;
     }
   },
-  async deletePost({ commit }, payload) {
+  async deletePage({ commit }, payload) {
     commit("setLoading", true);
     try {
-      await axios.delete(`/posts/${payload}`);
+      await axios.delete(`/pages/${payload}`);
       commit("setLoading", false);
     } catch (e) {
       commit("setLoading", false);
       throw e;
     }
   },
-  async getPostsByText({ commit }, payload) {
+  async getPagesByText({ commit }, payload) {
     commit("setLoading", true);
     try {
       const { data } = await axios.get(
-        `/posts?${payload.searchBy}=${payload.query}`
+        `/pages?${payload.searchBy}=${payload.query}`
       );
-      commit("setPosts", data.data);
+      commit("setPages", data.data);
 
       commit("setLoading", false);
     } catch (e) {

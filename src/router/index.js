@@ -2,7 +2,7 @@ import Vue from "vue";
 import VueRouter from "vue-router";
 import Posts from "../views/Posts";
 import Pages from "../views/Pages";
-import NewPage from "../views/Pages/New";
+import NewPage from "../views/Pages/New.vue";
 import NewBlog from "../views/Posts/New.vue";
 import EditBlog from "../views/Posts/edit/_id.vue";
 import Users from "../views/Users";
@@ -88,7 +88,7 @@ const routes = [
     },
   },
   {
-    path: "/Pages",
+    path: "/pages",
     name: "Pages",
     component: Pages,
     meta: {
@@ -96,7 +96,7 @@ const routes = [
     },
   },
   {
-    path: "/Pages/new",
+    path: "/pages/new",
     name: "NewPage",
     component: NewPage,
     meta: {
