@@ -3,6 +3,7 @@ import VueRouter from "vue-router";
 import Posts from "../views/Posts";
 import Pages from "../views/Pages";
 import NewPage from "../views/Pages/New.vue";
+import EditPage from "../views/Pages/edit/_id.vue";
 import NewBlog from "../views/Posts/New.vue";
 import EditBlog from "../views/Posts/edit/_id.vue";
 import Users from "../views/Users";
@@ -99,6 +100,14 @@ const routes = [
     path: "/pages/new",
     name: "NewPage",
     component: NewPage,
+    meta: {
+      requiresAuth: true,
+    },
+  },
+  {
+    path: "/pages/edit/:id",
+    name: "EditPage",
+    component: EditPage,
     meta: {
       requiresAuth: true,
     },
