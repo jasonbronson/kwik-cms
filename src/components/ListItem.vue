@@ -58,7 +58,7 @@ export default {
       default: "",
     },
     item: {
-      type: Array,
+      type: Object,
       default: () => {},
     },
     postImg: {

@@ -275,6 +275,9 @@ export default {
     await this.$store.dispatch("users/fetchAndSetUsers");
     await this.$store.dispatch("tags/fetchAndSetTags");
     await this.$store.dispatch("categories/fetchAndSetCategories");
+    if (this.editData && this.editData.user_id) {
+      this.selectedUser = this.editData.user_id
+    }
   },
   watch: {
     editData: {
