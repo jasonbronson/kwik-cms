@@ -4,7 +4,7 @@
       v-if="deleteUserConfirm"
       @yes="deleteUser"
       @no="deleteUserConfirm = false"
-      text="Do you want to delete this user?"
+      text="Do you want to delete the item?"
     ></are-you-sure>
     <div class="mr-20">
       <div class="flex items-center gap-3 text-sm">
