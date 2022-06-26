@@ -1,224 +1,231 @@
 <template>
-  <div class="flex gap-10">
-    <div class="w-2/3 py-8 px-10 flex flex-col gap-2 bg-white rounded shadow">
-      <div>
-        <div class="text-primary-200 mb-2">
+  <div>
+    <div class="flex gap-10">
+      <div class="w-2/3 py-8 px-10 flex flex-col gap-2 bg-white rounded shadow">
+        <div>
+          <div class="text-primary-200 mb-2">
+            <div
+              class="text-primary-200 flex items-center h-10 text-sm font-semibold"
+            >
+              <i class="fab fa-searchengin mr-2"></i>
+              <span> SEO Title </span>
+            </div>
+            <div class="text-xs">
+              We suggest a
+              <span class="text-blue-300">max of 55 chars</span>
+            </div>
+          </div>
+          <div class="flex gap-7">
+            <input
+              placeholder="Title that will appear in search engines"
+              class="flex-grow border-solid border-2 rounded h-10 px-4 focus:outline-none focus:border-primary-100 focus:shadow"
+              v-model="editData.title"
+            />
+          </div>
+        </div>
+        <div>
           <div
             class="text-primary-200 flex items-center h-10 text-sm font-semibold"
           >
             <i class="fab fa-searchengin mr-2"></i>
-            <span> SEO Title </span>
-          </div>
-          <div class="text-xs">
-            We suggest a
-            <span class="text-blue-300">max of 55 chars</span>
-          </div>
-        </div>
-        <div class="flex gap-7">
-          <input
-            placeholder="Title that will appear in search engines"
-            class="flex-grow border-solid border-2 rounded h-10 px-4 focus:outline-none focus:border-primary-100 focus:shadow"
-            v-model="editData.title"
-          />
-        </div>
-      </div>
-      <div>
-        <div
-          class="text-primary-200 flex items-center h-10 text-sm font-semibold"
-        >
-          <i class="fab fa-searchengin mr-2"></i>
-          <span> Slug </span>
-        </div>
-        <div class="flex gap-7">
-          <input
-            v-model="editData.slug"
-            placeholder="Slug"
-            class="flex-grow border-solid border-2 rounded h-10 px-4 focus:outline-none focus:border-primary-100 focus:shadow"
-          />
-        </div>
-      </div>
-      <div>
-        <div
-          class="text-primary-200 flex items-center h-10 text-sm font-semibold"
-        >
-          <i class="fas fa-user mr-2"></i>
-          <span>Author</span>
-        </div>
-        <div>
-          <select
-            class="w-full border-solid border-2 rounded h-10 px-4 focus:outline-none focus:border-primary-100"
-            v-model="selectedUser"
-          >
-            <option v-for="(user, i) in listUsers" :key="i" :value="user.id">
-              {{ user.first_name + user.last_name }}
-            </option>
-          </select>
-        </div>
-      </div>
-      <div>
-        <div
-          class="text-primary-200 flex items-center h-10 text-sm font-semibold"
-        >
-          <i class="fas fa-text mr-2"></i>
-          <span>Content</span>
-        </div>
-        <editor
-          ref="tm"
-          v-model="editData.content"
-          :api-key="$editorApiKey"
-          :init="$editorSettings"
-        />
-      </div>
-      <div>
-        <div class="text-primary-200 mb-2 mt-3">
-          <div
-            class="text-primary-200 flex items-center h-10 text-sm font-semibold"
-          >
-            <i class="fas fa-audio-description mr-2"></i>
-            <span>Meta Description</span>
-          </div>
-          <div class="text-xs">
-            We suggest a
-            <span class="text-blue-300">max of 140 chars</span>
-          </div>
-        </div>
-        <div class="flex gap-7">
-          <textarea
-            placeholder="Meta Description that will appear in search engines"
-            rows="4"
-            class="flex-grow border-solid border-2 rounded p-3 focus:outline-none focus:border-primary-100 focus:shadow"
-            v-model="editData.description"
-          />
-        </div>
-      </div>
-    </div>
-    <div class="w-1/3">
-      <div class="py-8 px-10 flex flex-col gap-2 bg-white rounded shadow">
-        <div>
-          <div
-            class="text-primary-200 flex items-center h-10 text-sm font-semibold"
-          >
-            <i class="fas fa-calendar-alt mr-2"></i>
-            <span> Publish Date <span class="text-blue-300">(UTC)</span> </span>
-          </div>
-          <div class="flex">
-            <div
-              class="w-12 h-10 bg-primary-500 rounded-l flex items-center justify-center text-white"
-            >
-              <i class="fas fa-calendar-alt"></i>
-            </div>
-            <div class="flex-grow">
-              <Datepicker
-                placeholder="Publish date"
-                input-class="focus:outline-none px-4 w-full flex-grow border-solid border-2 h-10 flex align-center"
-                wrapper-class=""
-                v-model="editData.publish_date"
-              />
-            </div>
-            <div
-              class="w-20 h-10 bg-primary-500 rounded-r flex items-center justify-center text-white"
-            >
-              <i class="fas fa-globe-americas text-sm"></i>
-              <span class="text-sm ml-2">UTC</span>
-            </div>
-          </div>
-        </div>
-        <div>
-          <div
-            class="text-primary-200 flex items-center h-10 text-sm font-semibold"
-          >
-            <i class="fas fa-tags mr-2"></i>
-            <span>
-              Categories <span class="text-blue-300">(manage)</span>
-            </span>
+            <span> Slug </span>
           </div>
           <div class="flex gap-7">
             <input
-              placeholder="comma, seperated, categories"
+              v-model="editData.slug"
+              placeholder="Slug"
               class="flex-grow border-solid border-2 rounded h-10 px-4 focus:outline-none focus:border-primary-100 focus:shadow"
-              v-model="listCateString"
             />
+          </div>
+        </div>
+        <div>
+          <div
+            class="text-primary-200 flex items-center h-10 text-sm font-semibold"
+          >
+            <i class="fas fa-user mr-2"></i>
+            <span>Author</span>
+          </div>
+          <div>
             <select
-              class="w-40 border-solid border-2 rounded h-10 px-4 focus:outline-none focus:border-primary-100"
-              v-model="selectedCate"
+              class="w-full border-solid border-2 rounded h-10 px-4 focus:outline-none focus:border-primary-100"
+              v-model="selectedUser"
             >
-              <option
-                v-for="(cate, i) in listCategories"
-                :key="i"
-                :value="cate.name"
+              <option v-for="(user, i) in listUsers" :key="i" :value="user.id">
+                {{ user.first_name + user.last_name }}
+              </option>
+            </select>
+          </div>
+        </div>
+        <div>
+          <div
+            class="text-primary-200 flex items-center h-10 text-sm font-semibold"
+          >
+            <i class="fas fa-text mr-2"></i>
+            <span>Content</span>
+          </div>
+          <editor
+            ref="tm"
+            v-model="editData.content"
+            :api-key="$editorApiKey"
+            :init="$editorSettings"
+          />
+        </div>
+        <div>
+          <div class="text-primary-200 mb-2 mt-3">
+            <div
+              class="text-primary-200 flex items-center h-10 text-sm font-semibold"
+            >
+              <i class="fas fa-audio-description mr-2"></i>
+              <span>Meta Description</span>
+            </div>
+            <div class="text-xs">
+              We suggest a
+              <span class="text-blue-300">max of 140 chars</span>
+            </div>
+          </div>
+          <div class="flex gap-7">
+            <textarea
+              placeholder="Meta Description that will appear in search engines"
+              rows="4"
+              class="flex-grow border-solid border-2 rounded p-3 focus:outline-none focus:border-primary-100 focus:shadow"
+              v-model="editData.description"
+            />
+          </div>
+        </div>
+      </div>
+      <div class="w-1/3">
+        <div class="py-8 px-10 flex flex-col gap-2 bg-white rounded shadow">
+          <div>
+            <div
+              class="text-primary-200 flex items-center h-10 text-sm font-semibold"
+            >
+              <i class="fas fa-calendar-alt mr-2"></i>
+              <span>
+                Publish Date <span class="text-blue-300">(UTC)</span>
+              </span>
+            </div>
+            <div class="flex">
+              <div
+                class="w-12 h-10 bg-primary-500 rounded-l flex items-center justify-center text-white"
               >
-                {{ cate.name }}
-              </option>
-            </select>
-          </div>
-        </div>
-        <div>
-          <div
-            class="text-primary-200 flex items-center h-10 text-sm font-semibold"
-          >
-            <i class="fas fa-tags mr-2"></i>
-            <span>Tags <span class="text-blue-300">(manage)</span> </span>
-          </div>
-          <div class="flex gap-7">
-            <input
-              placeholder="comma, seperated, tags"
-              class="flex-grow border-solid border-2 rounded h-10 px-4 focus:outline-none focus:border-primary-100 focus:shadow"
-              v-model="listTagString"
-            />
-            <select
-              class="w-40 border-solid border-2 rounded h-10 px-4 focus:outline-none focus:border-primary-100"
-              v-model="selectedTag"
-            >
-              <option v-for="(tag, i) in listTags" :key="i" :value="tag.name">
-                {{ tag.name }}
-              </option>
-            </select>
-          </div>
-        </div>
-      </div>
-      <div class="py-8 px-10 flex flex-col gap-2 bg-white rounded shadow mt-10">
-        <div>
-          <div
-            class="text-primary-200 flex items-center h-10 text-sm font-semibold"
-          >
-            <i class="fal fa-image mr-2"></i>
-            <span>Featured Image</span>
-          </div>
-          <div class="flex justify-center mt-2">
-            <div class="w-full">
-              <div class="flex items-center justify-center w-full">
-                <label
-                  class="flex flex-col w-full h-32 border-4 border-dashed hover:bg-gray-100 hover:border-gray-300 cursor-pointer"
-                >
-                  <div class="flex flex-col items-center justify-center pt-7">
-                    <i class="fa-solid fa-image text-4xl mb-2"></i>
-                    <p class="pt-1 tracking-wider text-gray-400 text-xs">
-                      <span class="text-primary-500">Choose a media</span> or
-                      Drag and Drop file
-                    </p>
-                  </div>
-                  <input type="file" class="opacity-0" />
-                </label>
+                <i class="fas fa-calendar-alt"></i>
+              </div>
+              <div class="flex-grow">
+                <Datepicker
+                  placeholder="Publish date"
+                  input-class="focus:outline-none px-4 w-full flex-grow border-solid border-2 h-10 flex align-center"
+                  wrapper-class=""
+                  v-model="editData.publish_date"
+                />
+              </div>
+              <div
+                class="w-20 h-10 bg-primary-500 rounded-r flex items-center justify-center text-white"
+              >
+                <i class="fas fa-globe-americas text-sm"></i>
+                <span class="text-sm ml-2">UTC</span>
               </div>
             </div>
           </div>
-        </div>
-        <div>
-          <div
-            class="text-primary-200 flex items-center h-10 text-sm font-semibold"
-          >
-            <i class="fas fa-tags mr-2"></i>
-            <span> Featured Image Alt Text </span>
+          <div>
+            <div
+              class="text-primary-200 flex items-center h-10 text-sm font-semibold"
+            >
+              <i class="fas fa-tags mr-2"></i>
+              <span>
+                Categories <span class="text-blue-300">(manage)</span>
+              </span>
+            </div>
+            <div class="flex gap-7">
+              <input
+                placeholder="comma, seperated, categories"
+                class="flex-grow border-solid border-2 rounded h-10 px-4 focus:outline-none focus:border-primary-100 focus:shadow"
+                v-model="listCateString"
+              />
+              <select
+                class="w-40 border-solid border-2 rounded h-10 px-4 focus:outline-none focus:border-primary-100"
+                v-model="selectedCate"
+              >
+                <option
+                  v-for="(cate, i) in listCategories"
+                  :key="i"
+                  :value="cate.name"
+                >
+                  {{ cate.name }}
+                </option>
+              </select>
+            </div>
           </div>
-          <div class="flex gap-7">
-            <input
-              placeholder="Featured Image Alt Text"
-              class="flex-grow border-solid border-2 rounded h-10 px-4 focus:outline-none focus:border-primary-100 focus:shadow"
-            />
+          <div>
+            <div
+              class="text-primary-200 flex items-center h-10 text-sm font-semibold"
+            >
+              <i class="fas fa-tags mr-2"></i>
+              <span>Tags <span class="text-blue-300">(manage)</span> </span>
+            </div>
+            <div class="flex gap-7">
+              <input
+                placeholder="comma, seperated, tags"
+                class="flex-grow border-solid border-2 rounded h-10 px-4 focus:outline-none focus:border-primary-100 focus:shadow"
+                v-model="listTagString"
+              />
+              <select
+                class="w-40 border-solid border-2 rounded h-10 px-4 focus:outline-none focus:border-primary-100"
+                v-model="selectedTag"
+              >
+                <option v-for="(tag, i) in listTags" :key="i" :value="tag.name">
+                  {{ tag.name }}
+                </option>
+              </select>
+            </div>
+          </div>
+        </div>
+        <div
+          class="py-8 px-10 flex flex-col gap-2 bg-white rounded shadow mt-10"
+        >
+          <div>
+            <div
+              class="text-primary-200 flex items-center h-10 text-sm font-semibold"
+            >
+              <i class="fal fa-image mr-2"></i>
+              <span>Featured Image</span>
+            </div>
+            <el-button
+              class="btn-image"
+              type="primary"
+              @click="handleShowPopup"
+            >
+              Choose Image
+            </el-button>
+          </div>
+          <div>
+            <div v-if="this.imageSelected">
+              <img :src="this.imageSelected" alt="" />
+            </div>
+            <div
+              v-if="!this.imageSelected"
+              class="text-sm text-primary-200"
+            ></div>
+            <div
+              class="text-primary-200 flex items-center h-10 text-sm font-semibold"
+            >
+              <i class="fas fa-tags mr-2"></i>
+              <span> Featured Image Alt Text </span>
+            </div>
+            <div class="flex gap-7">
+              <input
+                placeholder="Featured Image Alt Text"
+                class="flex-grow border-solid border-2 rounded h-10 px-4 focus:outline-none focus:border-primary-100 focus:shadow"
+              />
+            </div>
           </div>
         </div>
       </div>
     </div>
+    <popup-choose-image
+      :visible="showChooseImage"
+      @no="closeChooseImage"
+      @yes="setImage"
+    ></popup-choose-image>
   </div>
 </template>
 
@@ -226,11 +233,13 @@
 import Datepicker from "vuejs-datepicker";
 import { mapState } from "vuex";
 import Editor from "@tinymce/tinymce-vue";
+import PopupChooseImage from "../../components/global/PopupChooseImage.vue";
 export default {
   name: "Metadata",
   components: {
     Datepicker,
     Editor,
+    PopupChooseImage,
   },
   computed: {
     ...mapState({
@@ -253,6 +262,8 @@ export default {
       selectedTag: "",
       listCateArray: [],
       listTagArray: [],
+      showChooseImage: false,
+      imageSelected: "",
     };
   },
   props: {
@@ -297,6 +308,22 @@ export default {
       console.log("change");
       this.editData.user_id = value;
       this.$emit("handleMetaDataChange", this.editData);
+    },
+  },
+  methods: {
+    handleShowPopup() {
+      this.showChooseImage = true;
+    },
+    closeChooseImage() {
+      this.showChooseImage = false;
+      // this.$store.dispatch('media/addFolder', {
+      //   filename: fileName,
+      // })
+    },
+    setImage(value) {
+      this.showChooseImage = false;
+      console.log("value---------", value);
+      this.imageSelected = value.url;
     },
   },
 };
