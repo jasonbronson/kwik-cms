@@ -184,6 +184,7 @@ export default {
         },
       });
       this.publishConfirm = false;
+      this.$store.dispatch("posts/fetchAllPosts");
     },
     async publishPage() {
       await this.$store.dispatch("pages/updatePage", {
