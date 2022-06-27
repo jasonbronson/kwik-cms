@@ -246,12 +246,12 @@ export default {
       listUsers: (state) => state.users.usersList,
       listCategories: (state) => state.categories.categoriesList,
       listTags: (state) => state.tags.tagsList,
-      listCateString() {
-        return this.listCateArray.join(",");
-      },
-      listTagString() {
-        return this.listTagArray.join(",");
-      },
+      // listCateString() {
+      //   return this.listCateArray.join(",");
+      // },
+      // listTagString() {
+      //   return this.listTagArray.join(",");
+      // },
     }),
   },
   data() {
@@ -262,6 +262,8 @@ export default {
       selectedTag: "",
       listCateArray: [],
       listTagArray: [],
+      listCateString: "",
+      listTagString: "",
       showChooseImage: false,
       imageSelected: "",
     };
@@ -278,6 +280,14 @@ export default {
     if (this.editData && this.editData.user_id) {
       this.selectedUser = this.editData.user_id
     }
+    if (this.editData) {
+      this.listCateArray = this.editData.Categories.map(i => i.name)
+      this.listCateString = this.listCateArray.join(",")
+    }
+    if (this.editData) {
+      this.listTagArray = this.editData.Tags.map(i => i.name)
+      this.listTagString = this.listTagArray.join(",")
+    }
   },
   watch: {
     editData: {
@@ -289,26 +299,29 @@ export default {
     post(value) {
       this.editData = value;
     },
+    listCateString(value) {
+      this.listCateArray = value.split(",")
+      this.callEmit("cate")
+    },
+    listTagString(value) {
+      this.listTagArray = value.split(",")
+      this.callEmit("tag")
+    },
     selectedCate(value) {
       if (!this.listCateArray.includes(value)) {
         this.listCateArray.push(value);
       }
-      this.editData.categories = this.listCategories
-        .filter((i) => this.listCateArray.includes(i.name))
-        .map((j) => ({ id: j.id }));
-      this.$emit("handleMetaDataChange", this.editData);
+      this.listCateString = this.listCateArray.join(",")
+      this.callEmit("cate")
     },
     selectedTag(value) {
       if (!this.listCateArray.includes(value)) {
         this.listTagArray.push(value);
       }
-      this.editData.tags = this.listTags
-        .filter((i) => this.listTagArray.includes(i.name))
-        .map((j) => ({ id: j.id }));
-      this.$emit("handleMetaDataChange", this.editData);
+      this.listTagString = this.listTagArray.join(",")
+      this.callEmit("tag")
     },
     selectedUser(value) {
-      console.log("change");
       this.editData.user_id = value;
       this.$emit("handleMetaDataChange", this.editData);
     },
@@ -327,6 +340,20 @@ export default {
       this.showChooseImage = false;
       console.log("value---------", value);
       this.imageSelected = value.url;
+    },
+    callEmit(type) {
+      if (type === "cate") {
+        this.editData.Categories = this.listCategories
+          .filter((i) => this.listCateArray.includes(i.name))
+          .map((j) => ({ id: j.id }));
+        this.$emit("handleMetaDataChange", this.editData);
+      }
+      if (type === "tag") {
+        this.editData.Tags = this.listTags
+          .filter((i) => this.listTagArray.includes(i.name))
+          .map((j) => ({ id: j.id }));
+        this.$emit("handleMetaDataChange", this.editData);
+      }
     },
   },
 };
