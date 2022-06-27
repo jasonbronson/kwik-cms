@@ -107,21 +107,24 @@ export default {
         await this.$store.dispatch("posts/deletePost", this.postSelected.id);
         this.deleteUserConfirm = false;
         // this.$router.push("/users");
+        this.$store.dispatch("posts/fetchAllPosts");
       } catch (error) {
         console.log(error);
       }
     },
     handlePublish() {
       console.log("handlePublish");
-      this.publishConfirm = true
+      this.publishConfirm = true;
     },
     async publishPost() {
-      await this.$store.dispatch("posts/updatePost",{post: {
-        id: this.postSelected.id,
-        publish_date: new Date(),
-        status: "publish"
-      }});
-      this.publishConfirm = false
+      await this.$store.dispatch("posts/updatePost", {
+        post: {
+          id: this.postSelected.id,
+          publish_date: new Date(),
+          status: "publish",
+        },
+      });
+      this.publishConfirm = false;
     },
     handleSchedule() {
       this.isShowSchedule = true;
