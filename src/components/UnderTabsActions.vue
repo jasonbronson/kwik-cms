@@ -7,6 +7,12 @@
       text="Do you want to delete the item?"
     ></are-you-sure>
     <are-you-sure
+      v-if="deleteUserConfirmPage"
+      @yes="deletePage"
+      @no="deleteUserConfirmPage = false"
+      text="Do you want to delete the item?"
+    ></are-you-sure>
+    <are-you-sure
       v-if="publishConfirm"
       @yes="publishPost"
       @no="publishConfirm = false"
@@ -58,6 +64,7 @@ export default {
   data() {
     return {
       deleteUserConfirm: false,
+      deleteUserConfirmPage: false,
       publishConfirm: false,
       isShowSchedule: false,
     };
@@ -82,6 +89,10 @@ export default {
       type: Object,
       default: () => {},
     },
+    pageSelected: {
+      type: Object,
+      default: () => {},
+    },
   },
   mounted() {
     if (
@@ -99,7 +110,26 @@ export default {
       return tabData.title == this.value.title;
     },
     handleDelete() {
-      this.deleteUserConfirm = true;
+      if (this.postSelected) {
+        this.deleteUserConfirm = true;
+      } else if (this.pageSelected) {
+        this.deleteUserConfirmPage = true;
+      } else {
+        this.deleteUserConfirmPage = false;
+      }
+    },
+
+    async deletePage() {
+      try {
+        this.loading = true;
+        console.log("========", this.pageSelected.id);
+        await this.$store.dispatch("pages/deletePage", this.pageSelected.id);
+        this.deleteUserConfirmPage = false;
+        // this.$router.push("/users");
+        this.$store.dispatch("pages/fetchAllPages");
+      } catch (error) {
+        console.log(error);
+      }
     },
     async deleteUser() {
       try {
