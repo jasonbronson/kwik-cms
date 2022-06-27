@@ -34,8 +34,8 @@
             @input="handleTabActionChange"
             :postSelected="postSelected"
           />
-          <DropDown title="Author" :options="authors" />
-          <DropDown title="Categories" :options="categories" />
+          <DropDown :options="authorsOptions" @selectDropdown="filterAuthor"/>
+          <DropDown :options="categoriesOption" @selectDropdown="filterCategory"/>
           <div class="flex-grow text-right flex justify-end tex-primary-500">
             Export All Posts
           </div>
@@ -66,6 +66,7 @@ import KwikSearchInput from "../../components/global/KwikSearchInput.vue";
 import ListItem from "@/components/ListItem";
 import { mapState } from "vuex";
 import DropDown from "@/components/DropDown";
+var qs = require("qs");
 export default {
   components: {
     DropDown,
@@ -124,6 +125,7 @@ export default {
         icon: "fa-solid fa-trash",
       },
       password: "",
+      filters: []
     };
   },
 
@@ -134,25 +136,60 @@ export default {
       usersList: (state) => state.users.usersList,
       categories: (state) => state.categories.categoriesList,
     }),
-    authors() {
+    authorsOptions() {
       if (this.usersList.length > 0) {
-        return this.usersList.map((el) => {
+        var list = this.usersList.map((el) => {
           return {
-            name: `${el.first_name} ${el.last_name}`,
+            label: `${el.first_name} ${el.last_name}`,
             img: "https://source.unsplash.com/random/1280x720",
+            id: el.id
           };
         });
+        list.unshift(
+          {
+            label: "All Authors",
+            id: "",
+            img: ""
+          }
+        )
+        return list
       }
-      return [{ name: "Empty" }];
+      return [
+        {
+          label: "Empty",
+          id: "",
+          img: ""
+        }
+      ];
+    },
+    categoriesOption() {
+      if (this.usersList.length > 0) {
+        var list = this.categories.map((el) => {
+          return {
+            label: el.name,
+            id: el.id
+          };
+        });
+        list.unshift(
+          {
+            label: "All Categories",
+            id: "",
+          }
+        )
+        return list
+      }
+      return [
+        {
+          label: "Empty",
+          id: "",
+        }
+      ];
     },
   },
   methods: {
     handleTabChange(selectedValue) {
       this.currentBlogTab = selectedValue;
-      this.$store.dispatch("posts/getPostsByText", {
-        query: selectedValue.id,
-        searchBy: "status",
-      });
+      this.addFilter({status:selectedValue.id})
     },
     handleTabActionChange(selectedValue) {
       this.currentActionTab = selectedValue;
@@ -166,15 +203,37 @@ export default {
       }
     },
     handlePostsSearch(newString) {
-      console.log("newString", newString);
       if (newString && newString.length < 3) {
         return;
       }
-      this.$store.dispatch("posts/getPostsByText", {
-        query: newString,
-        searchBy: "title",
-      });
+      this.addFilter({title: newString})
     },
+    getQuery() {
+      var obj = this.filters.reduce(((r, c) => Object.assign(r, c)), {})
+      return qs.stringify(obj, { delimiter: '&' })
+    },
+    addFilter(object) {
+      const index = this.filters.findIndex(o => {
+        return Object.keys(o)[0] === Object.keys(object)[0];
+      });
+      if (!Object.values(object)[0] && index != -1) {
+        this.filters.splice(index, 1)
+      } else if (index == -1) {
+        this.filters.push(object)
+      } else {
+        this.filters[index] = object
+      }
+      this.fetchData()
+    },
+    fetchData() {
+      this.$store.dispatch("posts/fetchAllPosts", this.getQuery());
+    },
+    filterAuthor(value) {
+      this.addFilter({author: value})
+    },
+    filterCategory(value) {
+      this.addFilter({category: value})
+    }
   },
   mounted() {
     this.$store.dispatch("users/fetchAndSetUsers");

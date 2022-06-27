@@ -2,10 +2,10 @@
 import axios from "@/services/axios";
 
 export default {
-  async fetchAllPosts({ commit }) {
+  async fetchAllPosts({ commit }, query) {
     commit("setLoading", true);
     try {
-      const { data } = await axios.get("/posts");
+      const { data } = await axios.get(`/posts?${query}`);
       commit("setPosts", data.data);
       commit("setLoading", false);
     } catch (e) {
