@@ -98,11 +98,10 @@ export default {
     async handlePublish() {
       console.log("handlePublish");
 
-      let payload = {
+      await this.$store.dispatch("posts/updatePublish", {
         postId: this.postSelected.id,
         publish_date: this.postSelected.publish_date,
-      };
-      await this.$store.dispatch("posts/updatePublish", payload);
+      });
     },
     handleSchedule() {
       console.log("handleSchedule", this.postSelected);
