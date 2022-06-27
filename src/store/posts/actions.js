@@ -69,15 +69,4 @@ export default {
     }
   },
 
-  async updatePublish({ commit }, payload) {
-    commit("setLoading", true);
-    console.log("payload", payload);
-    try {
-      await axios.put(`/posts/publish/${payload.postId}`, payload);
-      commit("setLoading", false);
-    } catch (e) {
-      commit("setLoading", false);
-      throw e;
-    }
-  },
 };
