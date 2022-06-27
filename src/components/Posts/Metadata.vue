@@ -246,12 +246,6 @@ export default {
       listUsers: (state) => state.users.usersList,
       listCategories: (state) => state.categories.categoriesList,
       listTags: (state) => state.tags.tagsList,
-      // listCateString() {
-      //   return this.listCateArray.join(",");
-      // },
-      // listTagString() {
-      //   return this.listTagArray.join(",");
-      // },
     }),
   },
   data() {
