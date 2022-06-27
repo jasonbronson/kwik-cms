@@ -47,7 +47,7 @@
             v-for="(post, index) in posts"
             :key="index"
             :title="post.title"
-            :createdAt="post.created_at"
+            :publishDate="post.publish_date"
             :id="post.id"
             :item="post"
             :title-to="`/posts/edit/${post.id}`"
