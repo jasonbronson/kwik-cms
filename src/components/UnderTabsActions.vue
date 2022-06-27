@@ -6,6 +6,12 @@
       @no="deleteUserConfirm = false"
       text="Do you want to delete the item?"
     ></are-you-sure>
+    <popup-schedule
+      v-if="isShowSchedule"
+      @yes="isShowSchedule = false"
+      text="Schedule of item"
+      :info="this.postSelected.publish_date"
+    ></popup-schedule>
     <div class="mr-20">
       <div class="flex items-center gap-3 text-sm">
         <div
@@ -36,14 +42,17 @@
 
 <script>
 import AreYouSure from "../components/global/AreYouSure.vue";
+import PopupSchedule from "../components/global/PopupSchedule.vue";
 export default {
   name: "UnderlineTab",
   components: {
     AreYouSure,
+    PopupSchedule,
   },
   data() {
     return {
       deleteUserConfirm: false,
+      isShowSchedule: false,
     };
   },
   displayUserName() {
@@ -104,6 +113,7 @@ export default {
       });
     },
     handleSchedule() {
+      this.isShowSchedule = true;
       console.log("handleSchedule", this.postSelected);
     },
   },
