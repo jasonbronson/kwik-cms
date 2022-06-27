@@ -110,6 +110,7 @@ export default {
       await this.$store.dispatch("posts/updatePost",{post: {
         id: this.postSelected.id,
         publish_date: new Date(),
+        status: "publish"
       }});
     },
     handleSchedule() {

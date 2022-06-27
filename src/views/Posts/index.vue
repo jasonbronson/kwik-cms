@@ -149,6 +149,10 @@ export default {
   methods: {
     handleTabChange(selectedValue) {
       this.currentBlogTab = selectedValue;
+      this.$store.dispatch("posts/getPostsByText", {
+        query: selectedValue.id,
+        searchBy: "status",
+      });
     },
     handleTabActionChange(selectedValue) {
       this.currentActionTab = selectedValue;
