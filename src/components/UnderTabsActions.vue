@@ -6,6 +6,12 @@
       @no="deleteUserConfirm = false"
       text="Do you want to delete the item?"
     ></are-you-sure>
+    <are-you-sure
+      v-if="publishConfirm"
+      @yes="publishPost"
+      @no="publishConfirm = false"
+      text="Do you want to publish this item?"
+    ></are-you-sure>
     <popup-schedule
       v-if="isShowSchedule"
       @yes="isShowSchedule = false"
@@ -52,6 +58,7 @@ export default {
   data() {
     return {
       deleteUserConfirm: false,
+      publishConfirm: false,
       isShowSchedule: false,
     };
   },
@@ -104,14 +111,17 @@ export default {
         console.log(error);
       }
     },
-    async handlePublish() {
+    handlePublish() {
       console.log("handlePublish");
-
+      this.publishConfirm = true
+    },
+    async publishPost() {
       await this.$store.dispatch("posts/updatePost",{post: {
         id: this.postSelected.id,
         publish_date: new Date(),
         status: "publish"
       }});
+      this.publishConfirm = false
     },
     handleSchedule() {
       this.isShowSchedule = true;
