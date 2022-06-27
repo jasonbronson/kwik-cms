@@ -109,7 +109,7 @@ export default {
 
       await this.$store.dispatch("posts/updatePost",{post: {
         id: this.postSelected.id,
-        publish_date: this.postSelected.publish_date,
+        publish_date: new Date(),
       }});
     },
     handleSchedule() {
