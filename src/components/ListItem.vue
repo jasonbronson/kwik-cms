@@ -32,7 +32,8 @@
       <div class="flex justify-end">
         <button
           type="button"
-          class="text-emerald-400 bg-green-100 hover:bg-blue-800 focus:outline-none focus:ring-4 focus:ring-blue-300 font-medium rounded-full text-sm px-5 py-2.5 text-center mr-2 mb-2 dark:bg-blue-600 dark:hover:bg-blue-700 dark:focus:ring-blue-800"
+          :class="styleByStatus"
+          class="font-medium rounded-full text-sm px-5 py-2.5 text-center mr-2 mb-2"
         >
           {{ publishDate | moment("MMM DD, YYYY") }}
         </button>
@@ -78,6 +79,22 @@ export default {
     return {
       checked: false,
     };
+  },
+  computed: {
+    styleByStatus() {
+      var now = new Date()
+      if (this.item.status == "draft") {
+        return "text-yellow-200 bg-yellow-100"
+      }
+      if (this.item.status == "publish") {
+        if (new Date(this.publishDate).getTime() > now.getTime()) {
+          return "text-primary-500 bg-primary-300"
+        } else {
+          return "text-green-200 bg-green-100"
+        }
+      }
+      return ""
+    }
   },
   methods: {
     handleClick() {

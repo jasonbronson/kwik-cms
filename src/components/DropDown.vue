@@ -1,7 +1,7 @@
 <template>
   <div>
     <select
-      class="w-full border-solid border-2 rounded h-10 px-4 focus:outline-none focus:border-primary-100"
+      class="w-full border-solid border-2 rounded h-10 px-4 bg-white p-2"
       v-model="selectedValue"
     >
       <option v-for="(option, i) in options" :key="i" :value="option.id">

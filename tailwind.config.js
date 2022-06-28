@@ -36,6 +36,11 @@ module.exports = {
           default: " #428bca",
           300: "#428bca", //links
         },
+        yellow: {
+          default: "#fff7ca",
+          100: "#fff7ca",
+          200: "#726a3a",
+        }
       },
     },
   },

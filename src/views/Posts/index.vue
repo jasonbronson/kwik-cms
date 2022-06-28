@@ -34,7 +34,7 @@
             @input="handleTabActionChange"
             :postSelected="postSelected"
           />
-          <DropDown :options="authorsOptions" @selectDropdown="filterAuthor"/>
+          <DropDown :options="authorsOptions" @selectDropdown="filterAuthor" class="mr-2"/>
           <DropDown :options="categoriesOption" @selectDropdown="filterCategory"/>
           <div class="flex-grow text-right flex justify-end tex-primary-500">
             Export All Posts
