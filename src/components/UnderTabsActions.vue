@@ -12,18 +12,38 @@
       @no="deleteUserConfirmPage = false"
       text="Do you want to delete the item?"
     ></are-you-sure>
-    <are-you-sure
-      v-if="publishConfirm"
-      @yes="publishPost"
-      @no="publishConfirm = false"
-      text="Do you want to publish this item?"
-    ></are-you-sure>
-    <popup-schedule
-      v-if="isShowSchedule"
-      @yes="isShowSchedule = false"
-      text="Schedule of item"
-      :info="this.postSelected.publish_date"
-    ></popup-schedule>
+    <div v-if="this.postSelected">
+      <are-you-sure
+        v-if="publishConfirm"
+        @yes="publishPost"
+        @no="publishConfirm = false"
+        text="Do you want to publish this item?"
+      ></are-you-sure>
+    </div>
+    <div v-if="this.pageSelected">
+      <are-you-sure
+        v-if="publishConfirmPage"
+        @yes="publishPage"
+        @no="publishConfirmPage = false"
+        text="Do you want to publish this item?"
+      ></are-you-sure>
+    </div>
+    <div v-if="this.postSelected">
+      <popup-schedule
+        v-if="isShowSchedule"
+        @yes="isShowSchedule = false"
+        text="Schedule of item"
+        :info="this.postSelected.publish_date"
+      ></popup-schedule>
+    </div>
+    <div v-if="this.pageSelected">
+      <popup-schedule
+        v-if="isShowSchedulePage"
+        @yes="isShowSchedulePage = false"
+        text="Schedule of item"
+        :info="this.pageSelected.publish_date"
+      ></popup-schedule>
+    </div>
     <div class="mr-20">
       <div class="flex items-center gap-3 text-sm">
         <div
@@ -66,7 +86,9 @@ export default {
       deleteUserConfirm: false,
       deleteUserConfirmPage: false,
       publishConfirm: false,
+      publishConfirmPage: false,
       isShowSchedule: false,
+      isShowSchedulePage: false,
     };
   },
   displayUserName() {
@@ -144,7 +166,14 @@ export default {
     },
     handlePublish() {
       console.log("handlePublish");
-      this.publishConfirm = true;
+
+      if (this.postSelected) {
+        this.publishConfirm = true;
+      } else if (this.pageSelected) {
+        this.publishConfirmPage = true;
+      } else {
+        this.publishConfirmPage = true;
+      }
     },
     async publishPost() {
       await this.$store.dispatch("posts/updatePost", {
@@ -156,9 +185,27 @@ export default {
       });
       this.publishConfirm = false;
     },
+    async publishPage() {
+      await this.$store.dispatch("pages/updatePage", {
+        page: {
+          id: this.pageSelected.id,
+          publish_date: new Date(),
+          status: "publish",
+        },
+      });
+      this.publishConfirmPage = false;
+    },
     handleSchedule() {
       this.isShowSchedule = true;
       console.log("handleSchedule", this.postSelected);
+
+      if (this.postSelected) {
+        this.isShowSchedule = true;
+      } else if (this.pageSelected) {
+        this.isShowSchedulePage = true;
+      } else {
+        this.isShowSchedulePage = false;
+      }
     },
   },
 };
