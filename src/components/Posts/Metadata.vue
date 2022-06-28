@@ -326,9 +326,6 @@ export default {
     },
     closeChooseImage() {
       this.showChooseImage = false;
-      // this.$store.dispatch('media/addFolder', {
-      //   filename: fileName,
-      // })
     },
     setImage(value) {
       this.showChooseImage = false;
@@ -337,16 +334,10 @@ export default {
     },
     callEmit(type) {
       if (type === "cate") {
-        this.editData.Categories = this.listCategories
-          .filter((i) => this.listCateArray.includes(i.name))
-          .map((j) => ({ id: j.id }));
-        this.$emit("handleMetaDataChange", this.editData);
+        this.$emit("handleMetaDataChange", {type: "cate", data: this.listCateArray});
       }
       if (type === "tag") {
-        this.editData.Tags = this.listTags
-          .filter((i) => this.listTagArray.includes(i.name))
-          .map((j) => ({ id: j.id }));
-        this.$emit("handleMetaDataChange", this.editData);
+        this.$emit("handleMetaDataChange", {type: "tag", data: this.listTagArray});
       }
     },
   },
