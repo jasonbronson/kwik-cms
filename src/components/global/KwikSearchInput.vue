@@ -11,6 +11,7 @@
       />
       <button
         class="flex items-center justify-center px-4 border-l bg-primary-400"
+        @click="handleSeachString"
       >
         <svg
           class="h-4 w-4 text-white"
@@ -43,16 +44,6 @@ export default {
     value: {
       type: String,
       default: "",
-    },
-    props: {
-      placeholder: {
-        type: String,
-        default: "Search for live events, shows, news and more...",
-      },
-      value: {
-        type: String,
-        default: "",
-      },
     },
   },
   watch: {
