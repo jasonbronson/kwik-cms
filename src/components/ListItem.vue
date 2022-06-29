@@ -70,14 +70,14 @@ export default {
       type: String,
       default: "",
     },
-    // checked: {
-    //   type: Array,
-    //   default: [],
-    // },
+    checked: {
+      type: Boolean,
+      default: false
+    }
   },
   data() {
     return {
-      checked: false,
+      // checked: false,
     };
   },
   computed: {

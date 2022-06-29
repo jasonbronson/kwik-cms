@@ -58,14 +58,14 @@ export default {
       type: Boolean,
       default: false,
     },
-    postSelected: {
+    itemSelected: {
       type: Object,
       default: () => {},
     },
-    pageSelected: {
-      type: Object,
-      default: () => {},
-    },
+    // pageSelected: {
+    //   type: Object,
+    //   default: () => {},
+    // },
   },
   mounted() {
     if (
@@ -83,36 +83,18 @@ export default {
       return tabData.title == this.value.title;
     },
     handleDelete() {
-      if (this.postSelected) {
-        this.$emit("clickDeletePost", true);
-        this.deleteUserConfirm = true;
-      } else if (this.pageSelected) {
-        this.$emit("clickDeletePage", true);
-        this.deleteUserConfirmPage = true;
-      } else {
-        this.deleteUserConfirmPage = false;
+      if (this.itemSelected) {
+        this.$emit("clickDeleteItem", true);
       }
     },
     handlePublish() {
-      if (this.postSelected) {
-        this.$emit("clickPublishConfirm", true);
-        this.publishConfirm = true;
-      } else if (this.pageSelected) {
-        this.$emit("clickPublishConfirmPage", true);
-        this.publishConfirmPage = true;
-      } else {
-        this.publishConfirmPage = true;
+      if (this.itemSelected) {
+        this.$emit("clickPublishItem", true);
       }
     },
     handleSchedule() {
-      if (this.postSelected) {
-        this.$emit("clickSchedulePost", true);
-        this.isShowSchedule = true;
-      } else if (this.pageSelected) {
-        this.$emit("clickSchedulePage", true);
-        this.isShowSchedulePage = true;
-      } else {
-        this.isShowSchedulePage = false;
+      if (this.itemSelected) {
+        this.$emit("clickScheduleItem", true);
       }
     },
   },

@@ -28,14 +28,14 @@
           />
           <UnderTabsActions
             v-else
-            @clickDeletePost="handleDeletePost"
-            @clickPublishConfirm="handlePublishConfirm"
-            @clickSchedulePost="handleSchedulePost"
+            @clickDeleteItem="handleDeletePost"
+            @clickPublishItem="handlePublishConfirm"
+            @clickScheduleItem="handleSchedulePost"
             :isDeletePost="isDeletePost"
             :data="ActionPostTabs"
             v-model="currentActionTab"
             @input="handleTabActionChange"
-            :postSelected="postSelected"
+            :itemSelected="postSelected"
           />
           <DropDown
             :options="authorsOptions"
@@ -61,6 +61,7 @@
             :id="post.id"
             :item="post"
             :title-to="`/posts/edit/${post.id}`"
+            :checked="postSelected.id == post.id"
             postImg="https://source.unsplash.com/random/1280x720"
           />
         </div>
@@ -223,6 +224,8 @@ export default {
         this.loading = true;
         await this.$store.dispatch("posts/deletePost", this.postSelected.id);
         this.deleteUserConfirm = false;
+        this.isDeletePost = false
+        this.postSelected = {}
         // this.$router.push("/users");
         this.$store.dispatch("posts/fetchAllPosts");
         this.loading = false;
@@ -289,6 +292,8 @@ export default {
         },
       });
       this.publishConfirm = false;
+      this.isDeletePost = false
+      this.postSelected = {}
       this.$store.dispatch("posts/fetchAllPosts");
     },
     handlePublishConfirm(value) {
