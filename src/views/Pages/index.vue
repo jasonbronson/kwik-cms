@@ -28,7 +28,10 @@
           />
           <UnderTabsActions
             v-else
+            @clickPublishConfirmPage="handlePublishConfirmPag"
+            @clickDeletePage="clickDeletePage"
             :isDeletePage="isDeletePage"
+            @clickSchedulePage="handleSchedulePage"
             :data="ActionPageTabs"
             v-model="currentActionTab"
             @input="handleTabActionChange"
@@ -57,6 +60,24 @@
         <!--  -->
       </div>
     </div>
+    <are-you-sure
+      v-if="deleteUserConfirmPage"
+      @yes="handleDeletePage"
+      @no="deleteUserConfirmPage = false"
+      text="Do you want to delete the item?"
+    ></are-you-sure>
+    <are-you-sure
+      v-if="publishConfirmPage"
+      @yes="publishPage"
+      @no="publishConfirmPage = false"
+      text="Do you want to delete the item?"
+    ></are-you-sure>
+    <popup-schedule
+      v-if="isShowSchedule"
+      @yes="isShowSchedule = false"
+      text="Schedule of item"
+      :info="this.pageSelected.publish_date"
+    ></popup-schedule>
   </div>
 </template>
 <script>
@@ -66,6 +87,8 @@ import KwikSearchInput from "../../components/global/KwikSearchInput.vue";
 import ListItem from "@/components/ListItem";
 import { mapState } from "vuex";
 import DropDown from "@/components/DropDown";
+import AreYouSure from "../../components/global/AreYouSure.vue";
+import PopupSchedule from "../../components/global/PopupSchedule.vue";
 export default {
   components: {
     DropDown,
@@ -73,6 +96,8 @@ export default {
     UnderlineTabs,
     UnderTabsActions,
     KwikSearchInput,
+    AreYouSure,
+    PopupSchedule,
   },
   data() {
     return {
@@ -115,7 +140,10 @@ export default {
           icon: "fa-solid fa-trash",
         },
       ],
+      deleteUserConfirmPage: false,
+      publishConfirmPage: false,
       isDeletePage: false,
+      isShowSchedule: false,
       currentPageTab: {},
       pageSelected: {},
       currentActionTab: {
@@ -162,7 +190,6 @@ export default {
       }
     },
     handlePagesSearch(newString) {
-      console.log("newString", newString);
       if (newString && newString.length < 3) {
         return;
       }
@@ -170,6 +197,41 @@ export default {
         query: newString,
         searchBy: "title",
       });
+    },
+    async handleDeletePage() {
+      try {
+        this.loading = true;
+        await this.$store.dispatch("pages/deletePage", this.pageSelected.id);
+        this.deleteUserConfirmPage = false;
+
+        // this.$router.push("/users");
+        this.$store.dispatch("pages/fetchAllPages");
+        this.loading = false;
+      } catch (error) {
+        console.log(error);
+      }
+    },
+    clickDeletePage(value) {
+      this.deleteUserConfirmPage = value;
+    },
+    handlePublishConfirm(value) {
+      this.publishConfirmPage = value;
+    },
+    async publishPage() {
+      await this.$store.dispatch("pages/updatePage", {
+        page: {
+          id: this.pageSelected.id,
+          publish_date: new Date(),
+          status: "publish",
+        },
+      });
+      this.publishConfirmPage = false;
+    },
+    handlePublishConfirmPag(value) {
+      this.publishConfirmPage = value;
+    },
+    handleSchedulePage(value) {
+      this.isShowSchedule = value;
     },
   },
   mounted() {

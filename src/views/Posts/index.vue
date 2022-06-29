@@ -28,14 +28,24 @@
           />
           <UnderTabsActions
             v-else
+            @clickDeletePost="handleDeletePost"
+            @clickPublishConfirm="handlePublishConfirm"
+            @clickSchedulePost="handleSchedulePost"
             :isDeletePost="isDeletePost"
             :data="ActionPostTabs"
             v-model="currentActionTab"
             @input="handleTabActionChange"
             :postSelected="postSelected"
           />
-          <DropDown :options="authorsOptions" @selectDropdown="filterAuthor" class="mr-2"/>
-          <DropDown :options="categoriesOption" @selectDropdown="filterCategory"/>
+          <DropDown
+            :options="authorsOptions"
+            @selectDropdown="filterAuthor"
+            class="mr-2"
+          />
+          <DropDown
+            :options="categoriesOption"
+            @selectDropdown="filterCategory"
+          />
           <div class="flex-grow text-right flex justify-end tex-primary-500">
             Export All Posts
           </div>
@@ -57,6 +67,24 @@
         <!--  -->
       </div>
     </div>
+    <are-you-sure
+      v-if="deleteUserConfirm"
+      @yes="deleteUser"
+      @no="deleteUserConfirm = false"
+      text="Do you want to delete the item?"
+    ></are-you-sure>
+    <are-you-sure
+      v-if="publishConfirm"
+      @yes="publishPost"
+      @no="publishConfirm = false"
+      text="Do you want to delete the item?"
+    ></are-you-sure>
+    <popup-schedule
+      v-if="isShowSchedule"
+      @yes="isShowSchedule = false"
+      text="Schedule of item"
+      :info="this.postSelected.publish_date"
+    ></popup-schedule>
   </div>
 </template>
 <script>
@@ -66,6 +94,8 @@ import KwikSearchInput from "../../components/global/KwikSearchInput.vue";
 import ListItem from "@/components/ListItem";
 import { mapState } from "vuex";
 import DropDown from "@/components/DropDown";
+import AreYouSure from "../../components/global/AreYouSure.vue";
+import PopupSchedule from "../../components/global/PopupSchedule.vue";
 var qs = require("qs");
 export default {
   components: {
@@ -74,6 +104,8 @@ export default {
     UnderlineTabs,
     UnderTabsActions,
     KwikSearchInput,
+    AreYouSure,
+    PopupSchedule,
   },
   data() {
     return {
@@ -116,7 +148,10 @@ export default {
           icon: "fa-solid fa-trash",
         },
       ],
+      deleteUserConfirm: false,
+      publishConfirm: false,
       isDeletePost: false,
+      isShowSchedule: false,
       currentBlogTab: {},
       postSelected: {},
       currentActionTab: {
@@ -125,7 +160,7 @@ export default {
         icon: "fa-solid fa-trash",
       },
       password: "",
-      filters: []
+      filters: [],
     };
   },
 
@@ -142,24 +177,22 @@ export default {
           return {
             label: `${el.first_name} ${el.last_name}`,
             img: "https://source.unsplash.com/random/1280x720",
-            id: el.id
+            id: el.id,
           };
         });
-        list.unshift(
-          {
-            label: "All Authors",
-            id: "",
-            img: ""
-          }
-        )
-        return list
+        list.unshift({
+          label: "All Authors",
+          id: "",
+          img: "",
+        });
+        return list;
       }
       return [
         {
           label: "Empty",
           id: "",
-          img: ""
-        }
+          img: "",
+        },
       ];
     },
     categoriesOption() {
@@ -167,29 +200,42 @@ export default {
         var list = this.categories.map((el) => {
           return {
             label: el.name,
-            id: el.id
+            id: el.id,
           };
         });
-        list.unshift(
-          {
-            label: "All Categories",
-            id: "",
-          }
-        )
-        return list
+        list.unshift({
+          label: "All Categories",
+          id: "",
+        });
+        return list;
       }
       return [
         {
           label: "Empty",
           id: "",
-        }
+        },
       ];
     },
   },
   methods: {
+    async deleteUser() {
+      try {
+        this.loading = true;
+        await this.$store.dispatch("posts/deletePost", this.postSelected.id);
+        this.deleteUserConfirm = false;
+        // this.$router.push("/users");
+        this.$store.dispatch("posts/fetchAllPosts");
+        this.loading = false;
+      } catch (error) {
+        console.log(error);
+      }
+    },
+    handleDeletePost(value) {
+      this.deleteUserConfirm = value;
+    },
     handleTabChange(selectedValue) {
       this.currentBlogTab = selectedValue;
-      this.addFilter({status:selectedValue.id})
+      this.addFilter({ status: selectedValue.id });
     },
     handleTabActionChange(selectedValue) {
       this.currentActionTab = selectedValue;
@@ -206,34 +252,51 @@ export default {
       if (newString && newString.length < 3) {
         return;
       }
-      this.addFilter({title: newString})
+      this.addFilter({ title: newString });
     },
     getQuery() {
-      var obj = this.filters.reduce(((r, c) => Object.assign(r, c)), {})
-      return qs.stringify(obj, { delimiter: '&' })
+      var obj = this.filters.reduce((r, c) => Object.assign(r, c), {});
+      return qs.stringify(obj, { delimiter: "&" });
     },
     addFilter(object) {
-      const index = this.filters.findIndex(o => {
+      const index = this.filters.findIndex((o) => {
         return Object.keys(o)[0] === Object.keys(object)[0];
       });
       if (!Object.values(object)[0] && index != -1) {
-        this.filters.splice(index, 1)
+        this.filters.splice(index, 1);
       } else if (index == -1) {
-        this.filters.push(object)
+        this.filters.push(object);
       } else {
-        this.filters[index] = object
+        this.filters[index] = object;
       }
-      this.fetchData()
+      this.fetchData();
     },
     fetchData() {
       this.$store.dispatch("posts/fetchAllPosts", this.getQuery());
     },
     filterAuthor(value) {
-      this.addFilter({author: value})
+      this.addFilter({ author: value });
     },
     filterCategory(value) {
-      this.addFilter({category: value})
-    }
+      this.addFilter({ category: value });
+    },
+    async publishPost() {
+      await this.$store.dispatch("posts/updatePost", {
+        post: {
+          id: this.postSelected.id,
+          publish_date: new Date(),
+          status: "publish",
+        },
+      });
+      this.publishConfirm = false;
+      this.$store.dispatch("posts/fetchAllPosts");
+    },
+    handlePublishConfirm(value) {
+      this.publishConfirm = value;
+    },
+    handleSchedulePost(value) {
+      this.isShowSchedule = value;
+    },
   },
   mounted() {
     this.$store.dispatch("users/fetchAndSetUsers");

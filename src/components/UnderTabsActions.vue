@@ -1,49 +1,5 @@
 <template>
   <div>
-    <are-you-sure
-      v-if="deleteUserConfirm"
-      @yes="deleteUser"
-      @no="deleteUserConfirm = false"
-      text="Do you want to delete the item?"
-    ></are-you-sure>
-    <are-you-sure
-      v-if="deleteUserConfirmPage"
-      @yes="deletePage"
-      @no="deleteUserConfirmPage = false"
-      text="Do you want to delete the item?"
-    ></are-you-sure>
-    <div v-if="this.postSelected">
-      <are-you-sure
-        v-if="publishConfirm"
-        @yes="publishPost"
-        @no="publishConfirm = false"
-        text="Do you want to publish this item?"
-      ></are-you-sure>
-    </div>
-    <div v-if="this.pageSelected">
-      <are-you-sure
-        v-if="publishConfirmPage"
-        @yes="publishPage"
-        @no="publishConfirmPage = false"
-        text="Do you want to publish this item?"
-      ></are-you-sure>
-    </div>
-    <div v-if="this.postSelected">
-      <popup-schedule
-        v-if="isShowSchedule"
-        @yes="isShowSchedule = false"
-        text="Schedule of item"
-        :info="this.postSelected.publish_date"
-      ></popup-schedule>
-    </div>
-    <div v-if="this.pageSelected">
-      <popup-schedule
-        v-if="isShowSchedulePage"
-        @yes="isShowSchedulePage = false"
-        text="Schedule of item"
-        :info="this.pageSelected.publish_date"
-      ></popup-schedule>
-    </div>
     <div class="mr-20">
       <div class="flex items-center gap-3 text-sm">
         <div
@@ -73,14 +29,9 @@
 </template>
 
 <script>
-import AreYouSure from "../components/global/AreYouSure.vue";
-import PopupSchedule from "../components/global/PopupSchedule.vue";
 export default {
   name: "UnderlineTab",
-  components: {
-    AreYouSure,
-    PopupSchedule,
-  },
+  components: {},
   data() {
     return {
       deleteUserConfirm: false,
@@ -133,76 +84,32 @@ export default {
     },
     handleDelete() {
       if (this.postSelected) {
+        this.$emit("clickDeletePost", true);
         this.deleteUserConfirm = true;
       } else if (this.pageSelected) {
+        this.$emit("clickDeletePage", true);
         this.deleteUserConfirmPage = true;
       } else {
         this.deleteUserConfirmPage = false;
       }
     },
-
-    async deletePage() {
-      try {
-        this.loading = true;
-        console.log("========", this.pageSelected.id);
-        await this.$store.dispatch("pages/deletePage", this.pageSelected.id);
-        this.deleteUserConfirmPage = false;
-        // this.$router.push("/users");
-        this.$store.dispatch("pages/fetchAllPages");
-      } catch (error) {
-        console.log(error);
-      }
-    },
-    async deleteUser() {
-      try {
-        this.loading = true;
-        await this.$store.dispatch("posts/deletePost", this.postSelected.id);
-        this.deleteUserConfirm = false;
-        // this.$router.push("/users");
-        this.$store.dispatch("posts/fetchAllPosts");
-      } catch (error) {
-        console.log(error);
-      }
-    },
     handlePublish() {
-      console.log("handlePublish");
-
       if (this.postSelected) {
+        this.$emit("clickPublishConfirm", true);
         this.publishConfirm = true;
       } else if (this.pageSelected) {
+        this.$emit("clickPublishConfirmPage", true);
         this.publishConfirmPage = true;
       } else {
         this.publishConfirmPage = true;
       }
     },
-    async publishPost() {
-      await this.$store.dispatch("posts/updatePost", {
-        post: {
-          id: this.postSelected.id,
-          publish_date: new Date(),
-          status: "publish",
-        },
-      });
-      this.publishConfirm = false;
-      this.$store.dispatch("posts/fetchAllPosts");
-    },
-    async publishPage() {
-      await this.$store.dispatch("pages/updatePage", {
-        page: {
-          id: this.pageSelected.id,
-          publish_date: new Date(),
-          status: "publish",
-        },
-      });
-      this.publishConfirmPage = false;
-    },
     handleSchedule() {
-      this.isShowSchedule = true;
-      console.log("handleSchedule", this.postSelected);
-
       if (this.postSelected) {
+        this.$emit("clickSchedulePost", true);
         this.isShowSchedule = true;
       } else if (this.pageSelected) {
+        this.$emit("clickSchedulePage", true);
         this.isShowSchedulePage = true;
       } else {
         this.isShowSchedulePage = false;
