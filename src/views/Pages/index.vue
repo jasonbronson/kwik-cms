@@ -252,6 +252,7 @@ export default {
       }
     },
     handlePagesSearch(newString) {
+      console.log("ok pages", newString);
       if (newString && newString.length < 3) {
         return;
       }

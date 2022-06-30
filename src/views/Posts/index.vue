@@ -252,6 +252,7 @@ export default {
       }
     },
     handlePostsSearch(newString) {
+      console.log("ok posts");
       if (newString && newString.length < 3) {
         return;
       }

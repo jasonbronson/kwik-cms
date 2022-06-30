@@ -2,10 +2,10 @@
 import axios from "@/services/axios";
 
 export default {
-  async fetchAllPages({ commit }) {
+  async fetchAllPages({ commit }, query) {
     commit("setLoading", true);
     try {
-      const { data } = await axios.get("/pages");
+      const { data } = await axios.get(`/pages?${query}`);
       commit("setPages", data.data);
       commit("setLoading", false);
     } catch (e) {
