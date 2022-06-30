@@ -25,14 +25,14 @@ export default {
   },
   data() {
     return {
-      selectedValue: ""
-    }
+      selectedValue: "",
+    };
   },
   watch: {
     selectedValue(value) {
-      this.$emit("selectDropdown", value)
-    }
-  }
+      this.$emit("selectDropdown", value);
+    },
+  },
 };
 </script>
 
