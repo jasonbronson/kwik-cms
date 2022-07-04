@@ -3,6 +3,7 @@ import axios from "@/services/axios";
 
 export default {
   async fetchAllPosts({ commit }, query) {
+    console.log("fetchAllPosts", query);
     commit("setLoading", true);
     try {
       const { data } = await axios.get(`/posts?${query}`);
@@ -60,6 +61,7 @@ export default {
       const { data } = await axios.get(
         `/posts?${payload.searchBy}=${payload.query}`
       );
+      console.log("getPostsByText", data);
       commit("setPosts", data.data);
 
       commit("setLoading", false);
@@ -68,5 +70,4 @@ export default {
       throw e;
     }
   },
-
 };

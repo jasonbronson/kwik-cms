@@ -78,7 +78,7 @@
       v-if="publishConfirm"
       @yes="publishPost"
       @no="publishConfirm = false"
-      text="Do you want to delete the item?"
+      text="Do you want to Publish the item?"
     ></are-you-sure>
     <popup-schedule
       v-if="isShowSchedule"
@@ -224,8 +224,8 @@ export default {
         this.loading = true;
         await this.$store.dispatch("posts/deletePost", this.postSelected.id);
         this.deleteUserConfirm = false;
-        this.isDeletePost = false
-        this.postSelected = {}
+        this.isDeletePost = false;
+        this.postSelected = {};
         // this.$router.push("/users");
         this.$store.dispatch("posts/fetchAllPosts");
         this.loading = false;
@@ -252,6 +252,7 @@ export default {
       }
     },
     handlePostsSearch(newString) {
+      console.log("ok posts");
       if (newString && newString.length < 3) {
         return;
       }
@@ -292,8 +293,8 @@ export default {
         },
       });
       this.publishConfirm = false;
-      this.isDeletePost = false
-      this.postSelected = {}
+      this.isDeletePost = false;
+      this.postSelected = {};
       this.$store.dispatch("posts/fetchAllPosts");
     },
     handlePublishConfirm(value) {
