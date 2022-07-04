@@ -115,7 +115,7 @@
                   placeholder="Publish date"
                   input-class="focus:outline-none px-4 w-full flex-grow border-solid border-2 h-10 flex align-center"
                   wrapper-class=""
-                  v-model="editData.publish_date"
+                  v-model="publishDate"
                 />
               </div>
               <div
@@ -260,6 +260,7 @@ export default {
       listTagString: "",
       showChooseImage: false,
       imageSelected: "",
+      publishDate: null
     };
   },
   props: {
@@ -275,13 +276,14 @@ export default {
       this.selectedUser = this.editData.user_id
     }
     if (this.editData) {
-      this.listCateArray = this.editData.Categories.map(i => i.name)
+      this.listCateArray = this.editData.Categories ? this.editData.Categories.map(i => i.name) : []
       this.listCateString = this.listCateArray.join(",")
     }
     if (this.editData) {
-      this.listTagArray = this.editData.Tags.map(i => i.name)
+      this.listTagArray = this.editData.Tags ? this.editData.Tags.map(i => i.name) : []
       this.listTagString = this.listTagArray.join(",")
     }
+    this.publishDate = this.editData.publish_date || new Date() 
   },
   watch: {
     editData: {
@@ -289,6 +291,9 @@ export default {
         this.$emit("handleMetaDataChange", value);
       },
       deep: true,
+    },
+    publishDate(value) {
+      this.editData.publish_date = value
     },
     post(value) {
       this.editData = value;

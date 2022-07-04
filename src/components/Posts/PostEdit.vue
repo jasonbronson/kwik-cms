@@ -12,13 +12,13 @@
 
       <button
         class="shadow rounded px-4 py-2 bg-primary-400 text-gray-100 hover:bg-primary-500 hover:text-action-500 font-bold duration-300 text-sm"
-        @click="publishPost"
+        @click="savePost('publish')"
       >
         Publish
       </button>
       <button
         class="shadow rounded px-4 py-2 bg-white text-primary-500 font-bold duration-300 text-sm hover:border-primary-500 border"
-        @click="saveDraft"
+        @click="savePost('draft')"
       >
         Save Draft
       </button>
@@ -61,7 +61,7 @@ export default {
     await this.$store.dispatch("categories/fetchAndSetCategories");
   },
   methods: {
-    async publishPost() {
+    async savePost(status) {
       // add new categories on submit
       await Promise.all(this.valueCates.map(async(item) => {
         item = item.trim()
@@ -95,10 +95,7 @@ export default {
         .map((j) => ({ id: j.id }));
 
       // update post
-      await this.$emit("publish", { ...this.editData, status: "publish" });
-    },
-    async saveDraft() {
-      await this.$emit("publish", { ...this.editData, status: "draft" });
+      await this.$emit("publish", { ...this.editData, status: status });
     },
     handleChildDataChange(value) {
       if (value.type == "cate") {
