@@ -12,13 +12,13 @@
 
       <button
         class="shadow rounded px-4 py-2 bg-primary-400 text-gray-100 hover:bg-primary-500 hover:text-action-500 font-bold duration-300 text-sm"
-        @click="publishpage"
+        @click="savePage('publish')"
       >
         Publish
       </button>
       <button
         class="shadow rounded px-4 py-2 bg-white text-primary-500 font-bold duration-300 text-sm hover:border-primary-500 border"
-        @click="saveDraft"
+        @click="savePage('draft')"
       >
         Save Draft
       </button>
@@ -33,6 +33,7 @@
 
 <script>
 import Metadata from "@/components/Pages/Metadata";
+import { mapState } from "vuex";
 
 export default {
   name: "pageEdit",
@@ -40,6 +41,8 @@ export default {
   data() {
     return {
       editData: { title: "", content: "" },
+      valueCates: [],
+      valueTags: []
     };
   },
   props: {
@@ -47,15 +50,61 @@ export default {
       default: () => {},
     },
   },
+  computed: {
+    ...mapState({
+      listCategories: (state) => state.categories.categoriesList,
+      listTags: (state) => state.tags.tagsList,
+    }),
+  },
+  async mounted() {
+    await this.$store.dispatch("tags/fetchAndSetTags");
+    await this.$store.dispatch("categories/fetchAndSetCategories");
+  },
   methods: {
-    async publishpage() {
-      await this.$emit("publish", { ...this.editData, status: "publish" });
-    },
-    async saveDraft() {
-      await this.$emit("publish", { ...this.editData, status: "draft" });
+    async savePage(status) {
+      // add new categories on submit
+      await Promise.all(this.valueCates.map(async(item) => {
+        item = item.trim()
+        const checkValue = obj => obj.name === item;
+        if (!this.listCategories.some(checkValue)) {
+          await this.$store.dispatch("categories/createCategory", {
+            name: item,
+          });
+        }
+        return item
+      })).then(value => this.valueCates = value)
+      await this.$store.dispatch("categories/fetchAndSetCategories");
+      this.editData.Categories = this.listCategories
+        .filter((i) => this.valueCates.includes(i.name))
+        .map((j) => ({ id: j.id }));
+
+      // add new tags on submit
+      await Promise.all(this.valueTags.map(async(item) => {
+        item = item.trim()
+        const checkValue = obj => obj.name === item;
+        if (!this.listTags.some(checkValue)) {
+          await this.$store.dispatch("tags/createTag", {
+            name: item,
+          });
+        }
+        return item
+      })).then(value => this.valueTags = value)
+      await this.$store.dispatch("tags/fetchAndSetTags");
+      this.editData.Tags = this.listTags
+        .filter((i) => this.valueTags.includes(i.name))
+        .map((j) => ({ id: j.id }));
+
+      // update post
+      await this.$emit("publish", { ...this.editData, status: status });
     },
     handleChildDataChange(value) {
-      this.editData = { ...this.editData, ...value };
+      if (value.type == "cate") {
+        this.valueCates = value.data
+      } else if (value.type == "tag") {
+        this.valueTags = value.data
+      } else {
+        this.editData = { ...this.editData, ...value };
+      }
     },
   },
   watch: {

@@ -334,7 +334,6 @@ export default {
     },
     setImage(value) {
       this.showChooseImage = false;
-      console.log("value---------", value);
       this.imageSelected = value.url;
     },
     callEmit(type) {

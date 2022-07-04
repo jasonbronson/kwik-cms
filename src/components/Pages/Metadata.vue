@@ -115,7 +115,7 @@
                   placeholder="Publish date"
                   input-class="focus:outline-none px-4 w-full flex-grow border-solid border-2 h-10 flex align-center"
                   wrapper-class=""
-                  v-model="editData.publish_date"
+                  v-model="publishDate"
                 />
               </div>
               <div
@@ -260,6 +260,7 @@ export default {
       listTagString: "",
       imageSelected: "",
       showChooseImage: false,
+      publishDate: null
     };
   },
   props: {
@@ -275,13 +276,14 @@ export default {
       this.selectedUser = this.editData.user_id
     }
     if (this.editData) {
-      this.listCateArray = this.editData.Categories.map(i => i.name)
+      this.listCateArray = this.editData.Categories ? this.editData.Categories.map(i => i.name) : []
       this.listCateString = this.listCateArray.join(",")
     }
     if (this.editData) {
-      this.listTagArray = this.editData.Tags.map(i => i.name)
+      this.listTagArray = this.editData.Tags ? this.editData.Tags.map(i => i.name) : []
       this.listTagString = this.listTagArray.join(",")
     }
+    this.publishDate = this.editData.publish_date || new Date() 
   },
   watch: {
     editData: {
@@ -289,6 +291,9 @@ export default {
         this.$emit("handleMetaDataChange", value);
       },
       deep: true,
+    },
+    publishDate(value) {
+      this.editData.publish_date = value
     },
     page(value) {
       this.editData = value;
@@ -316,7 +321,6 @@ export default {
       this.callEmit("tag")
     },
     selectedUser(value) {
-      console.log("change");
       this.editData.user_id = value;
       this.$emit("handleMetaDataChange", this.editData);
     },
@@ -327,27 +331,17 @@ export default {
     },
     closeChooseImage() {
       this.showChooseImage = false;
-      // this.$store.dispatch('media/addFolder', {
-      //   filename: fileName,
-      // })
     },
     setImage(value) {
       this.showChooseImage = false;
-      console.log("value---------", value);
       this.imageSelected = value.url;
     },
     callEmit(type) {
       if (type === "cate") {
-        this.editData.Categories = this.listCategories
-          .filter((i) => this.listCateArray.includes(i.name))
-          .map((j) => ({ id: j.id }));
-        this.$emit("handleMetaDataChange", this.editData);
+        this.$emit("handleMetaDataChange", {type: "cate", data: this.listCateArray});
       }
       if (type === "tag") {
-        this.editData.Tags = this.listTags
-          .filter((i) => this.listTagArray.includes(i.name))
-          .map((j) => ({ id: j.id }));
-        this.$emit("handleMetaDataChange", this.editData);
+        this.$emit("handleMetaDataChange", {type: "tag", data: this.listTagArray});
       }
     },
   },
