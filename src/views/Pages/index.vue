@@ -82,9 +82,8 @@
     ></are-you-sure>
     <popup-schedule
       v-if="isShowSchedule"
-      @yes="isShowSchedule = false"
-      text="Schedule of item"
-      :info="this.pageSelected.publish_date"
+      @no="isShowSchedule = false"
+      @setSchedule="setSchedule"
     ></popup-schedule>
   </div>
 </template>
@@ -293,6 +292,18 @@ export default {
         },
       });
       this.publishConfirm = false;
+      this.isDeletePage = false;
+      this.pageSelected = {};
+      this.$store.dispatch("pages/fetchAllPages");
+    },
+    async setSchedule(date) {
+      await this.$store.dispatch("pages/updatePost", {
+        post: {
+          id: this.postSelected.id,
+          publish_date: date,
+        },
+      });
+      this.isShowSchedule = false;
       this.isDeletePage = false;
       this.pageSelected = {};
       this.$store.dispatch("pages/fetchAllPages");

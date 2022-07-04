@@ -2,19 +2,53 @@
   <div class="dialog">
     <div class="content">
       <div class="title">
-        <p>{{ text }}: {{ customDate }}</p>
+        <p class="text-left">Publish at a specific date and time</p>
+        <div class="flex mt-2">
+          <div
+            class="w-12 h-10 bg-primary-500 rounded-l flex items-center justify-center text-white"
+          >
+            <i class="fas fa-calendar-alt"></i>
+          </div>
+          <div class="flex-grow">
+            <Datepicker
+              placeholder="Publish date"
+              input-class="focus:outline-none px-4 w-full flex-grow border-solid border-2 h-10 flex align-center"
+              wrapper-class=""
+              :disabled-dates="dateDisable"
+              v-model="publishDate"
+            />
+          </div>
+          <div
+            class="w-20 h-10 bg-primary-500 rounded-r flex items-center justify-center text-white"
+          >
+            <i class="fas fa-globe-americas text-sm"></i>
+            <span class="text-sm ml-2">UTC</span>
+          </div>
+        </div>
       </div>
-      <div class="group-btn">
-        <button class="button" @click="$emit('yes')">Schedule</button>
+      <div class="group-btn text-right">
+        <button class="button" @click.prevent="$emit('setSchedule', publishDate)">Schedule</button>
       </div>
     </div>
   </div>
 </template>
 <script lang="ts">
 import Vue from "vue";
+import Datepicker from "vuejs-datepicker";
 
 export default Vue.extend({
   name: "PopupSchedule",
+  components: {
+    Datepicker,
+  },
+  data() {
+    return {
+      dateDisable: {
+        to: new Date(),
+      },
+      publishDate: null
+    }
+  },
   props: {
     text: {
       type: String,
@@ -59,7 +93,7 @@ export default Vue.extend({
 }
 .group-btn {
   display: flex;
-  justify-content: center;
+  justify-content: right;
   .button {
     padding: 5px 10px;
     border-radius: 4px !important;
