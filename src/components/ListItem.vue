@@ -34,7 +34,7 @@
           type="button"
           :class="styleByStatus"
           class="font-medium rounded-full text-sm px-5 py-2.5 text-center mr-2 mb-2"
-        >
+        ><i :class="iconByStatus"></i>
           {{ publishDate | moment("MMM DD, YYYY") }}
         </button>
       </div>
@@ -91,6 +91,20 @@ export default {
           return "text-primary-500 bg-primary-300"
         } else {
           return "text-green-200 bg-green-100"
+        }
+      }
+      return ""
+    },
+    iconByStatus() {
+      var now = new Date()
+      if (this.item.status == "draft") {
+        return "fa-solid fa-pencil"
+      }
+      if (this.item.status == "publish") {
+        if (new Date(this.publishDate).getTime() > now.getTime()) {
+          return "fa-solid fa-check"
+        } else {
+          return "fa-solid fa-clock"
         }
       }
       return ""
