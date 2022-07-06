@@ -35,7 +35,6 @@
             :data="ActionPostTabs"
             v-model="currentActionTab"
             @input="handleTabActionChange"
-            :itemSelected="postSelected"
           />
           <DropDown
             :options="authorsOptions"
@@ -51,9 +50,9 @@
           </div>
         </div>
 
-        <div class="mt-5">
+        <div class="mt-5" :key="key">
           <ListItem
-            @click="goToEvent"
+            @click="clickItem"
             v-for="(post, index) in posts"
             :key="index"
             :title="post.title"
@@ -61,7 +60,6 @@
             :id="post.id"
             :item="post"
             :title-to="`/posts/edit/${post.id}`"
-            :checked="postSelected.id == post.id"
             postImg="https://source.unsplash.com/random/1280x720"
           />
         </div>
@@ -153,7 +151,7 @@ export default {
       isDeletePost: false,
       isShowSchedule: false,
       currentBlogTab: {},
-      postSelected: {},
+      postSelected: [],
       currentActionTab: {
         title: "Delete",
         id: "delete",
@@ -161,12 +159,19 @@ export default {
       },
       password: "",
       filters: [],
+      key: 0
     };
   },
 
   computed: {
     ...mapState({
-      posts: (state) => state.posts.posts,
+      posts: (state) => {
+        var temp =  state.posts.posts.map(item => {
+          item.check = false
+          return item
+        })
+        return temp
+      },
       loading: (state) => state.posts.loading,
       usersList: (state) => state.users.usersList,
       categories: (state) => state.categories.categoriesList,
@@ -221,13 +226,10 @@ export default {
     async deleteUser() {
       try {
         this.loading = true;
-        await this.$store.dispatch("posts/deletePost", this.postSelected.id);
-        this.deleteUserConfirm = false;
-        this.isDeletePost = false;
-        this.postSelected = {};
-        // this.$router.push("/users");
-        this.$store.dispatch("posts/fetchAllPosts");
-        this.loading = false;
+        for (var p of this.postSelected) {
+          await this.$store.dispatch("posts/deletePost", p.id);
+        }
+        this.reset()
       } catch (error) {
         console.log(error);
       }
@@ -242,13 +244,13 @@ export default {
     handleTabActionChange(selectedValue) {
       this.currentActionTab = selectedValue;
     },
-    goToEvent(value) {
-      if (value) {
-        this.isDeletePost = true;
-        this.postSelected = value;
+    clickItem(value) {
+      if (value.check) {
+        this.postSelected.push(value)
       } else {
-        this.isDeletePost = false;
+        this.postSelected = this.postSelected.filter(item => item.id != value.id)
       }
+      this.isDeletePost = this.postSelected.length > 0
     },
     handlePostsSearch(newString) {
       console.log("ok posts");
@@ -284,29 +286,27 @@ export default {
       this.addFilter({ category: value });
     },
     async publishPost() {
-      await this.$store.dispatch("posts/updatePost", {
-        post: {
-          id: this.postSelected.id,
-          publish_date: new Date(),
-          status: "publish",
-        },
-      });
-      this.publishConfirm = false;
-      this.isDeletePost = false;
-      this.postSelected = {};
-      this.$store.dispatch("posts/fetchAllPosts");
+      for (var p of this.postSelected) {
+        await this.$store.dispatch("posts/updatePost", {
+          post: {
+            id: p.id,
+            publish_date: new Date(),
+            status: "publish",
+          },
+        });
+      }
+      this.reset()
     },
     async setSchedule(date) {
-      await this.$store.dispatch("posts/updatePost", {
-        post: {
-          id: this.postSelected.id,
-          publish_date: date,
-        },
-      });
-      this.isShowSchedule = false;
-      this.isDeletePost = false;
-      this.postSelected = {};
-      this.$store.dispatch("posts/fetchAllPosts");
+      for (var p of this.postSelected) {
+        await this.$store.dispatch("posts/updatePost", {
+          post: {
+            id: p.id,
+            publish_date: date,
+          },
+        });
+      }
+      this.reset()
     },
     handlePublishConfirm(value) {
       this.publishConfirm = value;
@@ -314,6 +314,15 @@ export default {
     handleSchedulePost(value) {
       this.isShowSchedule = value;
     },
+    reset() {
+      this.isShowSchedule = false;
+      this.publishConfirm = false;
+      this.deleteUserConfirm = false;
+      this.isDeletePost = false;
+      this.postSelected = [];
+      this.$store.dispatch("posts/fetchAllPosts");
+      this.key++
+    }
   },
   mounted() {
     this.$store.dispatch("users/fetchAndSetUsers");

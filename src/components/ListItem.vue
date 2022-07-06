@@ -2,7 +2,6 @@
   <div class="mb-2">
     <div
       class="w-full flex bg-white items-center justify-between py-4 px-4"
-      @click="handleClick"
     >
       <div class="flex justify-start items-center">
         <input
@@ -10,7 +9,8 @@
           type="checkbox"
           :value="item.title"
           id="flexCheckDefault"
-          v-model="checked"
+          v-model="item.check"
+          @change="handleClick"
         />
         <div class="w-32 mr-6" v-if="postImg">
           <img class="shadow-md" :src="postImg" alt="" />
@@ -70,10 +70,6 @@ export default {
       type: String,
       default: "",
     },
-    checked: {
-      type: Boolean,
-      default: false
-    }
   },
   data() {
     return {
@@ -112,12 +108,7 @@ export default {
   },
   methods: {
     handleClick() {
-      this.checked = !this.checked;
-      if (this.checked) {
-        this.$emit("click", this.item);
-      } else {
-        this.$emit("click", "");
-      }
+      this.$emit("click", this.item)
     },
   },
 };

@@ -58,10 +58,6 @@ export default {
       type: Boolean,
       default: false,
     },
-    itemSelected: {
-      type: Object,
-      default: () => {},
-    },
     // pageSelected: {
     //   type: Object,
     //   default: () => {},
@@ -76,26 +72,17 @@ export default {
     }
   },
   methods: {
-    // showPopup(item) {
-
-    // },
     isCurrentTab(tabData) {
       return tabData.title == this.value.title;
     },
     handleDelete() {
-      if (this.itemSelected) {
-        this.$emit("clickDeleteItem", true);
-      }
+      this.$emit("clickDeleteItem", true);
     },
     handlePublish() {
-      if (this.itemSelected) {
-        this.$emit("clickPublishItem", true);
-      }
+      this.$emit("clickPublishItem", true);
     },
     handleSchedule() {
-      if (this.itemSelected) {
-        this.$emit("clickScheduleItem", true);
-      }
+      this.$emit("clickScheduleItem", true);
     },
   },
 };
