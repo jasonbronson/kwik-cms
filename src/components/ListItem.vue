@@ -102,9 +102,9 @@ export default {
       }
       if (this.item.status == "publish") {
         if (new Date(this.publishDate).getTime() > now.getTime()) {
-          return "fa-solid fa-check"
-        } else {
           return "fa-solid fa-clock"
+        } else {
+          return "fa-solid fa-check"
         }
       }
       return ""
