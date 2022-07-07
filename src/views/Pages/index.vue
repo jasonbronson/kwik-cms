@@ -51,9 +51,9 @@
           </div>
         </div>
 
-        <div class="mt-5">
+        <div class="mt-5" :key="key">
           <ListItem
-            @click="goToEvent"
+            @click="clickItem"
             v-for="(page, index) in pages"
             :key="index"
             :title="page.title"
@@ -153,7 +153,7 @@ export default {
       isDeletePage: false,
       isShowSchedule: false,
       currentPageTab: {},
-      pageSelected: {},
+      pageSelected: [],
       currentActionTab: {
         title: "Delete",
         id: "delete",
@@ -161,12 +161,19 @@ export default {
       },
       password: "",
       filters: [],
+      key: 0
     };
   },
 
   computed: {
     ...mapState({
-      pages: (state) => state.pages.pages,
+      pages: (state) => {
+        var temp =  state.pages.pages.map(item => {
+          item.check = false
+          return item
+        })
+        return temp
+      },
       loading: (state) => state.pages.loading,
       usersList: (state) => state.users.usersList,
       categories: (state) => state.categories.categoriesList,
@@ -221,13 +228,10 @@ export default {
     async deleteUser() {
       try {
         this.loading = true;
-        await this.$store.dispatch("pages/deletePage", this.pageSelected.id);
-        this.deleteUserConfirm = false;
-        this.isDeletePage = false;
-        this.pageSelected = {};
-        // this.$router.push("/users");
-        this.$store.dispatch("pages/fetchAllPages");
-        this.loading = false;
+        for (var p of this.pageSelected) {
+          await this.$store.dispatch("pages/deletePage", p.id);
+        }
+        this.reset()
       } catch (error) {
         console.log(error);
       }
@@ -242,13 +246,13 @@ export default {
     handleTabActionChange(selectedValue) {
       this.currentActionTab = selectedValue;
     },
-    goToEvent(value) {
-      if (value) {
-        this.isDeletePage = true;
-        this.pageSelected = value;
+    clickItem(value) {
+      if (value.check) {
+        this.pageSelected.push(value)
       } else {
-        this.isDeletePage = false;
+        this.pageSelected = this.pageSelected.filter(item => item.id != value.id)
       }
+      this.isDeletePage = this.pageSelected.length > 0
     },
     handlePagesSearch(newString) {
       console.log("ok pages", newString);
@@ -284,29 +288,27 @@ export default {
       this.addFilter({ category: value });
     },
     async publishPage() {
-      await this.$store.dispatch("pages/updatePage", {
-        page: {
-          id: this.pageSelected.id,
-          publish_date: new Date(),
-          status: "publish",
-        },
-      });
-      this.publishConfirm = false;
-      this.isDeletePage = false;
-      this.pageSelected = {};
-      this.$store.dispatch("pages/fetchAllPages");
+      for (var p of this.pageSelected) {
+        await this.$store.dispatch("pages/updatePage", {
+          page: {
+            id: p.id,
+            publish_date: new Date(),
+            status: "publish",
+          },
+        });
+      }
+      this.reset()
     },
     async setSchedule(date) {
-      await this.$store.dispatch("pages/updatePost", {
-        post: {
-          id: this.postSelected.id,
-          publish_date: date,
-        },
-      });
-      this.isShowSchedule = false;
-      this.isDeletePage = false;
-      this.pageSelected = {};
-      this.$store.dispatch("pages/fetchAllPages");
+      for (var p of this.pageSelected) {
+        await this.$store.dispatch("pages/updatePage", {
+          page: {
+            id: p.id,
+            publish_date: date,
+          },
+        });
+      }
+      this.reset()
     },
     handlePublishConfirm(value) {
       this.publishConfirm = value;
@@ -314,6 +316,15 @@ export default {
     handleSchedulePage(value) {
       this.isShowSchedule = value;
     },
+    reset() {
+      this.isShowSchedule = false;
+      this.publishConfirm = false;
+      this.deleteUserConfirm = false;
+      this.isDeletePage = false;
+      this.pageSelected = [];
+      this.$store.dispatch("pages/fetchAllPages");
+      this.key++
+    }
   },
   mounted() {
     this.$store.dispatch("users/fetchAndSetUsers");
