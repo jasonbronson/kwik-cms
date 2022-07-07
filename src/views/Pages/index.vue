@@ -46,7 +46,7 @@
             :options="categoriesOption"
             @selectDropdown="filterCategory"
           />
-          <div class="flex-grow text-right flex justify-end tex-primary-500">
+          <div class="flex-grow text-right flex justify-end text-primary-500">
             Export All Pages
           </div>
         </div>
