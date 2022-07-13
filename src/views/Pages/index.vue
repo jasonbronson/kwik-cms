@@ -28,9 +28,7 @@
           />
           <UnderTabsActions
             v-else
-            @clickDeleteItem="handleDeletePage"
-            @clickPublishItem="handlePublishConfirm"
-            @clickScheduleItem="handleSchedulePage"
+            @clickAction="handleAction"
             :isDeletePage="isDeletePage"
             :data="ActionPageTabs"
             v-model="currentActionTab"
@@ -136,16 +134,19 @@ export default {
           title: "Publish",
           id: "publish",
           icon: "fa-solid fa-check",
+          style: "text-green-600",
         },
         {
           title: "Schedule",
           id: "schedule",
           icon: "fa-solid fa-clock",
+          style: "text-gray-600",
         },
         {
           title: "Delete",
           id: "delete",
           icon: "fa-solid fa-trash",
+          style: "text-red-600",
         },
       ],
       deleteUserConfirm: false,
@@ -236,9 +237,6 @@ export default {
         console.log(error);
       }
     },
-    handleDeletePage(value) {
-      this.deleteUserConfirm = value;
-    },
     handleTabChange(selectedValue) {
       this.currentPageTab = selectedValue;
       this.addFilter({ status: selectedValue.id });
@@ -310,11 +308,19 @@ export default {
       }
       this.reset()
     },
-    handlePublishConfirm(value) {
-      this.publishConfirm = value;
-    },
-    handleSchedulePage(value) {
-      this.isShowSchedule = value;
+    handleAction(value) {
+      console.log("value", value)
+      switch(value) {
+        case "publish":
+          this.publishConfirm = true;
+          break;
+        case "schedule":
+          this.isShowSchedule = true;
+          break;
+        case "delete":
+          this.deleteUserConfirm = true;
+          break;
+      }
     },
     reset() {
       this.isShowSchedule = false;

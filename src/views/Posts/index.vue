@@ -28,9 +28,7 @@
           />
           <UnderTabsActions
             v-else
-            @clickDeleteItem="handleDeletePost"
-            @clickPublishItem="handlePublishConfirm"
-            @clickScheduleItem="handleSchedulePost"
+            @clickAction="handleAction"
             :isDeletePost="isDeletePost"
             :data="ActionPostTabs"
             v-model="currentActionTab"
@@ -134,16 +132,19 @@ export default {
           title: "Publish",
           id: "publish",
           icon: "fa-solid fa-check",
+          style: "text-green-600",
         },
         {
           title: "Schedule",
           id: "schedule",
           icon: "fa-solid fa-clock",
+          style: "text-gray-600",
         },
         {
           title: "Delete",
           id: "delete",
           icon: "fa-solid fa-trash",
+          style: "text-red-600",
         },
       ],
       deleteUserConfirm: false,
@@ -234,9 +235,6 @@ export default {
         console.log(error);
       }
     },
-    handleDeletePost(value) {
-      this.deleteUserConfirm = value;
-    },
     handleTabChange(selectedValue) {
       this.currentBlogTab = selectedValue;
       this.addFilter({ status: selectedValue.id });
@@ -308,11 +306,19 @@ export default {
       }
       this.reset()
     },
-    handlePublishConfirm(value) {
-      this.publishConfirm = value;
-    },
-    handleSchedulePost(value) {
-      this.isShowSchedule = value;
+    handleAction(value) {
+      console.log("value", value)
+      switch(value) {
+        case "publish":
+          this.publishConfirm = true;
+          break;
+        case "schedule":
+          this.isShowSchedule = true;
+          break;
+        case "delete":
+          this.deleteUserConfirm = true;
+          break;
+      }
     },
     reset() {
       this.isShowSchedule = false;

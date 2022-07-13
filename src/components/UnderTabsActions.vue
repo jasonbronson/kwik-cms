@@ -3,25 +3,14 @@
     <div class="mr-20">
       <div class="flex items-center gap-3 text-sm">
         <div
-          class="shadow bg-white px-4 py-2 rounded cursor-pointer text-green-600"
-          @click="handlePublish"
+          v-for="(item, index) in data"
+          :key="index"
+          class="shadow bg-white px-4 py-2 rounded cursor-pointer"
+          :class="item.style"
+          @click="handleAction(item.id)"
         >
-          <i class="fas fa-check mr-2"></i>
-          <span>Publish</span>
-        </div>
-        <div
-          class="shadow bg-white px-4 py-2 rounded cursor-pointer text-gray-600"
-          @click="handleSchedule"
-        >
-          <i class="fas fa-clock mr-2"></i>
-          <span>Schedule</span>
-        </div>
-        <div
-          class="shadow bg-white px-4 py-2 rounded cursor-pointer text-red-600"
-          @click="handleDelete"
-        >
-          <i class="fal fa-trash-alt mr-2"></i>
-          <span>Delete</span>
+          <i class="mr-2" :class="item.icon"></i>
+          <span>{{ item.title }}</span>
         </div>
       </div>
     </div>
@@ -58,10 +47,6 @@ export default {
       type: Boolean,
       default: false,
     },
-    // pageSelected: {
-    //   type: Object,
-    //   default: () => {},
-    // },
   },
   mounted() {
     if (
@@ -75,14 +60,8 @@ export default {
     isCurrentTab(tabData) {
       return tabData.title == this.value.title;
     },
-    handleDelete() {
-      this.$emit("clickDeleteItem", true);
-    },
-    handlePublish() {
-      this.$emit("clickPublishItem", true);
-    },
-    handleSchedule() {
-      this.$emit("clickScheduleItem", true);
+    handleAction(value) {
+      this.$emit("clickAction", value)
     },
   },
 };
