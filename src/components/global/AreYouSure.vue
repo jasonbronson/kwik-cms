@@ -1,5 +1,5 @@
 <template>
-  <div class="dialog">
+  <div class="dialog" @click.self="$emit('no')">
     <div class="content">
       <div class="title">
         <p>{{ text }}</p>
